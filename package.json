@@ -1,0 +1,22 @@
+{
+  "name": "aprendiendo-con-ari",
+  "version": "1.0.0",
+  "description": "Plataforma educativa interactiva infantil Aprendiendo con Ari con niveles, sistema de puntuación, sonidos Web Audio, animaciones y persistencia de progreso.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "audit": "node tests/audit.js"
+  },
+  "keywords": [
+    "educacion",
+    "aprendiendo-con-ari",
+    "interactivo",
+    "matematicas",
+    "lectura",
+    "logica",
+    "ciencias"
+  ],
+  "author": "Aprendiendo con Ari",
+  "license": "MIT"
+}

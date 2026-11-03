@@ -1,0 +1,812 @@
+{
+  "passed": [
+    {
+      "category": "2. Rutas",
+      "description": "Ruta #/inicio renderiza HomeView",
+      "details": "Componente=HomeView"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Componentes globales (Navbar, Footer, AriMascot) presentes en #/inicio",
+      "details": "Navbar=true, Footer=true, AriMascot=true"
+    },
+    {
+      "category": "2. Rutas",
+      "description": "Ruta #/grado renderiza GradeSelectView",
+      "details": "Componente=GradeSelectView"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Componentes globales (Navbar, Footer, AriMascot) presentes en #/grado",
+      "details": "Navbar=true, Footer=true, AriMascot=true"
+    },
+    {
+      "category": "2. Rutas",
+      "description": "Ruta #/estudiante renderiza GradeSelectView",
+      "details": "Componente=GradeSelectView"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Componentes globales (Navbar, Footer, AriMascot) presentes en #/estudiante",
+      "details": "Navbar=true, Footer=true, AriMascot=true"
+    },
+    {
+      "category": "2. Rutas",
+      "description": "Ruta #/materias renderiza HomeView",
+      "details": "Componente=HomeView"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Componentes globales (Navbar, Footer, AriMascot) presentes en #/materias",
+      "details": "Navbar=true, Footer=true, AriMascot=true"
+    },
+    {
+      "category": "2. Rutas",
+      "description": "Ruta #/matematicas renderiza LevelsMapView",
+      "details": "Componente=LevelsMapView"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Componentes globales (Navbar, Footer, AriMascot) presentes en #/matematicas",
+      "details": "Navbar=true, Footer=true, AriMascot=true"
+    },
+    {
+      "category": "2. Rutas",
+      "description": "Ruta #/espanol renderiza LevelsMapView",
+      "details": "Componente=LevelsMapView"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Componentes globales (Navbar, Footer, AriMascot) presentes en #/espanol",
+      "details": "Navbar=true, Footer=true, AriMascot=true"
+    },
+    {
+      "category": "2. Rutas",
+      "description": "Ruta #/niveles renderiza LevelsMapView",
+      "details": "Componente=LevelsMapView"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Componentes globales (Navbar, Footer, AriMascot) presentes en #/niveles",
+      "details": "Navbar=true, Footer=true, AriMascot=true"
+    },
+    {
+      "category": "2. Rutas",
+      "description": "Ruta #/nivel/1 renderiza ExerciseView",
+      "details": "Componente=ExerciseView"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Componentes globales (Navbar, Footer, AriMascot) presentes en #/nivel/1",
+      "details": "Navbar=true, Footer=true, AriMascot=true"
+    },
+    {
+      "category": "2. Rutas",
+      "description": "Ruta #/nivel/6 renderiza ExerciseView",
+      "details": "Componente=ExerciseView"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Componentes globales (Navbar, Footer, AriMascot) presentes en #/nivel/6",
+      "details": "Navbar=true, Footer=true, AriMascot=true"
+    },
+    {
+      "category": "2. Rutas",
+      "description": "Ruta #/nivel/10 renderiza ExerciseView",
+      "details": "Componente=ExerciseView"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Componentes globales (Navbar, Footer, AriMascot) presentes en #/nivel/10",
+      "details": "Navbar=true, Footer=true, AriMascot=true"
+    },
+    {
+      "category": "2. Rutas",
+      "description": "Ruta #/practica renderiza PracticeView",
+      "details": "Componente=PracticeView"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Componentes globales (Navbar, Footer, AriMascot) presentes en #/practica",
+      "details": "Navbar=true, Footer=true, AriMascot=true"
+    },
+    {
+      "category": "2. Rutas",
+      "description": "Ruta #/progreso renderiza ProgressView",
+      "details": "Componente=ProgressView"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Componentes globales (Navbar, Footer, AriMascot) presentes en #/progreso",
+      "details": "Navbar=true, Footer=true, AriMascot=true"
+    },
+    {
+      "category": "2. Rutas",
+      "description": "Ruta #/logros renderiza ProgressView",
+      "details": "Componente=ProgressView"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Componentes globales (Navbar, Footer, AriMascot) presentes en #/logros",
+      "details": "Navbar=true, Footer=true, AriMascot=true"
+    },
+    {
+      "category": "2. Rutas",
+      "description": "Ruta #/ruta-no-existente renderiza NotFoundView",
+      "details": "Componente=NotFoundView"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Componentes globales (Navbar, Footer, AriMascot) presentes en #/ruta-no-existente",
+      "details": "Navbar=true, Footer=true, AriMascot=true"
+    },
+    {
+      "category": "2. Rutas",
+      "description": "Ruta #/matematicas muestra el encabezado «¡Vamos a aprender Matemáticas!» y filtra las 5 unidades",
+      "details": ""
+    },
+    {
+      "category": "2. Rutas",
+      "description": "Ruta #/espanol muestra el encabezado «¡Descubramos el mundo de las palabras!» y filtra las 5 unidades",
+      "details": ""
+    },
+    {
+      "category": "2. Rutas",
+      "description": "Ruta de nivel inválido (#/nivel/99) muestra pantalla de control not-found",
+      "details": "status=not-found"
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón #btn-back-map-invalid regresa a #/niveles",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón #btn-404-home en vista 404 regresa a #/inicio",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón #btn-404-map en vista 404 navega a #/niveles",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón #btn-ari-greet actualiza el consejo de Ari y activa animación",
+      "details": "Cambio de frase verificado"
+    },
+    {
+      "category": "3. Botones",
+      "description": "Formulario #form-player-name y botón #btn-save-name guardan nombre del jugador",
+      "details": "savedName=Valentina"
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón #btn-change-grade navega a la pantalla de selección de grado (#/grado)",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón #btn-select-grade-4 selecciona 4° Grado y navega a #/materias",
+      "details": ""
+    },
+    {
+      "category": "4. Ejercicios",
+      "description": "Al seleccionar 4° Grado se adaptan las preguntas a mayor complejidad (ej. 1.250 + ___ = 2.000)",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón #btn-select-grade-3 selecciona 3° Grado y navega a #/materias",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Tarjeta 3D #btn-subject-matematicas abre Matemáticas Unidad 1 (#/nivel/1)",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Tarjeta 3D #btn-subject-espanol abre Español Unidad 1 (#/nivel/6)",
+      "details": ""
+    },
+    {
+      "category": "8. Sonidos",
+      "description": "Botón #btn-listen-reading («🔊 Escuchar») en lectura de Español reproduce audio y síntesis de voz",
+      "details": ""
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Pestaña «📘 Nivel 1: Aprendo» muestra la explicación del tema, ejemplo de Ari y botón de audio",
+      "details": ""
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Visor de Textos Expositivos Interactivos funciona en todas sus etapas (Portada, Fragmentos, Palabras Resaltadas, Pregunta de Exploración y paso a Evaluación)",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón #btn-start-adventure navega a #/niveles",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón #nav-inicio navega a #/inicio",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón #btn-continue-level («▶ ¡Comenzar!») navega al nivel activo",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón de marca #btn-brand-home navega a #/inicio",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón #btn-go-practice navega a #/practica",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón #btn-go-progress navega a #/progreso",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón del pie de página [data-footer-nav=\"/inicio\"] navega correctamente",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón del pie de página [data-footer-nav=\"/niveles\"] navega correctamente",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón del pie de página [data-footer-nav=\"/practica\"] navega correctamente",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón del pie de página [data-footer-nav=\"/progreso\"] navega correctamente",
+      "details": ""
+    },
+    {
+      "category": "8. Sonidos",
+      "description": "Botón #btn-music-toggle controla de forma independiente la música opcional",
+      "details": ""
+    },
+    {
+      "category": "8. Sonidos",
+      "description": "Botón #btn-sound-toggle silencia sonidos y persiste estado muted",
+      "details": "enabled=false, played=false"
+    },
+    {
+      "category": "8. Sonidos",
+      "description": "Botón #btn-sound-toggle reactiva sonidos y reproduce tono click",
+      "details": "enabled=true, played=true"
+    },
+    {
+      "category": "4. Ejercicios",
+      "description": "Las 10 unidades (50 preguntas base + bancos de 4° grado) incluyen las 6 modalidades interactivas y respuestas verificadas",
+      "details": "Unidades=10, Modalidades=multiple_choice,fill_blank,drag_drop,true_false,ordering,matching"
+    },
+    {
+      "category": "6. Desbloqueo de niveles",
+      "description": "Clic en Nivel 2 bloqueado muestra alerta en el mapa, reproduce sonido locked y permanece en #/niveles",
+      "details": ""
+    },
+    {
+      "category": "6. Desbloqueo de niveles",
+      "description": "Navegar por URL a nivel bloqueado (#/nivel/2) muestra pantalla de protección de nivel bloqueado",
+      "details": "status=locked"
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón #btn-guard-back-map regresa al mapa (#/niveles)",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón #btn-guard-play-available redirige al nivel disponible",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón #btn-exit-level sale del ejercicio activo hacia #/niveles",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón #btn-play-level-1 en el mapa inicia el Nivel 1 (#/nivel/1)",
+      "details": ""
+    },
+    {
+      "category": "5. Puntuación",
+      "description": "Primera respuesta correcta otorga 100 puntos base (+10 pts de estrella) y reproduce sonido correct",
+      "details": "scoreAfterQ1=100"
+    },
+    {
+      "category": "5. Puntuación",
+      "description": "Modalidad FillBlank valida respuesta con espacios extra y otorga +125 pts (100 base + 25 racha)",
+      "details": "scoreAfterQ2=225, streak=2"
+    },
+    {
+      "category": "5. Puntuación",
+      "description": "Respuesta incorrecta suma 0 puntos, reinicia la racha a 0 y reproduce sonido wrong",
+      "details": ""
+    },
+    {
+      "category": "6. Desbloqueo de niveles",
+      "description": "Obtener 60% (3/5 aciertos, menor al mínimo de 70%) NO desbloquea el Nivel 2",
+      "details": "accuracy=60%, level2Unlocked=false"
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón #btn-hint muestra pista de Ari y reproduce sonido hint",
+      "details": ""
+    },
+    {
+      "category": "4. Ejercicios",
+      "description": "Nivel 1 (Matemáticas - Unidad 1: Sumas) completado al 100% con 3 estrellas y sonido levelComplete",
+      "details": "stars=3"
+    },
+    {
+      "category": "6. Desbloqueo de niveles",
+      "description": "Superar Nivel 1 con >=70% mantiene o desbloquea el Nivel 2",
+      "details": ""
+    },
+    {
+      "category": "4. Ejercicios",
+      "description": "Nivel 2 (Matemáticas - Unidad 2: Restas) completado al 100% con 3 estrellas y sonido levelComplete",
+      "details": "stars=3"
+    },
+    {
+      "category": "6. Desbloqueo de niveles",
+      "description": "Superar Nivel 2 con >=70% mantiene o desbloquea el Nivel 3",
+      "details": ""
+    },
+    {
+      "category": "4. Ejercicios",
+      "description": "Nivel 3 (Matemáticas - Unidad 3: Multiplicaciones) completado al 100% con 3 estrellas y sonido levelComplete",
+      "details": "stars=3"
+    },
+    {
+      "category": "6. Desbloqueo de niveles",
+      "description": "Superar Nivel 3 con >=70% mantiene o desbloquea el Nivel 4",
+      "details": ""
+    },
+    {
+      "category": "4. Ejercicios",
+      "description": "Nivel 4 (Matemáticas - Unidad 4: Divisiones) completado al 100% con 3 estrellas y sonido levelComplete",
+      "details": "stars=3"
+    },
+    {
+      "category": "6. Desbloqueo de niveles",
+      "description": "Superar Nivel 4 con >=70% mantiene o desbloquea el Nivel 5",
+      "details": ""
+    },
+    {
+      "category": "4. Ejercicios",
+      "description": "Nivel 5 (Matemáticas - Unidad 5: Desafío Matemático) completado al 100% con 3 estrellas y sonido levelComplete",
+      "details": "stars=3"
+    },
+    {
+      "category": "6. Desbloqueo de niveles",
+      "description": "Superar Nivel 5 con >=70% mantiene o desbloquea el Nivel 6",
+      "details": ""
+    },
+    {
+      "category": "4. Ejercicios",
+      "description": "Nivel 6 (Español - Unidad 1: Los Verbos) completado al 100% con 3 estrellas y sonido levelComplete",
+      "details": "stars=3"
+    },
+    {
+      "category": "6. Desbloqueo de niveles",
+      "description": "Superar Nivel 6 con >=70% mantiene o desbloquea el Nivel 7",
+      "details": ""
+    },
+    {
+      "category": "4. Ejercicios",
+      "description": "Nivel 7 (Español - Unidad 2: El Sujeto) completado al 100% con 3 estrellas y sonido levelComplete",
+      "details": "stars=3"
+    },
+    {
+      "category": "6. Desbloqueo de niveles",
+      "description": "Superar Nivel 7 con >=70% mantiene o desbloquea el Nivel 8",
+      "details": ""
+    },
+    {
+      "category": "4. Ejercicios",
+      "description": "Nivel 8 (Español - Unidad 3: El Predicado) completado al 100% con 3 estrellas y sonido levelComplete",
+      "details": "stars=3"
+    },
+    {
+      "category": "6. Desbloqueo de niveles",
+      "description": "Superar Nivel 8 con >=70% mantiene o desbloquea el Nivel 9",
+      "details": ""
+    },
+    {
+      "category": "4. Ejercicios",
+      "description": "Nivel 9 (Español - Unidad 4: Comprensión Lectora) completado al 100% con 3 estrellas y sonido levelComplete",
+      "details": "stars=3"
+    },
+    {
+      "category": "6. Desbloqueo de niveles",
+      "description": "Superar Nivel 9 con >=70% mantiene o desbloquea el Nivel 10",
+      "details": ""
+    },
+    {
+      "category": "4. Ejercicios",
+      "description": "Nivel 10 (Español - Unidad 5: Textos Expositivos) completado al 100% con 3 estrellas y sonido levelComplete",
+      "details": "stars=3"
+    },
+    {
+      "category": "5. Puntuación",
+      "description": "Repetir una unidad ya completada al 100% no entrega bonificaciones duplicadas (Sección 8.1)",
+      "details": "newBonusAwarded=0"
+    },
+    {
+      "category": "7. Persistencia de progreso",
+      "description": "Recargar el navegador recupera exactamente nombre, puntaje, 30/30 estrellas, 10 unidades desbloqueadas y las 9 medallas desde localStorage",
+      "details": "{\"playerName\":\"Valentina\",\"totalScore\":36325,\"totalStars\":30,\"unlockedCount\":10,\"achievementsCount\":9,\"navScoreText\":\"36325\",\"navStarsText\":\"30/30\"}"
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón de filtro de categoría #btn-cat-todas selecciona y filtra ejercicios",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón de filtro de categoría #btn-cat-matematicas selecciona y filtra ejercicios",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón de filtro de categoría #btn-cat-espanol selecciona y filtra ejercicios",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botones de Práctica Libre (pista, comprobar, siguiente ejercicio y #btn-practice-to-map) funcionan correctamente",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botones de tarjetas de unidades en Inicio ([data-home-level-btn]) navegan al nivel seleccionado",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botón #btn-progress-to-map en Progreso navega a #/niveles",
+      "details": ""
+    },
+    {
+      "category": "3. Botones",
+      "description": "Botones de acción de la tabla de Progreso ([data-table-play]) inician el nivel correspondiente",
+      "details": ""
+    },
+    {
+      "category": "9. Animaciones",
+      "description": "Animaciones CSS de mascota (ariFloat) y transición de vistas (viewFadeIn) están activas",
+      "details": "{\"ariAnimationName\":\"ariFloat\",\"viewAnimationName\":\"viewFadeIn\"}"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Móvil-360 (360x800) en #/inicio sin desbordamiento horizontal",
+      "details": "scrollWidth=360, clientWidth=360"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Móvil-360 (360x800) en #/niveles sin desbordamiento horizontal",
+      "details": "scrollWidth=360, clientWidth=360"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Móvil-360 (360x800) adapta la cuadrícula de niveles a 1 columna(s)",
+      "details": "columnas=1"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Móvil-360 (360x800) en #/nivel/1 sin desbordamiento horizontal",
+      "details": "scrollWidth=360, clientWidth=360"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Móvil-360 (360x800) en #/nivel/10 sin desbordamiento horizontal",
+      "details": "scrollWidth=360, clientWidth=360"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Móvil-360 (360x800) en #/practica sin desbordamiento horizontal",
+      "details": "scrollWidth=360, clientWidth=360"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Móvil-360 (360x800) en #/progreso sin desbordamiento horizontal",
+      "details": "scrollWidth=360, clientWidth=360"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Teléfono (375x667) en #/inicio sin desbordamiento horizontal",
+      "details": "scrollWidth=375, clientWidth=375"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Menú hamburguesa (#btn-mobile-menu) visible y funcional en resolución de Teléfono y barra de estadísticas en una sola fila",
+      "details": ""
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Teléfono (375x667) en #/niveles sin desbordamiento horizontal",
+      "details": "scrollWidth=375, clientWidth=375"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Teléfono (375x667) adapta la cuadrícula de niveles a 1 columna(s)",
+      "details": "columnas=1"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Teléfono (375x667) en #/nivel/1 sin desbordamiento horizontal",
+      "details": "scrollWidth=375, clientWidth=375"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Teléfono (375x667) en #/nivel/10 sin desbordamiento horizontal",
+      "details": "scrollWidth=375, clientWidth=375"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Teléfono (375x667) en #/practica sin desbordamiento horizontal",
+      "details": "scrollWidth=375, clientWidth=375"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Teléfono (375x667) en #/progreso sin desbordamiento horizontal",
+      "details": "scrollWidth=375, clientWidth=375"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Móvil-390 (390x844) en #/inicio sin desbordamiento horizontal",
+      "details": "scrollWidth=390, clientWidth=390"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Móvil-390 (390x844) en #/niveles sin desbordamiento horizontal",
+      "details": "scrollWidth=390, clientWidth=390"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Móvil-390 (390x844) adapta la cuadrícula de niveles a 1 columna(s)",
+      "details": "columnas=1"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Móvil-390 (390x844) en #/nivel/1 sin desbordamiento horizontal",
+      "details": "scrollWidth=390, clientWidth=390"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Móvil-390 (390x844) en #/nivel/10 sin desbordamiento horizontal",
+      "details": "scrollWidth=390, clientWidth=390"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Móvil-390 (390x844) en #/practica sin desbordamiento horizontal",
+      "details": "scrollWidth=390, clientWidth=390"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Móvil-390 (390x844) en #/progreso sin desbordamiento horizontal",
+      "details": "scrollWidth=390, clientWidth=390"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Tablet (768x1024) en #/inicio sin desbordamiento horizontal",
+      "details": "scrollWidth=768, clientWidth=768"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Tablet (768x1024) en #/niveles sin desbordamiento horizontal",
+      "details": "scrollWidth=768, clientWidth=768"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Tablet (768x1024) adapta la cuadrícula de niveles a 2 columna(s)",
+      "details": "columnas=2"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Tablet (768x1024) en #/nivel/1 sin desbordamiento horizontal",
+      "details": "scrollWidth=768, clientWidth=768"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Tablet (768x1024) en #/nivel/10 sin desbordamiento horizontal",
+      "details": "scrollWidth=768, clientWidth=768"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Tablet (768x1024) en #/practica sin desbordamiento horizontal",
+      "details": "scrollWidth=768, clientWidth=768"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Tablet (768x1024) en #/progreso sin desbordamiento horizontal",
+      "details": "scrollWidth=768, clientWidth=768"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Tablet-Horizontal (1024x768) en #/inicio sin desbordamiento horizontal",
+      "details": "scrollWidth=1024, clientWidth=1024"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Tablet-Horizontal (1024x768) en #/niveles sin desbordamiento horizontal",
+      "details": "scrollWidth=1024, clientWidth=1024"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Tablet-Horizontal (1024x768) adapta la cuadrícula de niveles a 2 columna(s)",
+      "details": "columnas=2"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Tablet-Horizontal (1024x768) en #/nivel/1 sin desbordamiento horizontal",
+      "details": "scrollWidth=1024, clientWidth=1024"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Tablet-Horizontal (1024x768) en #/nivel/10 sin desbordamiento horizontal",
+      "details": "scrollWidth=1024, clientWidth=1024"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Tablet-Horizontal (1024x768) en #/practica sin desbordamiento horizontal",
+      "details": "scrollWidth=1024, clientWidth=1024"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Tablet-Horizontal (1024x768) en #/progreso sin desbordamiento horizontal",
+      "details": "scrollWidth=1024, clientWidth=1024"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Computador (1280x800) en #/inicio sin desbordamiento horizontal",
+      "details": "scrollWidth=1265, clientWidth=1265"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Computador (1280x800) en #/niveles sin desbordamiento horizontal",
+      "details": "scrollWidth=1265, clientWidth=1265"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Computador (1280x800) adapta la cuadrícula de niveles a 3 columna(s)",
+      "details": "columnas=3"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Computador (1280x800) en #/nivel/1 sin desbordamiento horizontal",
+      "details": "scrollWidth=1280, clientWidth=1280"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "En Computador, la fila de opciones de Matemáticas (.math-tiles-row) muestra las 4 fichas en una fila horizontal",
+      "details": "mathCols=4"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Computador (1280x800) en #/nivel/10 sin desbordamiento horizontal",
+      "details": "scrollWidth=1265, clientWidth=1265"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Computador (1280x800) en #/practica sin desbordamiento horizontal",
+      "details": "scrollWidth=1265, clientWidth=1265"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Computador (1280x800) en #/progreso sin desbordamiento horizontal",
+      "details": "scrollWidth=1265, clientWidth=1265"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "En Español, las opciones de lectura (.reading-options-list) se apilan verticalmente en 1 columna con botones radio",
+      "details": "readingCols=1"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Portátil-1366 (1366x768) en #/inicio sin desbordamiento horizontal",
+      "details": "scrollWidth=1351, clientWidth=1351"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Portátil-1366 (1366x768) en #/niveles sin desbordamiento horizontal",
+      "details": "scrollWidth=1351, clientWidth=1351"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Portátil-1366 (1366x768) adapta la cuadrícula de niveles a 3 columna(s)",
+      "details": "columnas=3"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Portátil-1366 (1366x768) en #/nivel/1 sin desbordamiento horizontal",
+      "details": "scrollWidth=1351, clientWidth=1351"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Portátil-1366 (1366x768) en #/nivel/10 sin desbordamiento horizontal",
+      "details": "scrollWidth=1351, clientWidth=1351"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Portátil-1366 (1366x768) en #/practica sin desbordamiento horizontal",
+      "details": "scrollWidth=1351, clientWidth=1351"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Portátil-1366 (1366x768) en #/progreso sin desbordamiento horizontal",
+      "details": "scrollWidth=1351, clientWidth=1351"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Escritorio-1920 (1920x1080) en #/inicio sin desbordamiento horizontal",
+      "details": "scrollWidth=1905, clientWidth=1905"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Escritorio-1920 (1920x1080) en #/niveles sin desbordamiento horizontal",
+      "details": "scrollWidth=1905, clientWidth=1905"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Escritorio-1920 (1920x1080) adapta la cuadrícula de niveles a 3 columna(s)",
+      "details": "columnas=3"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Escritorio-1920 (1920x1080) en #/nivel/1 sin desbordamiento horizontal",
+      "details": "scrollWidth=1920, clientWidth=1920"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Escritorio-1920 (1920x1080) en #/nivel/10 sin desbordamiento horizontal",
+      "details": "scrollWidth=1920, clientWidth=1920"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Escritorio-1920 (1920x1080) en #/practica sin desbordamiento horizontal",
+      "details": "scrollWidth=1920, clientWidth=1920"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Escritorio-1920 (1920x1080) en #/progreso sin desbordamiento horizontal",
+      "details": "scrollWidth=1905, clientWidth=1905"
+    },
+    {
+      "category": "7. Persistencia de progreso",
+      "description": "Modal de confirmación (#confirm-modal) permite cancelar o confirmar el reinicio total del progreso",
+      "details": "{\"totalScore\":0,\"unlockedLevels\":[1,6,10]}"
+    },
+    {
+      "category": "Consola y Red",
+      "description": "Cero errores de consola JavaScript y cero errores de red (404/500)",
+      "details": "consoleErrors=0, networkErrors=0"
+    }
+  ],
+  "failed": [],
+  "consoleErrors": [],
+  "networkErrors": [],
+  "screenshots": [
+    "C:\\Johan Linares\\Aprendiendo con Ari\\tests\\screenshots\\vista-telefono.png",
+    "C:\\Johan Linares\\Aprendiendo con Ari\\tests\\screenshots\\vista-tablet.png",
+    "C:\\Johan Linares\\Aprendiendo con Ari\\tests\\screenshots\\vista-computador.png"
+  ]
+}
