@@ -2,6 +2,13 @@
 
 **¡Explora, aprende y diviértete!**
 
+## 🌐 ¡Pruébalo ahora en tu navegador!
+
+👉 **[▶️ Jugar Aprendiendo con Ari en Vivo (GitHub Pages)](https://johanlinaress.github.io/Aprendiendo-con-Ari/)**  
+🔗 Enlace directo: https://johanlinaress.github.io/Aprendiendo-con-Ari/
+
+---
+
 Plataforma educativa web interactiva diseñada para estudiantes de **3° y 4° de primaria**, enfocada en el refuerzo de **Matemáticas** y **Español** mediante lecciones progresivas (*Aprendo*, *Practico* y *Demuestro lo aprendido*), ejercicios interactivos, textos expositivos ilustrados, efectos de sonido, animaciones y recompensas gamificadas junto a **Ari**, el búho morado sabio.
 
 ---
@@ -28,7 +35,7 @@ Plataforma educativa web interactiva diseñada para estudiantes de **3° y 4° d
 
 ---
 
-## 🚀 Instalación y Ejecución
+## 🚀 Instalación y Ejecución Local
 
 1. Clona el repositorio:
    ```bash
