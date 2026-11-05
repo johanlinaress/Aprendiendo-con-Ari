@@ -8,6 +8,7 @@ import { escapeHtml } from '../utils/escapeHtml.js';
 export function renderGradeSelectView() {
   const state = StorageService.getState();
   const safeName = escapeHtml(state.playerName);
+  const profiles = StorageService.getProfiles();
 
   return `
     <section class="grade-select-view view-fade-anim" data-component="GradeSelectView">
@@ -82,6 +83,37 @@ export function renderGradeSelectView() {
               </button>
             </div>
           </form>
+
+          <!-- Perfiles de Niños / Multidispositivo (RF-03) -->
+          <div class="profiles-manager-section" id="profiles-manager-panel">
+            <div class="profiles-header-row">
+              <span class="profiles-label">👥 Perfiles en este dispositivo:</span>
+              <button type="button" class="btn-new-child-profile" id="btn-create-new-profile">
+                ➕ Nuevo Niño
+              </button>
+            </div>
+            <div class="profiles-list-row">
+              ${profiles
+                .map(
+                  (p) => `
+                <button
+                  type="button"
+                  class="profile-chip-btn ${p.name === state.playerName ? 'active-profile' : ''}"
+                  data-switch-profile="${p.id}"
+                  title="Cambiar al perfil de ${escapeHtml(p.name)}"
+                >
+                  <span class="chip-avatar">👤</span>
+                  <span class="chip-name">${escapeHtml(p.name)}</span>
+                  <span class="chip-grade">${p.grade}°</span>
+                </button>
+              `
+                )
+                .join('')}
+            </div>
+            <p class="profiles-device-tip">
+              📱 <em>Tu avance se guarda de forma independiente en cada dispositivo. Para que otro niño juegue aquí con su propio puntaje, pulsa «Nuevo Niño».</em>
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -123,4 +155,24 @@ export function bindGradeSelectViewEvents(rootElement = document) {
       Router.navigate('/materias');
     });
   });
+
+  const profileBtns = rootElement.querySelectorAll('[data-switch-profile]');
+  profileBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const profId = btn.getAttribute('data-switch-profile');
+      SoundService.play('click');
+      StorageService.switchProfile(profId);
+      Router.navigate('/materias');
+    });
+  });
+
+  const newProfileBtn = rootElement.querySelector('#btn-create-new-profile');
+  if (newProfileBtn && nameInput) {
+    newProfileBtn.addEventListener('click', () => {
+      SoundService.play('click');
+      nameInput.value = '';
+      nameInput.placeholder = 'Escribe el nombre del nuevo niño...';
+      nameInput.focus();
+    });
+  }
 }

@@ -61,17 +61,41 @@ function highlightKeywordsHtml(rawText, keywords = []) {
   return html;
 }
 
+export function getActiveSession() {
+  return activeSession;
+}
+
 export function initExerciseSession(levelId, options = {}) {
   const id = Number(levelId);
   const state = StorageService.getState();
   const level = LEVELS_DATA.find((l) => l.id === id) || null;
-  const questions = getQuestionsForLevel(level, state.selectedGrade);
-
-  StorageService.markLevelInProgress(id);
 
   const savedSession = !options.forceFresh
     ? StorageService.getExerciseSession(id, state.selectedGrade)
     : null;
+
+  let questions = [];
+  if (savedSession && Array.isArray(savedSession.questionIds) && savedSession.questionIds.length > 0) {
+    const fullPool = getQuestionsForLevel(level, state.selectedGrade);
+    const restored = savedSession.questionIds
+      .map((qid) => fullPool.find((q) => q.id === qid))
+      .filter(Boolean);
+    questions = restored.length > 0 ? restored : fullPool.slice(0, 5);
+  } else if (options.deterministic) {
+    const fullPool = getQuestionsForLevel(level, state.selectedGrade);
+    questions = fullPool.slice(0, 5);
+    StorageService.recordLevelQuestionsSeen(id, questions.map((q) => q.id));
+  } else {
+    const lastSeenIds = StorageService.getLastSeenQuestionIds(id);
+    questions = getQuestionsForLevel(level, state.selectedGrade, {
+      count: 5,
+      shuffle: true,
+      excludeIds: options.forceFresh || options.isRetry ? lastSeenIds : []
+    });
+    StorageService.recordLevelQuestionsSeen(id, questions.map((q) => q.id));
+  }
+
+  StorageService.markLevelInProgress(id);
 
   const safeQuestionIndex =
     savedSession &&

@@ -289,6 +289,92 @@ export const LEVELS_DATA = [
         correctAnswer: '838',
         hint: '2+6=8, 1+2=3 y 5+3=8.',
         explanation: '¡Perfecto! 512 + 326 = 838.'
+      },
+{
+            "id": "q1_6",
+            "type": "math",
+            "interactionType": "fill_blank",
+            "ariTip": "Completa la suma escribiendo o seleccionando el número que falta.",
+            "prompt": "340 + ___ = 500",
+            "visual": "340 + [ ? ] = 500",
+            "inputPlaceholder": "Escribe el número...",
+            "options": [
+                  "140",
+                  "160",
+                  "150",
+                  "170"
+            ],
+            "correctAnswer": "160",
+            "hint": "Para encontrar el sumando faltante, calcula 500 - 340.",
+            "explanation": "¡Excelente! 340 + 160 = 500."
+      },
+      {
+            "id": "q1_7",
+            "type": "math",
+            "interactionType": "drag_drop",
+            "ariTip": "Coloca la ficha con la suma correcta.",
+            "prompt": "425 + 234 = ___",
+            "visual": "425 + 234 = [ ___ ]",
+            "options": [
+                  "649",
+                  "659",
+                  "669",
+                  "639"
+            ],
+            "correctAnswer": "659",
+            "hint": "Suma unidades 5+4=9, decenas 2+3=5 y centenas 4+2=6.",
+            "explanation": "¡Muy bien! 425 + 234 = 659."
+      },
+      {
+            "id": "q1_8",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Lee la situación con atención y halla el total.",
+            "prompt": "Sofía tiene 140 canicas y su hermano le regala 85 más. ¿Cuántas canicas tiene en total?",
+            "visual": "⚪ 140 + 85 = ?",
+            "options": [
+                  "215",
+                  "225",
+                  "235",
+                  "205"
+            ],
+            "correctAnswer": "225",
+            "hint": "Suma 140 + 85 = 225.",
+            "explanation": "¡Correcto! 140 + 85 = 225 canicas."
+      },
+      {
+            "id": "q1_9",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Suma centenas y decenas completas.",
+            "prompt": "180 + 220 = ?",
+            "visual": "180 + 220 = ?",
+            "options": [
+                  "390",
+                  "400",
+                  "410",
+                  "420"
+            ],
+            "correctAnswer": "400",
+            "hint": "80 + 20 suman 100. Luego 100 + 200 + 100 = 400.",
+            "explanation": "¡Brillante! 180 + 220 = 400."
+      },
+      {
+            "id": "q1_10",
+            "type": "math",
+            "interactionType": "drag_drop",
+            "ariTip": "Resuelve la suma de tres cifras.",
+            "prompt": "312 + 165 = ___",
+            "visual": "312 + 165 = [ ___ ]",
+            "options": [
+                  "467",
+                  "477",
+                  "487",
+                  "457"
+            ],
+            "correctAnswer": "477",
+            "hint": "2+5=7, 1+6=7 y 3+1=4.",
+            "explanation": "¡Perfecto! 312 + 165 = 477."
       }
     ],
     questionsGrade4: [
@@ -352,6 +438,92 @@ export const LEVELS_DATA = [
         correctAnswer: '2.000',
         hint: 'Agrupa primero 450 + 350 = 800, y luego suma 1.200 + 800.',
         explanation: '¡Perfecto! 450 + 350 = 800, y 1.200 + 800 = 2.000 libros.'
+      },
+{
+            "id": "q1_4g_6",
+            "type": "math",
+            "interactionType": "fill_blank",
+            "ariTip": "Completa la suma de cuatro cifras.",
+            "prompt": "4.200 + ___ = 7.500",
+            "visual": "4.200 + [ ? ] = 7.500",
+            "inputPlaceholder": "Escribe la cifra...",
+            "options": [
+                  "3.200",
+                  "3.300",
+                  "3.400",
+                  "3.100"
+            ],
+            "correctAnswer": "3.300",
+            "hint": "Resta 7.500 - 4.200 para hallar el número faltante.",
+            "explanation": "¡Genial! 4.200 + 3.300 = 7.500."
+      },
+      {
+            "id": "q1_4g_7",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Resuelve el problema de la biblioteca escolar.",
+            "prompt": "En una biblioteca hay 2.450 libros infantiles y 3.820 de ciencias. ¿Cuántos libros hay en total?",
+            "visual": "📖 2.450 + 3.820 = ?",
+            "options": [
+                  "6.170",
+                  "6.270",
+                  "6.370",
+                  "6.070"
+            ],
+            "correctAnswer": "6.270",
+            "hint": "Suma 2.450 + 3.820 = 6.270.",
+            "explanation": "¡Excelente! En total hay 6.270 libros."
+      },
+      {
+            "id": "q1_4g_8",
+            "type": "math",
+            "interactionType": "drag_drop",
+            "ariTip": "Coloca la ficha con la suma correcta de cuatro cifras.",
+            "prompt": "6.350 + 2.430 = ___",
+            "visual": "6.350 + 2.430 = [ ___ ]",
+            "options": [
+                  "8.680",
+                  "8.780",
+                  "8.880",
+                  "8.580"
+            ],
+            "correctAnswer": "8.780",
+            "hint": "Suma 6.000+2.000=8.000, 300+400=700 y 50+30=80.",
+            "explanation": "¡Muy bien! 6.350 + 2.430 = 8.780."
+      },
+      {
+            "id": "q1_4g_9",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Identifica la propiedad fundamental de la adición.",
+            "prompt": "¿Qué propiedad de la suma indica que 2.500 + 1.800 = 1.800 + 2.500?",
+            "visual": "2.500 + 1.800 = 1.800 + 2.500",
+            "options": [
+                  "Propiedad conmutativa",
+                  "Propiedad asociativa",
+                  "Propiedad distributiva",
+                  "Elemento neutro"
+            ],
+            "correctAnswer": "Propiedad conmutativa",
+            "hint": "El orden de los sumandos no altera la suma total.",
+            "explanation": "¡Exacto! La propiedad conmutativa establece que el orden de los sumandos no cambia el resultado."
+      },
+      {
+            "id": "q1_4g_10",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Suma con reagrupación en las decenas.",
+            "prompt": "5.640 + 3.190 = ?",
+            "visual": "5.640 + 3.190 = ?",
+            "options": [
+                  "8.730",
+                  "8.830",
+                  "8.930",
+                  "8.630"
+            ],
+            "correctAnswer": "8.830",
+            "hint": "40 + 90 = 130 (llevas 1 centena), 6 + 1 + 1 = 8 y 5 + 3 = 8.",
+            "explanation": "¡Fantástico! 5.640 + 3.190 = 8.830."
       }
     ]
   },
@@ -456,6 +628,92 @@ export const LEVELS_DATA = [
         correctAnswer: '353',
         hint: '8-5=3, 6-1=5 y 7-4=3.',
         explanation: '¡Increíble! 768 - 415 = 353.'
+      },
+{
+            "id": "q2_6",
+            "type": "math",
+            "interactionType": "fill_blank",
+            "ariTip": "Completa la resta escribiendo el sustraendo que falta.",
+            "prompt": "300 - ___ = 140",
+            "visual": "300 - [ ? ] = 140",
+            "inputPlaceholder": "Escribe el número...",
+            "options": [
+                  "150",
+                  "160",
+                  "170",
+                  "140"
+            ],
+            "correctAnswer": "160",
+            "hint": "Calcula 300 - 140 = 160.",
+            "explanation": "¡Correcto! 300 - 160 = 140."
+      },
+      {
+            "id": "q2_7",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Resta las cantidades del huerto escolar.",
+            "prompt": "En un árbol había 180 manzanas y los recolectores bajaron 65. ¿Cuántas manzanas quedaron?",
+            "visual": "🍎 180 - 65 = ?",
+            "options": [
+                  "105",
+                  "115",
+                  "125",
+                  "135"
+            ],
+            "correctAnswer": "115",
+            "hint": "180 - 60 = 120, menos 5 = 115.",
+            "explanation": "¡Muy bien! Quedaron 115 manzanas en el árbol."
+      },
+      {
+            "id": "q2_8",
+            "type": "math",
+            "interactionType": "drag_drop",
+            "ariTip": "Arrastra la ficha con la diferencia correcta.",
+            "prompt": "450 - 120 = ___",
+            "visual": "450 - 120 = [ ___ ]",
+            "options": [
+                  "320",
+                  "330",
+                  "340",
+                  "310"
+            ],
+            "correctAnswer": "330",
+            "hint": "Resta centenas (4-1=3) y decenas (5-2=3).",
+            "explanation": "¡Excelente! 450 - 120 = 330."
+      },
+      {
+            "id": "q2_9",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Resta con reagrupación en las decenas.",
+            "prompt": "520 - 250 = ?",
+            "visual": "520 - 250 = ?",
+            "options": [
+                  "260",
+                  "270",
+                  "280",
+                  "250"
+            ],
+            "correctAnswer": "270",
+            "hint": "52 decenas menos 25 decenas = 27 decenas (270).",
+            "explanation": "¡Genial! 520 - 250 = 270."
+      },
+      {
+            "id": "q2_10",
+            "type": "math",
+            "interactionType": "drag_drop",
+            "ariTip": "Resuelve la resta de tres cifras.",
+            "prompt": "385 - 142 = ___",
+            "visual": "385 - 142 = [ ___ ]",
+            "options": [
+                  "233",
+                  "243",
+                  "253",
+                  "223"
+            ],
+            "correctAnswer": "243",
+            "hint": "5-2=3, 8-4=4 y 3-1=2.",
+            "explanation": "¡Perfecto! 385 - 142 = 243."
       }
     ],
     questionsGrade4: [
@@ -519,6 +777,92 @@ export const LEVELS_DATA = [
         correctAnswer: '350',
         hint: '800 + 350 = 1.150 entradas vendidas. Ahora calcula 1.500 - 1.150.',
         explanation: '¡Excelente! Quedan 350 asientos disponibles.'
+      },
+{
+            "id": "q2_4g_6",
+            "type": "math",
+            "interactionType": "fill_blank",
+            "ariTip": "Halla la cantidad que se restó de ocho mil.",
+            "prompt": "8.000 - ___ = 4.350",
+            "visual": "8.000 - [ ? ] = 4.350",
+            "inputPlaceholder": "Escribe el número...",
+            "options": [
+                  "3.550",
+                  "3.650",
+                  "3.750",
+                  "3.450"
+            ],
+            "correctAnswer": "3.650",
+            "hint": "8.000 - 4.350 = 3.650.",
+            "explanation": "¡Exacto! 8.000 - 3.650 = 4.350."
+      },
+      {
+            "id": "q2_4g_7",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Calcula la carga restante del camión.",
+            "prompt": "Un camión transportaba 6.400 kg de frutas y descargó 2.850 kg en el mercado. ¿Cuántos kilogramos le quedan?",
+            "visual": "🚛 6.400 kg - 2.850 kg = ?",
+            "options": [
+                  "3.450 kg",
+                  "3.550 kg",
+                  "3.650 kg",
+                  "3.350 kg"
+            ],
+            "correctAnswer": "3.550 kg",
+            "hint": "6.400 - 2.850 = 3.550.",
+            "explanation": "¡Muy bien! Le quedan 3.550 kg de fruta."
+      },
+      {
+            "id": "q2_4g_8",
+            "type": "math",
+            "interactionType": "drag_drop",
+            "ariTip": "Resta cuatro cifras desagrupando en las decenas.",
+            "prompt": "7.520 - 3.190 = ___",
+            "visual": "7.520 - 3.190 = [ ___ ]",
+            "options": [
+                  "4.230",
+                  "4.330",
+                  "4.430",
+                  "4.130"
+            ],
+            "correctAnswer": "4.330",
+            "hint": "12 decenas - 9 decenas = 3 decenas. 4 centenas - 1 centena = 3. 7 mil - 3 mil = 4 mil.",
+            "explanation": "¡Brillante! 7.520 - 3.190 = 4.330."
+      },
+      {
+            "id": "q2_4g_9",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Comprueba una sustracción mediante su operación inversa.",
+            "prompt": "¿Cómo se comprueba que 5.400 - 2.150 = 3.250 es correcto?",
+            "visual": "5.400 - 2.150 = 3.250",
+            "options": [
+                  "Sumando 3.250 + 2.150 = 5.400",
+                  "Restando 3.250 - 2.150 = 1.100",
+                  "Multiplicando 3.250 x 2",
+                  "Dividiendo 5.400 entre 2"
+            ],
+            "correctAnswer": "Sumando 3.250 + 2.150 = 5.400",
+            "hint": "Diferencia + Sustraendo = Minuendo.",
+            "explanation": "¡Excelente! Sumando la diferencia con el sustraendo se comprueba que la resta es correcta."
+      },
+      {
+            "id": "q2_4g_10",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Resta cifras con reagrupación en centenas y millares.",
+            "prompt": "9.600 - 4.750 = ?",
+            "visual": "9.600 - 4.750 = ?",
+            "options": [
+                  "4.750",
+                  "4.850",
+                  "4.950",
+                  "4.650"
+            ],
+            "correctAnswer": "4.850",
+            "hint": "9.600 - 4.750 = 4.850.",
+            "explanation": "¡Fantástico! 9.600 - 4.750 = 4.850."
       }
     ]
   },
@@ -624,6 +968,92 @@ export const LEVELS_DATA = [
         correctAnswer: '75',
         hint: '25 + 25 son 50, más 25 son 75.',
         explanation: '¡Fantástico! 25 × 3 = 75.'
+      },
+{
+            "id": "q3_6",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Calcula con la tabla del 6 y del 7.",
+            "prompt": "6 x 7 = ?",
+            "visual": "6 x 7 = ?",
+            "options": [
+                  "36",
+                  "42",
+                  "48",
+                  "40"
+            ],
+            "correctAnswer": "42",
+            "hint": "6 veces 7 es igual a 42.",
+            "explanation": "¡Correcto! 6 x 7 = 42."
+      },
+      {
+            "id": "q3_7",
+            "type": "math",
+            "interactionType": "fill_blank",
+            "ariTip": "Encuentra el factor faltante en la tabla del 8.",
+            "prompt": "8 x ___ = 32",
+            "visual": "8 x [ ? ] = 32",
+            "inputPlaceholder": "Escribe el factor...",
+            "options": [
+                  "3",
+                  "4",
+                  "5",
+                  "6"
+            ],
+            "correctAnswer": "4",
+            "hint": "Divide 32 entre 8 = 4.",
+            "explanation": "¡Muy bien! 8 x 4 = 32."
+      },
+      {
+            "id": "q3_8",
+            "type": "math",
+            "interactionType": "drag_drop",
+            "ariTip": "Coloca el producto en la tabla del 9.",
+            "prompt": "9 x 4 = ___",
+            "visual": "9 x 4 = [ ___ ]",
+            "options": [
+                  "32",
+                  "36",
+                  "40",
+                  "45"
+            ],
+            "correctAnswer": "36",
+            "hint": "9 x 4 = 36.",
+            "explanation": "¡Excelente! 9 x 4 = 36."
+      },
+      {
+            "id": "q3_9",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Multiplica la cantidad de corrales por las aves.",
+            "prompt": "En una granja hay 5 corrales con 8 gallinas en cada uno. ¿Cuántas gallinas hay en total?",
+            "visual": "🐔 5 corrales x 8 gallinas = ?",
+            "options": [
+                  "35 gallinas",
+                  "40 gallinas",
+                  "45 gallinas",
+                  "48 gallinas"
+            ],
+            "correctAnswer": "40 gallinas",
+            "hint": "5 x 8 = 40.",
+            "explanation": "¡Genial! 5 x 8 = 40 gallinas."
+      },
+      {
+            "id": "q3_10",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Calcula el cuadrado del número 7.",
+            "prompt": "7 x 7 = ?",
+            "visual": "7 x 7 = ?",
+            "options": [
+                  "42",
+                  "49",
+                  "56",
+                  "48"
+            ],
+            "correctAnswer": "49",
+            "hint": "7 veces 7 es igual a 49.",
+            "explanation": "¡Perfecto! 7 x 7 = 49."
       }
     ],
     questionsGrade4: [
@@ -687,6 +1117,92 @@ export const LEVELS_DATA = [
         correctAnswer: '200',
         hint: '4 × 25 = 100, así que 8 × 25 es el doble de 100.',
         explanation: '¡Brillante! 8 × 25 = 200 pupitres.'
+      },
+{
+            "id": "q3_4g_6",
+            "type": "math",
+            "interactionType": "fill_blank",
+            "ariTip": "Multiplica por una decena completa.",
+            "prompt": "45 x 20 = ___",
+            "visual": "45 x 20 = [ ? ]",
+            "inputPlaceholder": "Escribe el producto...",
+            "options": [
+                  "800",
+                  "900",
+                  "950",
+                  "850"
+            ],
+            "correctAnswer": "900",
+            "hint": "45 x 2 = 90, agrega el 0 al final = 900.",
+            "explanation": "¡Exacto! 45 x 20 = 900."
+      },
+      {
+            "id": "q3_4g_7",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Multiplica dos cifras por dos cifras.",
+            "prompt": "Una caja contiene 25 paquetes con 16 marcadores cada uno. ¿Cuántos marcadores hay en total?",
+            "visual": "📦 25 paquetes x 16 marcadores = ?",
+            "options": [
+                  "350 marcadores",
+                  "400 marcadores",
+                  "420 marcadores",
+                  "450 marcadores"
+            ],
+            "correctAnswer": "400 marcadores",
+            "hint": "25 x 16 = 400.",
+            "explanation": "¡Muy bien! Hay 400 marcadores en total."
+      },
+      {
+            "id": "q3_4g_8",
+            "type": "math",
+            "interactionType": "drag_drop",
+            "ariTip": "Descompón 18 x 12 para hallar el producto.",
+            "prompt": "18 x 12 = ___",
+            "visual": "18 x 12 = [ ___ ]",
+            "options": [
+                  "206",
+                  "216",
+                  "226",
+                  "196"
+            ],
+            "correctAnswer": "216",
+            "hint": "18 x 10 = 180, 18 x 2 = 36. 180 + 36 = 216.",
+            "explanation": "¡Brillante! 18 x 12 = 216."
+      },
+      {
+            "id": "q3_4g_9",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Aplica la propiedad distributiva de la multiplicación.",
+            "prompt": "Aplica la propiedad distributiva: 14 x (10 + 2) = ?",
+            "visual": "14 x (10 + 2) = (14 x 10) + (14 x 2)",
+            "options": [
+                  "140 + 28 = 168",
+                  "140 + 2 = 142",
+                  "14 + 20 = 34",
+                  "140 x 2 = 280"
+            ],
+            "correctAnswer": "140 + 28 = 168",
+            "hint": "Multiplica 14 x 10 y luego 14 x 2, después suma los resultados.",
+            "explanation": "¡Excelente! 14 x 10 = 140 y 14 x 2 = 28; 140 + 28 = 168."
+      },
+      {
+            "id": "q3_4g_10",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Multiplica centenas por un solo dígito.",
+            "prompt": "125 x 8 = ?",
+            "visual": "125 x 8 = ?",
+            "options": [
+                  "900",
+                  "1.000",
+                  "1.100",
+                  "950"
+            ],
+            "correctAnswer": "1.000",
+            "hint": "125 x 4 = 500, luego el doble de 500 es 1.000.",
+            "explanation": "¡Fantástico! 125 x 8 = 1.000."
       }
     ]
   },
@@ -791,6 +1307,92 @@ export const LEVELS_DATA = [
         correctAnswer: '9',
         hint: 'Recuerda que 8 × 9 = 72.',
         explanation: '¡Fantástico! 72 ÷ 8 = 9.'
+      },
+{
+            "id": "q4m_6",
+            "type": "math",
+            "interactionType": "fill_blank",
+            "ariTip": "Divide en partes iguales.",
+            "prompt": "36 ÷ 4 = ___",
+            "visual": "36 ÷ 4 = [ ? ]",
+            "inputPlaceholder": "Escribe el cociente...",
+            "options": [
+                  "7",
+                  "8",
+                  "9",
+                  "6"
+            ],
+            "correctAnswer": "9",
+            "hint": "¿Qué número multiplicado por 4 da 36? 4 x 9 = 36.",
+            "explanation": "¡Muy bien! 36 ÷ 4 = 9."
+      },
+      {
+            "id": "q4m_7",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Reparto equitativo entre estudiantes.",
+            "prompt": "Un profesor reparte 45 fichas entre 9 estudiantes en partes iguales. ¿Cuántas fichas recibe cada uno?",
+            "visual": "🎲 45 fichas ÷ 9 niños = ?",
+            "options": [
+                  "4",
+                  "5",
+                  "6",
+                  "7"
+            ],
+            "correctAnswer": "5",
+            "hint": "45 ÷ 9 = 5.",
+            "explanation": "¡Correcto! Cada estudiante recibe 5 fichas."
+      },
+      {
+            "id": "q4m_8",
+            "type": "math",
+            "interactionType": "drag_drop",
+            "ariTip": "Coloca el cociente de la división.",
+            "prompt": "48 ÷ 6 = ___",
+            "visual": "48 ÷ 6 = [ ___ ]",
+            "options": [
+                  "6",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "correctAnswer": "8",
+            "hint": "6 x 8 = 48.",
+            "explanation": "¡Excelente! 48 ÷ 6 = 8."
+      },
+      {
+            "id": "q4m_9",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Divide usando la tabla del 7.",
+            "prompt": "63 ÷ 7 = ?",
+            "visual": "63 ÷ 7 = ?",
+            "options": [
+                  "7",
+                  "8",
+                  "9",
+                  "10"
+            ],
+            "correctAnswer": "9",
+            "hint": "7 x 9 = 63.",
+            "explanation": "¡Genial! 63 ÷ 7 = 9."
+      },
+      {
+            "id": "q4m_10",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Reparte 32 entre 8.",
+            "prompt": "32 ÷ 8 = ?",
+            "visual": "32 ÷ 8 = ?",
+            "options": [
+                  "3",
+                  "4",
+                  "5",
+                  "6"
+            ],
+            "correctAnswer": "4",
+            "hint": "8 x 4 = 32.",
+            "explanation": "¡Perfecto! 32 ÷ 8 = 4."
       }
     ],
     questionsGrade4: [
@@ -854,6 +1456,92 @@ export const LEVELS_DATA = [
         correctAnswer: '45',
         hint: 'Multiplica divisor por cociente (6 × 7 = 42) y suma el residuo (+ 3).',
         explanation: '¡Brillante! (6 × 7) + 3 = 42 + 3 = 45.'
+      },
+{
+            "id": "q4m_4g_6",
+            "type": "math",
+            "interactionType": "fill_blank",
+            "ariTip": "Divide tres cifras entre una cifra.",
+            "prompt": "325 ÷ 5 = ___",
+            "visual": "325 ÷ 5 = [ ? ]",
+            "inputPlaceholder": "Escribe el resultado...",
+            "options": [
+                  "55",
+                  "65",
+                  "75",
+                  "60"
+            ],
+            "correctAnswer": "65",
+            "hint": "300 ÷ 5 = 60, 25 ÷ 5 = 5. 60 + 5 = 65.",
+            "explanation": "¡Exacto! 325 ÷ 5 = 65."
+      },
+      {
+            "id": "q4m_4g_7",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Identifica el cociente y el residuo en la división inexacta.",
+            "prompt": "Si dividimos 87 entre 4, ¿cuál es el cociente y el residuo?",
+            "visual": "87 ÷ 4 ➔ Cociente: ? | Residuo: ?",
+            "options": [
+                  "Cociente 21 y residuo 3",
+                  "Cociente 22 y residuo 1",
+                  "Cociente 20 y residuo 7",
+                  "Cociente 21 y residuo 1"
+            ],
+            "correctAnswer": "Cociente 21 y residuo 3",
+            "hint": "4 x 21 = 84, para llegar a 87 sobran 3.",
+            "explanation": "¡Muy bien! 4 x 21 + 3 = 87."
+      },
+      {
+            "id": "q4m_4g_8",
+            "type": "math",
+            "interactionType": "drag_drop",
+            "ariTip": "Divide entre dos cifras.",
+            "prompt": "450 ÷ 15 = ___",
+            "visual": "450 ÷ 15 = [ ___ ]",
+            "options": [
+                  "25",
+                  "30",
+                  "35",
+                  "20"
+            ],
+            "correctAnswer": "30",
+            "hint": "15 x 3 = 45, por tanto 15 x 30 = 450.",
+            "explanation": "¡Brillante! 450 ÷ 15 = 30."
+      },
+      {
+            "id": "q4m_4g_9",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Calcula cuántos paquetes o cajas se completan.",
+            "prompt": "Se desean empacar 720 galletas en cajas de 12 unidades. ¿Cuántas cajas se completan?",
+            "visual": "🍪 720 galletas ÷ 12 = ?",
+            "options": [
+                  "50 cajas",
+                  "60 cajas",
+                  "70 cajas",
+                  "55 cajas"
+            ],
+            "correctAnswer": "60 cajas",
+            "hint": "72 ÷ 12 = 6, agregando el cero obtenemos 60 cajas.",
+            "explanation": "¡Excelente! Se completan 60 cajas."
+      },
+      {
+            "id": "q4m_4g_10",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Comprueba una división con residuo.",
+            "prompt": "¿Cuál es la fórmula para comprobar una división?",
+            "visual": "D = (d x c) + r",
+            "options": [
+                  "Dividendo = (Divisor x Cociente) + Residuo",
+                  "Dividendo = Divisor + Cociente + Residuo",
+                  "Dividendo = Divisor x Residuo",
+                  "Dividendo = Cociente ÷ Divisor"
+            ],
+            "correctAnswer": "Dividendo = (Divisor x Cociente) + Residuo",
+            "hint": "Multiplica el divisor por el cociente y suma el residuo.",
+            "explanation": "¡Fantástico! Al multiplicar el divisor por el cociente y sumar el residuo obtenemos el dividendo."
       }
     ]
   },
@@ -974,6 +1662,92 @@ export const LEVELS_DATA = [
         correctAnswer: 'Reunir: Suma (+) | Quitar: Resta (-) | Repartir: División (÷)',
         hint: 'Reunir es sumar (+), quitar es restar (-) y repartir equitativamente es dividir (÷).',
         explanation: '¡Felicidades! Identificaste perfectamente cuándo usar cada operación.'
+      },
+{
+            "id": "q5m_6",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Resuelve el problema de la compra escolar.",
+            "prompt": "Mateo compra 3 libretas a $80 cada una y paga con un billete de $500. ¿Cuánto le sobra?",
+            "visual": "💵 $500 - (3 x $80) = ?",
+            "options": [
+                  "$240",
+                  "$260",
+                  "$280",
+                  "$250"
+            ],
+            "correctAnswer": "$260",
+            "hint": "3 x 80 = 240. 500 - 240 = 260.",
+            "explanation": "¡Correcto! 3 x $80 = $240; $500 - $240 = $260."
+      },
+      {
+            "id": "q5m_7",
+            "type": "math",
+            "interactionType": "fill_blank",
+            "ariTip": "Calcula los metros totales recorridos.",
+            "prompt": "En una carrera se recorren 4 vueltas de 150 metros cada una. ¿Cuántos metros se recorren en total?",
+            "visual": "🏃 4 vueltas x 150 m = [ ? ]",
+            "inputPlaceholder": "Escribe los metros...",
+            "options": [
+                  "500 metros",
+                  "600 metros",
+                  "650 metros",
+                  "550 metros"
+            ],
+            "correctAnswer": "600 metros",
+            "hint": "4 x 150 = 600.",
+            "explanation": "¡Muy bien! 4 x 150 = 600 metros."
+      },
+      {
+            "id": "q5m_8",
+            "type": "math",
+            "interactionType": "drag_drop",
+            "ariTip": "Suma la producción y resta las ventas.",
+            "prompt": "Un panadero horneó 120 panes en la mañana y 80 en la tarde. Si vendió 150, ¿cuántos le quedan? ___",
+            "visual": "🥖 (120 + 80) - 150 = [ ___ ]",
+            "options": [
+                  "40",
+                  "50",
+                  "60",
+                  "70"
+            ],
+            "correctAnswer": "50",
+            "hint": "120 + 80 = 200 panes. 200 - 150 = 50.",
+            "explanation": "¡Excelente! Le quedan 50 panes."
+      },
+      {
+            "id": "q5m_9",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Calcula cuántas sillas faltan para todos los niños.",
+            "prompt": "En un salón hay 6 mesas con 4 sillas cada una. Si llegan 30 niños, ¿cuántas sillas faltan?",
+            "visual": "🪑 30 niños - (6 x 4 sillas) = ?",
+            "options": [
+                  "4 sillas",
+                  "6 sillas",
+                  "8 sillas",
+                  "5 sillas"
+            ],
+            "correctAnswer": "6 sillas",
+            "hint": "6 x 4 = 24 sillas. Faltan 30 - 24 = 6 sillas.",
+            "explanation": "¡Genial! 6 x 4 = 24; faltan 30 - 24 = 6 sillas."
+      },
+      {
+            "id": "q5m_10",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Ahorro semanal y gasto.",
+            "prompt": "Lucía ahorró $50 cada semana durante 6 semanas. Si gastó $120 en un libro, ¿cuánto dinero le queda?",
+            "visual": "💰 (6 x $50) - $120 = ?",
+            "options": [
+                  "$160",
+                  "$180",
+                  "$200",
+                  "$150"
+            ],
+            "correctAnswer": "$180",
+            "hint": "6 x 50 = 300. 300 - 120 = 180.",
+            "explanation": "¡Perfecto! Ahorró $300 y le quedaron $180."
       }
     ],
     questionsGrade4: [
@@ -1053,6 +1827,92 @@ export const LEVELS_DATA = [
         correctAnswer: '(12×3)+4 = 40 | (50-10)÷5 = 8 | 100-(8×5) = 60',
         hint: '36 + 4 = 40; 40 ÷ 5 = 8; y 100 - 40 = 60.',
         explanation: '¡Felicidades! Resolviste las tres expresiones combinadas de 4° grado.'
+      },
+{
+            "id": "q5m_4g_6",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Presupuesto escolar de dos eventos.",
+            "prompt": "Una escuela recaudó $4.500 en una rifa y $3.800 en una kermesse. Si gastaron $5.200 en material deportivo, ¿cuánto dinero sobró?",
+            "visual": "🏫 ($4.500 + $3.800) - $5.200 = ?",
+            "options": [
+                  "$2.900",
+                  "$3.100",
+                  "$3.300",
+                  "$3.000"
+            ],
+            "correctAnswer": "$3.100",
+            "hint": "4.500 + 3.800 = 8.300. 8.300 - 5.200 = 3.100.",
+            "explanation": "¡Exacto! Recaudaron $8.300 y sobraron $3.100."
+      },
+      {
+            "id": "q5m_4g_7",
+            "type": "math",
+            "interactionType": "fill_blank",
+            "ariTip": "Calcula el perímetro de la figura rectangular.",
+            "prompt": "Un terreno rectangular mide 25 metros de largo y 12 metros de ancho. ¿Cuál es su perímetro?",
+            "visual": "📐 Perímetro = 2 x (25 m + 12 m) = [ ? ]",
+            "inputPlaceholder": "Escribe el perímetro...",
+            "options": [
+                  "64 metros",
+                  "74 metros",
+                  "84 metros",
+                  "70 metros"
+            ],
+            "correctAnswer": "74 metros",
+            "hint": "Perímetro = 2 x (25 + 12) = 2 x 37 = 74 metros.",
+            "explanation": "¡Muy bien! El perímetro es de 74 metros."
+      },
+      {
+            "id": "q5m_4g_8",
+            "type": "math",
+            "interactionType": "drag_drop",
+            "ariTip": "Multiplica los viajes diarios por los días de la semana.",
+            "prompt": "Un microbús hace 6 viajes al día transportando 35 pasajeros en cada viaje. ¿Cuántos pasajeros transporta en 5 días? ___",
+            "visual": "🚌 6 viajes x 35 pasajeros x 5 días = [ ___ ]",
+            "options": [
+                  "950 pasajeros",
+                  "1.050 pasajeros",
+                  "1.150 pasajeros",
+                  "1.000 pasajeros"
+            ],
+            "correctAnswer": "1.050 pasajeros",
+            "hint": "6 x 35 = 210 pasajeros al día; 210 x 5 = 1.050.",
+            "explanation": "¡Brillante! Transporta 1.050 pasajeros en 5 días."
+      },
+      {
+            "id": "q5m_4g_9",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Calcula el costo combinado de los artículos.",
+            "prompt": "Se compran 15 calculadoras a $120 cada una y 8 mochilas a $250 cada una. ¿Cuál es el costo total?",
+            "visual": "🎒 (15 x $120) + (8 x $250) = ?",
+            "options": [
+                  "$3.600",
+                  "$3.800",
+                  "$4.000",
+                  "$3.500"
+            ],
+            "correctAnswer": "$3.800",
+            "hint": "Calculadoras: 15 x 120 = 1.800. Mochilas: 8 x 250 = 2.000. Total = 3.800.",
+            "explanation": "¡Excelente! 1.800 + 2.000 = $3.800."
+      },
+      {
+            "id": "q5m_4g_10",
+            "type": "math",
+            "interactionType": "multiple_choice",
+            "ariTip": "Halla el promedio de tres recorridos.",
+            "prompt": "Un ciclista recorre 140 km el primer día, 160 km el segundo y 180 km el tercero. ¿Cuál es el promedio diario?",
+            "visual": "🚴 (140 + 160 + 180) ÷ 3 = ?",
+            "options": [
+                  "150 km",
+                  "160 km",
+                  "170 km",
+                  "165 km"
+            ],
+            "correctAnswer": "160 km",
+            "hint": "Suma 140 + 160 + 180 = 480 km. 480 ÷ 3 = 160 km.",
+            "explanation": "¡Fantástico! 480 ÷ 3 = 160 km diarios."
       }
     ]
   },
@@ -1180,6 +2040,102 @@ export const LEVELS_DATA = [
         correctAnswer: 'Futuro',
         hint: 'La palabra «Mañana» nos indica algo que ocurrirá después.',
         explanation: '¡Perfecto! «Viajaremos» está en tiempo futuro.'
+      },
+{
+            "id": "q6_6",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "La melodía en el aula",
+            "readingText": "En el salón de música, todos participan con alegría.",
+            "illustration": "book",
+            "prompt": "En la oración «Los niños cantan una hermosa melodía», ¿cuál palabra es el verbo?",
+            "visual": "🎶 Los niños [ cantan ] una melodía.",
+            "options": [
+                  "niños",
+                  "cantan",
+                  "hermosa",
+                  "melodía"
+            ],
+            "correctAnswer": "cantan",
+            "hint": "¿Qué acción realizan los niños?",
+            "explanation": "¡Exacto! «cantan» es el verbo porque expresa la acción."
+      },
+      {
+            "id": "q6_7",
+            "type": "reading",
+            "interactionType": "fill_blank",
+            "readingTitle": "El tiempo pasado",
+            "readingText": "Las acciones que ocurrieron ayer se expresan en tiempo pasado.",
+            "illustration": "book",
+            "prompt": "¿Cuál es el verbo en tiempo pasado de la acción comer para \"él\"?",
+            "visual": "🍽️ Ayer él [ ? ] una manzana.",
+            "inputPlaceholder": "Escribe el verbo...",
+            "options": [
+                  "come",
+                  "comió",
+                  "comerá",
+                  "comiendo"
+            ],
+            "correctAnswer": "comió",
+            "hint": "Acción que ya ocurrió ayer: él comió.",
+            "explanation": "¡Muy bien! «comió» es el verbo en tiempo pasado."
+      },
+      {
+            "id": "q6_8",
+            "type": "reading",
+            "interactionType": "drag_drop",
+            "readingTitle": "El tiempo futuro",
+            "readingText": "Cuando una acción ocurrirá mañana o el fin de semana, usamos el futuro.",
+            "illustration": "nature",
+            "prompt": "Completa con el verbo en futuro: «Nosotros ______ en la piscina el próximo sábado.»",
+            "visual": "🏊 Nosotros [ ______ ] en la piscina.",
+            "options": [
+                  "nadamos",
+                  "nadaremos",
+                  "nadaron",
+                  "nadando"
+            ],
+            "correctAnswer": "nadaremos",
+            "hint": "Acción futura para nosotros: nadaremos.",
+            "explanation": "¡Excelente! «nadaremos» expresa una acción en el futuro."
+      },
+      {
+            "id": "q6_9",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Verbos vs Objetos",
+            "readingText": "Los verbos son acciones, mientras que los sustantivos son cosas, animales o lugares.",
+            "illustration": "book",
+            "prompt": "¿Cuál de las siguientes palabras NO es un verbo?",
+            "visual": "🔍 Identifica el sustantivo",
+            "options": [
+                  "Correr",
+                  "Bailar",
+                  "Ventana",
+                  "Escribir"
+            ],
+            "correctAnswer": "Ventana",
+            "hint": "«Ventana» es un objeto o cosa, no una acción.",
+            "explanation": "¡Genial! «Ventana» es un sustantivo, no un verbo."
+      },
+      {
+            "id": "q6_10",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Reconociendo el tiempo verbal",
+            "readingText": "El tiempo verbal nos dice si la acción es en pasado, presente o futuro.",
+            "illustration": "nature",
+            "prompt": "En la oración «Ayer dibujé un arcoíris», el verbo «dibujé» está en tiempo:",
+            "visual": "🌈 Ayer [ dibujé ] un arcoíris.",
+            "options": [
+                  "Presente",
+                  "Pasado",
+                  "Futuro",
+                  "Condicional"
+            ],
+            "correctAnswer": "Pasado",
+            "hint": "«Ayer» nos indica que la acción ya finalizó.",
+            "explanation": "¡Perfecto! «dibujé» indica una acción pasada."
       }
     ],
     questionsGrade4: [
@@ -1267,6 +2223,102 @@ export const LEVELS_DATA = [
         correctAnswer: 'Verdadero',
         hint: 'Se refiere a varios astronautas (plural) y a una acción que ya ocurrió (pasado).',
         explanation: '¡Brillante! «Exploraron» está en tercera persona del plural y en pasado.'
+      },
+{
+            "id": "q6_4g_6",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Tiempos compuestos",
+            "readingText": "Los tiempos compuestos se forman con el verbo auxiliar haber y el participio.",
+            "illustration": "book",
+            "prompt": "En la oración «Los científicos han descubierto un nuevo mineral», ¿cuál es el verbo compuesto?",
+            "visual": "🔬 Los científicos [ han descubierto ] un mineral.",
+            "options": [
+                  "científicos",
+                  "han descubierto",
+                  "nuevo",
+                  "mineral"
+            ],
+            "correctAnswer": "han descubierto",
+            "hint": "Está formado por el auxiliar «han» más el participio «descubierto».",
+            "explanation": "¡Exacto! «han descubierto» es un tiempo compuesto (pretérito perfecto compuesto)."
+      },
+      {
+            "id": "q6_4g_7",
+            "type": "reading",
+            "interactionType": "fill_blank",
+            "readingTitle": "Formas no personales: el gerundio",
+            "readingText": "El gerundio termina en -ando o -iendo y señala una acción en desarrollo.",
+            "illustration": "book",
+            "prompt": "El gerundio del verbo «escribir» es:",
+            "visual": "✍️ Verbo escribir en gerundio: [ ? ]",
+            "inputPlaceholder": "Escribe el gerundio...",
+            "options": [
+                  "escrito",
+                  "escribiendo",
+                  "escribir",
+                  "escribirá"
+            ],
+            "correctAnswer": "escribiendo",
+            "hint": "Los gerundios terminan en -ando o -iendo.",
+            "explanation": "¡Muy bien! «escribiendo» es el gerundio del verbo escribir."
+      },
+      {
+            "id": "q6_4g_8",
+            "type": "reading",
+            "interactionType": "drag_drop",
+            "readingTitle": "Formas no personales: el infinitivo",
+            "readingText": "El infinitivo es el nombre del verbo y termina en -ar, -er o -ir.",
+            "illustration": "book",
+            "prompt": "Completa con el verbo en infinitivo: «Nos gusta ______ en la biblioteca.»",
+            "visual": "📚 Nos gusta [ ______ ] en la biblioteca.",
+            "options": [
+                  "investigado",
+                  "investigando",
+                  "investigar",
+                  "investigó"
+            ],
+            "correctAnswer": "investigar",
+            "hint": "El infinitivo termina en -ar, -er o -ir.",
+            "explanation": "¡Brillante! «investigar» es la forma infinitiva del verbo."
+      },
+      {
+            "id": "q6_4g_9",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "El futuro compuesto",
+            "readingText": "El futuro compuesto indica una acción que habrá finalizado antes de un momento futuro.",
+            "illustration": "solar",
+            "prompt": "En «Nosotros habremos llegado antes del mediodía», ¿en qué tiempo compuesto está el verbo?",
+            "visual": "⏰ Nosotros [ habremos llegado ]",
+            "options": [
+                  "Pretérito perfecto",
+                  "Futuro compuesto",
+                  "Pretérito pluscuamperfecto",
+                  "Presente"
+            ],
+            "correctAnswer": "Futuro compuesto",
+            "hint": "El auxiliar «habremos» expresa futuro compuesto.",
+            "explanation": "¡Excelente! «habremos llegado» está en futuro compuesto del indicativo."
+      },
+      {
+            "id": "q6_4g_10",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Participios irregulares",
+            "readingText": "Algunos verbos tienen participios irregulares que no terminan en -ado ni en -ido.",
+            "illustration": "book",
+            "prompt": "¿Cuál es el participio del verbo «romper»?",
+            "visual": "💔 Participio de romper: ?",
+            "options": [
+                  "rompido",
+                  "roto",
+                  "rompiendo",
+                  "romper"
+            ],
+            "correctAnswer": "roto",
+            "hint": "Decimos «el jarrón está roto», no «rompido».",
+            "explanation": "¡Fantástico! «roto» es el participio irregular de romper."
       }
     ]
   },
@@ -1391,6 +2443,102 @@ export const LEVELS_DATA = [
         correctAnswer: 'Verdadero',
         hint: '¿Quién explica las sumas con alegría? Mi maestra.',
         explanation: '¡Así es! «Mi maestra» es quien realiza la acción, por lo tanto es el sujeto.'
+      },
+{
+            "id": "q7_6",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "La clase de ciencias",
+            "readingText": "En el colegio, cada integrante tiene una tarea especial.",
+            "illustration": "book",
+            "prompt": "En la oración «La maestra explica la lección con paciencia», ¿quién es el sujeto?",
+            "visual": "👩‍🏫 [ La maestra ] explica la lección.",
+            "options": [
+                  "La maestra",
+                  "explica",
+                  "la lección",
+                  "con paciencia"
+            ],
+            "correctAnswer": "La maestra",
+            "hint": "Pregunta: ¿Quién explica la lección?",
+            "explanation": "¡Exacto! «La maestra» es el sujeto que realiza la acción."
+      },
+      {
+            "id": "q7_7",
+            "type": "reading",
+            "interactionType": "fill_blank",
+            "readingTitle": "Núcleo del sujeto",
+            "readingText": "El núcleo del sujeto es el sustantivo más importante.",
+            "illustration": "nature",
+            "prompt": "En «El gato blanco duerme en el tejado», el núcleo del sujeto es:",
+            "visual": "🐱 El [ ? ] blanco",
+            "inputPlaceholder": "Escribe el núcleo...",
+            "options": [
+                  "El",
+                  "gato",
+                  "blanco",
+                  "duerme"
+            ],
+            "correctAnswer": "gato",
+            "hint": "El núcleo es la palabra central del sujeto (gato).",
+            "explanation": "¡Muy bien! «gato» es el núcleo del sujeto."
+      },
+      {
+            "id": "q7_8",
+            "type": "reading",
+            "interactionType": "drag_drop",
+            "readingTitle": "Concordancia en plural",
+            "readingText": "El sujeto y el verbo deben coincidir en número (singular o plural).",
+            "illustration": "nature",
+            "prompt": "Arrastra el sujeto que concuerda: «______ vuelan hacia el sur en invierno.»",
+            "visual": "🕊️ [ ______ ] vuelan hacia el sur.",
+            "options": [
+                  "El árbol",
+                  "Las golondrinas",
+                  "El viento",
+                  "La montaña"
+            ],
+            "correctAnswer": "Las golondrinas",
+            "hint": "Debe concordar en plural con «vuelan».",
+            "explanation": "¡Excelente! «Las golondrinas» concuerda en plural con «vuelan»."
+      },
+      {
+            "id": "q7_9",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Sujeto al final de la oración",
+            "readingText": "El sujeto puede aparecer al principio, en medio o al final de la oración.",
+            "illustration": "nature",
+            "prompt": "En la oración «Caminaron por el bosque los exploradores», ¿cuál es el sujeto?",
+            "visual": "🌲 Caminaron por el bosque [ los exploradores ].",
+            "options": [
+                  "Caminaron",
+                  "por el bosque",
+                  "los exploradores",
+                  "el bosque"
+            ],
+            "correctAnswer": "los exploradores",
+            "hint": "Pregunta: ¿Quiénes caminaron por el bosque?",
+            "explanation": "¡Genial! «los exploradores» es el sujeto, aunque esté al final."
+      },
+      {
+            "id": "q7_10",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Identifica el sujeto completo",
+            "readingText": "El sujeto incluye el núcleo y sus palabras acompañantes.",
+            "illustration": "trophy",
+            "prompt": "¿Cuál es el sujeto en «Mi hermano menor ganó una medalla de oro»?",
+            "visual": "🥇 [ Mi hermano menor ] ganó una medalla.",
+            "options": [
+                  "Mi hermano menor",
+                  "ganó",
+                  "una medalla",
+                  "de oro"
+            ],
+            "correctAnswer": "Mi hermano menor",
+            "hint": "¿Quién ganó la medalla de oro?",
+            "explanation": "¡Perfecto! «Mi hermano menor» es el sujeto completo."
       }
     ],
     questionsGrade4: [
@@ -1469,6 +2617,102 @@ export const LEVELS_DATA = [
         correctAnswer: 'Verdadero',
         hint: 'El sujeto expreso aparece escrito y el sujeto tácito se deduce de la terminación del verbo.',
         explanation: '¡Brillante! Se llama sujeto tácito (en este caso, «Nosotros»).'
+      },
+{
+            "id": "q7_4g_6",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "El sujeto tácito u omitido",
+            "readingText": "Cuando el sujeto no está escrito pero se deduce por la terminación del verbo, se llama sujeto tácito.",
+            "illustration": "nature",
+            "prompt": "En «Caminamos bajo la lluvia durante toda la tarde», el sujeto es:",
+            "visual": "🌧️ [ (Nosotros) ] Caminamos bajo la lluvia.",
+            "options": [
+                  "Sujeto tácito u omitido (Nosotros)",
+                  "La lluvia",
+                  "La tarde",
+                  "Sujeto compuesto"
+            ],
+            "correctAnswer": "Sujeto tácito u omitido (Nosotros)",
+            "hint": "El verbo «caminamos» nos indica la persona \"nosotros\".",
+            "explanation": "¡Exacto! El sujeto está tácito u omitido (Nosotros)."
+      },
+      {
+            "id": "q7_4g_7",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Modificador indirecto del sujeto",
+            "readingText": "El modificador indirecto se une al núcleo mediante una preposición (de, con, para).",
+            "illustration": "solar",
+            "prompt": "En «La brillante estrella del norte guía a los marineros», ¿cuál es el modificador indirecto?",
+            "visual": "⭐ La brillante estrella [ del norte ]",
+            "options": [
+                  "La",
+                  "brillante",
+                  "del norte",
+                  "marineros"
+            ],
+            "correctAnswer": "del norte",
+            "hint": "Lleva la preposición \"de\" (del = de + el).",
+            "explanation": "¡Muy bien! «del norte» es el modificador indirecto del sujeto."
+      },
+      {
+            "id": "q7_4g_8",
+            "type": "reading",
+            "interactionType": "drag_drop",
+            "readingTitle": "Sujetos compuestos",
+            "readingText": "Un sujeto compuesto tiene dos o más núcleos coordinados por una conjunción.",
+            "illustration": "book",
+            "prompt": "Identifica el sujeto compuesto: «______ prepararon una obra de teatro maravillosa.»",
+            "visual": "🎭 [ ______ ] prepararon una obra.",
+            "options": [
+                  "El profesor",
+                  "Mateo y Valentina",
+                  "La actriz principal",
+                  "El público"
+            ],
+            "correctAnswer": "Mateo y Valentina",
+            "hint": "Tiene dos núcleos: Mateo y Valentina.",
+            "explanation": "¡Brillante! «Mateo y Valentina» es un sujeto compuesto."
+      },
+      {
+            "id": "q7_4g_9",
+            "type": "reading",
+            "interactionType": "fill_blank",
+            "readingTitle": "Deducción del sujeto tácito",
+            "readingText": "La desinencia verbal revela el pronombre correspondiente.",
+            "illustration": "book",
+            "prompt": "En «Estudiaron con gran entusiasmo para el examen», el sujeto tácito es:",
+            "visual": "📖 [ ? ] Estudiaron con entusiasmo.",
+            "inputPlaceholder": "Escribe el pronombre...",
+            "options": [
+                  "Nosotros",
+                  "Tú",
+                  "Ellos o Ellas",
+                  "Yo"
+            ],
+            "correctAnswer": "Ellos o Ellas",
+            "hint": "La terminación -aron corresponde a ellos o ellas.",
+            "explanation": "¡Excelente! El sujeto tácito es «Ellos» o «Ellas»."
+      },
+      {
+            "id": "q7_4g_10",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "La aposición en el sujeto",
+            "readingText": "La aposición es una aclaración que nombra al núcleo de otra forma y va entre comas.",
+            "illustration": "nature",
+            "prompt": "En «París, la capital de Francia, atrae a miles de turistas», la frase entre comas es una:",
+            "visual": "🗼 París, [ la capital de Francia ], atrae...",
+            "options": [
+                  "Aposición",
+                  "Modificador directo",
+                  "Núcleo del sujeto",
+                  "Predicado"
+            ],
+            "correctAnswer": "Aposición",
+            "hint": "Explica quién es París y va entre comas.",
+            "explanation": "¡Fantástico! «la capital de Francia» es una aposición que aclara al núcleo París."
       }
     ]
   },
@@ -1593,6 +2837,102 @@ export const LEVELS_DATA = [
         correctAnswer: 'Verdadero',
         hint: '«Las abejas» es el sujeto y todo lo que hacen («fabrican miel en la colmena») es el predicado.',
         explanation: '¡Excelente! Es Verdadero: «fabrican miel en la colmena» es el predicado.'
+      },
+{
+            "id": "q8_6",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "El canto de las aves",
+            "readingText": "El predicado expresa lo que el sujeto hace o cómo está.",
+            "illustration": "nature",
+            "prompt": "En la oración «Los pájaros cantan al amanecer», ¿cuál es el predicado?",
+            "visual": "🐦 Los pájaros [ cantan al amanecer ].",
+            "options": [
+                  "Los pájaros",
+                  "cantan al amanecer",
+                  "al amanecer",
+                  "pájaros"
+            ],
+            "correctAnswer": "cantan al amanecer",
+            "hint": "Todo lo que se dice del sujeto a partir del verbo.",
+            "explanation": "¡Exacto! «cantan al amanecer» es el predicado."
+      },
+      {
+            "id": "q8_7",
+            "type": "reading",
+            "interactionType": "fill_blank",
+            "readingTitle": "Núcleo del predicado",
+            "readingText": "El núcleo del predicado es siempre un verbo conjugado.",
+            "illustration": "book",
+            "prompt": "En «El cartero entregó una carta urgente», el núcleo del predicado es:",
+            "visual": "✉️ El cartero [ ? ] una carta.",
+            "inputPlaceholder": "Escribe el verbo núcleo...",
+            "options": [
+                  "El cartero",
+                  "entregó",
+                  "carta",
+                  "urgente"
+            ],
+            "correctAnswer": "entregó",
+            "hint": "El núcleo del predicado es el verbo conjugado.",
+            "explanation": "¡Muy bien! «entregó» es el núcleo del predicado."
+      },
+      {
+            "id": "q8_8",
+            "type": "reading",
+            "interactionType": "drag_drop",
+            "readingTitle": "Completa con el predicado",
+            "readingText": "Un predicado completo contiene la acción y sus circunstancias.",
+            "illustration": "nature",
+            "prompt": "Completa con el predicado correcto: «El río caudaloso ______»",
+            "visual": "🌊 El río caudaloso [ ______ ]",
+            "options": [
+                  "es azul",
+                  "desemboca en el océano",
+                  "las aguas",
+                  "peces nadando"
+            ],
+            "correctAnswer": "desemboca en el océano",
+            "hint": "Contiene un verbo conjugado: desemboca.",
+            "explanation": "¡Excelente! «desemboca en el océano» completa la acción del río."
+      },
+      {
+            "id": "q8_9",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Reconociendo el predicado",
+            "readingText": "Separa la oración en quién lo hace (sujeto) y qué hace (predicado).",
+            "illustration": "book",
+            "prompt": "¿Cuál es el predicado en «Daniel horneó deliciosas galletas de avena»?",
+            "visual": "🍪 Daniel [ horneó deliciosas galletas de avena ].",
+            "options": [
+                  "Daniel",
+                  "horneó deliciosas galletas de avena",
+                  "deliciosas galletas",
+                  "galletas de avena"
+            ],
+            "correctAnswer": "horneó deliciosas galletas de avena",
+            "hint": "¿Qué hizo Daniel?",
+            "explanation": "¡Genial! «horneó deliciosas galletas de avena» es el predicado completo."
+      },
+      {
+            "id": "q8_10",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Verbo como corazón del predicado",
+            "readingText": "Sin verbo no hay predicado.",
+            "illustration": "solar",
+            "prompt": "En la oración «El sol ilumina todo el valle», el núcleo del predicado es:",
+            "visual": "☀️ El sol [ ilumina ] todo el valle.",
+            "options": [
+                  "sol",
+                  "ilumina",
+                  "todo",
+                  "valle"
+            ],
+            "correctAnswer": "ilumina",
+            "hint": "Busca el verbo conjugado.",
+            "explanation": "¡Perfecto! «ilumina» es el núcleo del predicado."
       }
     ],
     questionsGrade4: [
@@ -1681,6 +3021,102 @@ export const LEVELS_DATA = [
         correctAnswer: 'Verdadero',
         hint: 'Observa las dos acciones que realiza Ari: «lee» y «explica».',
         explanation: '¡Excelente! Es un predicado verbal compuesto porque tiene dos núcleos («lee» y «explica»).'
+      },
+{
+            "id": "q8_4g_6",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Objeto Directo (OD)",
+            "readingText": "El objeto directo recibe la acción directa del verbo transitivo.",
+            "illustration": "nature",
+            "prompt": "En «La arqueóloga halló un fósil antiguo en la cueva», ¿cuál es el Objeto Directo?",
+            "visual": "🦴 La arqueóloga halló [ un fósil antiguo ]",
+            "options": [
+                  "La arqueóloga",
+                  "un fósil antiguo",
+                  "en la cueva",
+                  "halló"
+            ],
+            "correctAnswer": "un fósil antiguo",
+            "hint": "Pregunta: ¿Qué halló la arqueóloga? Un fósil antiguo.",
+            "explanation": "¡Exacto! «un fósil antiguo» es el objeto directo (se puede sustituir por \"lo halló\")."
+      },
+      {
+            "id": "q8_4g_7",
+            "type": "reading",
+            "interactionType": "fill_blank",
+            "readingTitle": "Objeto Indirecto (OI)",
+            "readingText": "El objeto indirecto indica el destinatario o beneficiario de la acción.",
+            "illustration": "book",
+            "prompt": "En «El cartero entregó el paquete a la vecina», el Objeto Indirecto es:",
+            "visual": "📦 Entregó el paquete [ ? ]",
+            "inputPlaceholder": "Escribe a quién...",
+            "options": [
+                  "El cartero",
+                  "el paquete",
+                  "a la vecina",
+                  "entregó"
+            ],
+            "correctAnswer": "a la vecina",
+            "hint": "Pregunta: ¿A quién entregó el paquete?",
+            "explanation": "¡Muy bien! «a la vecina» es el objeto indirecto (se puede sustituir por \"le entregó\")."
+      },
+      {
+            "id": "q8_4g_8",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Predicado nominal y verbal",
+            "readingText": "Los verbos ser, estar y parecer forman predicados nominales con un atributo.",
+            "illustration": "solar",
+            "prompt": "¿Qué tipo de predicado tiene la oración «El cielo está despejado y azul»?",
+            "visual": "🌤️ El cielo [ está despejado y azul ]",
+            "options": [
+                  "Predicado nominal (con verbo copulativo ser o estar)",
+                  "Predicado verbal",
+                  "Predicado tácito",
+                  "Predicado adverbial"
+            ],
+            "correctAnswer": "Predicado nominal (con verbo copulativo ser o estar)",
+            "hint": "El verbo «está» es copulativo y une el sujeto con sus atributos.",
+            "explanation": "¡Brillante! Es un predicado nominal porque usa el verbo copulativo estar."
+      },
+      {
+            "id": "q8_4g_9",
+            "type": "reading",
+            "interactionType": "drag_drop",
+            "readingTitle": "Complemento circunstancial de lugar",
+            "readingText": "Responde a la pregunta ¿Dónde se realiza la acción?",
+            "illustration": "nature",
+            "prompt": "En «Los atletas entrenaron arduamente en el estadio», la frase «en el estadio» funciona como:",
+            "visual": "🏟️ entrenaron [ en el estadio ]",
+            "options": [
+                  "Complemento circunstancial de lugar",
+                  "Objeto directo",
+                  "Objeto indirecto",
+                  "Atributo"
+            ],
+            "correctAnswer": "Complemento circunstancial de lugar",
+            "hint": "Indica el lugar donde entrenaron.",
+            "explanation": "¡Excelente! «en el estadio» es un complemento circunstancial de lugar."
+      },
+      {
+            "id": "q8_4g_10",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Complemento circunstancial de modo",
+            "readingText": "Responde a la pregunta ¿Cómo se realiza la acción?",
+            "illustration": "book",
+            "prompt": "En «La música sonaba suavemente durante la velada», la palabra «suavemente» es un complemento circunstancial de:",
+            "visual": "🎻 sonaba [ suavemente ]",
+            "options": [
+                  "Tiempo",
+                  "Lugar",
+                  "Modo",
+                  "Causa"
+            ],
+            "correctAnswer": "Modo",
+            "hint": "Indica la manera o modo como sonaba la música.",
+            "explanation": "¡Fantástico! «suavemente» expresa el modo en que se realizaba la acción."
       }
     ]
   },
@@ -1819,6 +3255,102 @@ export const LEVELS_DATA = [
         correctAnswer: 'Verdadero',
         hint: 'Revisa el texto: menciona que viven en grupos y usan silbidos bajo el agua.',
         explanation: '¡Brillante! Es Verdadero según la información explícita de la lectura.'
+      },
+{
+            "id": "q9_6",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "El Secreto del Río",
+            "readingText": "Los animales del bosque se reunían al atardecer para escuchar el rumor del agua y compartir historias sobre las montañas lejanas.",
+            "illustration": "nature",
+            "prompt": "Según el texto, ¿en qué momento del día se reunían los animales?",
+            "visual": "🌅 Animales junto al río",
+            "options": [
+                  "Al amanecer",
+                  "Al atardecer",
+                  "A medianoche",
+                  "Al mediodía"
+            ],
+            "correctAnswer": "Al atardecer",
+            "hint": "El texto indica: «se reunían al atardecer».",
+            "explanation": "¡Exacto! El relato dice expresamente que se reunían al atardecer."
+      },
+      {
+            "id": "q9_7",
+            "type": "reading",
+            "interactionType": "fill_blank",
+            "readingTitle": "La brújula de Lucas",
+            "readingText": "Lucas guardaba en su bolsillo una pequeña brújula dorada que le regaló su abuelo antes de iniciar el viaje.",
+            "illustration": "nature",
+            "prompt": "¿De qué color era la brújula de Lucas según la lectura?",
+            "visual": "🧭 Brújula [ ? ] de Lucas",
+            "inputPlaceholder": "Escribe el color...",
+            "options": [
+                  "plateada",
+                  "dorada",
+                  "azul",
+                  "verde"
+            ],
+            "correctAnswer": "dorada",
+            "hint": "El texto dice: «una pequeña brújula dorada».",
+            "explanation": "¡Muy bien! La brújula era dorada."
+      },
+      {
+            "id": "q9_8",
+            "type": "reading",
+            "interactionType": "drag_drop",
+            "readingTitle": "El hogar del búho Ari",
+            "readingText": "En lo más alto del bosque, un búho sabio observaba todo desde las ramas protectoras de un viejo árbol centenario.",
+            "illustration": "nature",
+            "prompt": "Completa la frase: «El búho Ari vivía en lo alto de un viejo ______»",
+            "visual": "🦉 El búho Ari en un viejo [ ______ ]",
+            "options": [
+                  "pino",
+                  "roble",
+                  "sauce",
+                  "eucalipto"
+            ],
+            "correctAnswer": "roble",
+            "hint": "El árbol protector del bosque es el roble.",
+            "explanation": "¡Excelente! Ari habita en la cima del viejo roble."
+      },
+      {
+            "id": "q9_9",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Inferencia de emociones",
+            "readingText": "Antes de subir al escenario, Camila sentía mariposas en el estómago y sus manos temblaban un poquito de alegría.",
+            "illustration": "book",
+            "prompt": "A partir del texto, podemos deducir que Camila estaba:",
+            "visual": "🎭 Emociones del personaje",
+            "options": [
+                  "Enojada",
+                  "Emocionada y un poco nerviosa",
+                  "Aburrida",
+                  "Dormida"
+            ],
+            "correctAnswer": "Emocionada y un poco nerviosa",
+            "hint": "Sentir mariposas y temblor leve suele acompañar a la emoción y los nervios.",
+            "explanation": "¡Genial! El texto describe los síntomas típicos de la emoción antes de una presentación."
+      },
+      {
+            "id": "q9_10",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "El mensaje de la fábula",
+            "readingText": "Al final de la historia, la liebre aprendió que la constancia y el esfuerzo valen más que la rapidez sin disciplina.",
+            "illustration": "book",
+            "prompt": "¿Cuál es la enseñanza o moraleja principal de esta historia?",
+            "visual": "🐢 Constancia frente a la vanidad",
+            "options": [
+                  "El esfuerzo y la constancia nos llevan al éxito",
+                  "Es mejor correr muy rápido y dormir",
+                  "No vale la pena competir",
+                  "Los animales no aprenden lecciones"
+            ],
+            "correctAnswer": "El esfuerzo y la constancia nos llevan al éxito",
+            "hint": "La constancia permite alcanzar las metas sin rendirse.",
+            "explanation": "¡Perfecto! La moraleja resalta el valor del esfuerzo constante."
       }
     ],
     questionsGrade4: [
@@ -1921,6 +3453,102 @@ export const LEVELS_DATA = [
         correctAnswer: 'Verdadero',
         hint: 'Observa el conector de causa «Como...» al inicio de la oración.',
         explanation: '¡Brillante! La polinización de las abejas es la causa de que muchas plantas den frutos.'
+      },
+{
+            "id": "q9_4g_6",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Ecosistemas de manglar",
+            "readingText": "Los manglares protegen las costas tropicales porque sus intrincadas raíces retienen los sedimentos y disipan la fuerza del oleaje durante tormentas severas.",
+            "illustration": "nature",
+            "prompt": "¿Cuál es la idea principal del párrafo sobre los manglares?",
+            "visual": "🌊 Función protectora de los manglares",
+            "options": [
+                  "Los manglares son peligrosos",
+                  "Los manglares protegen las costas reteniendo sedimentos y reduciendo el oleaje",
+                  "Las olas destruyen todos los árboles",
+                  "Los sedimentos no sirven"
+            ],
+            "correctAnswer": "Los manglares protegen las costas reteniendo sedimentos y reduciendo el oleaje",
+            "hint": "Sintetiza la función protectora explicada en el texto.",
+            "explanation": "¡Exacto! El texto destaca su función de defensa costera."
+      },
+      {
+            "id": "q9_4g_7",
+            "type": "reading",
+            "interactionType": "fill_blank",
+            "readingTitle": "Inferencia meteorológica",
+            "readingText": "El cielo se tornó plomizo, un viento gélido sopló desde la cordillera y las aves buscaron refugio en sus nidos.",
+            "illustration": "nature",
+            "prompt": "A partir de las pistas del texto, inferimos que se aproxima una:",
+            "visual": "☁️ Cielo plomizo ➔ [ ? ]",
+            "inputPlaceholder": "Escribe el fenómeno...",
+            "options": [
+                  "ola de calor",
+                  "tormenta",
+                  "sequía",
+                  "primavera"
+            ],
+            "correctAnswer": "tormenta",
+            "hint": "Cielo oscuro, viento frío y aves buscando nido anuncian tormenta.",
+            "explanation": "¡Muy bien! Las evidencias sensoriales indican la llegada de una tormenta."
+      },
+      {
+            "id": "q9_4g_8",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Relación causa y efecto",
+            "readingText": "Debido a la ausencia prolongada de precipitaciones en la cuenca, el nivel del embalse se redujo a la mitad.",
+            "illustration": "nature",
+            "prompt": "Identifica la relación de causa y efecto en el texto:",
+            "visual": "📉 Sequía ➔ Disminución del embalse",
+            "options": [
+                  "Causa: ausencia de precipitaciones | Efecto: reducción del embalse",
+                  "Causa: reducción del embalse | Efecto: ausencia de lluvias",
+                  "Causa: el calor del verano | Efecto: aumento de agua",
+                  "Causa: el embalse | Efecto: las nubes"
+            ],
+            "correctAnswer": "Causa: ausencia de precipitaciones | Efecto: reducción del embalse",
+            "hint": "El conector «Debido a» introduce la causa directa.",
+            "explanation": "¡Brillante! La falta de lluvia (causa) provocó la baja del embalse (efecto)."
+      },
+      {
+            "id": "q9_4g_9",
+            "type": "reading",
+            "interactionType": "drag_drop",
+            "readingTitle": "Vocabulario en contexto",
+            "readingText": "La bióloga examinó minuciosamente las alas de la mariposa bajo el microscopio electrónico.",
+            "illustration": "nature",
+            "prompt": "En el contexto de la lectura, la palabra «minuciosamente» significa:",
+            "visual": "🔬 examinó [ minuciosamente ]",
+            "options": [
+                  "con gran detalle y cuidado",
+                  "a toda prisa sin mirar",
+                  "con miedo",
+                  "de manera descuidada"
+            ],
+            "correctAnswer": "con gran detalle y cuidado",
+            "hint": "Mirar con microscopio requiere máxima atención a los detalles.",
+            "explanation": "¡Excelente! Minuciosamente significa con profundo detalle y detenimiento."
+      },
+      {
+            "id": "q9_4g_10",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Hechos versus opiniones",
+            "readingText": "La temperatura media del planeta ha subido 1,1 °C desde la era preindustrial, lo cual algunos consideran el reto más urgente de nuestro siglo.",
+            "illustration": "solar",
+            "prompt": "¿Cuál de las siguientes afirmaciones es un HECHO comprobable y no una opinión?",
+            "visual": "📊 Datos objetivos vs juicios personales",
+            "options": [
+                  "La temperatura media del planeta ha subido 1,1 °C",
+                  "La ciencia es la materia más divertida de todas",
+                  "Todos los científicos son personas amables",
+                  "El calor del verano es el mejor clima posible"
+            ],
+            "correctAnswer": "La temperatura media del planeta ha subido 1,1 °C",
+            "hint": "Un hecho se puede verificar con mediciones e instrumentos científicos.",
+            "explanation": "¡Fantástico! La subida de 1,1 °C es un dato empírico y verificable."
       }
     ]
   },
@@ -2052,6 +3680,102 @@ export const LEVELS_DATA = [
         correctAnswer: '1° Evaporación - 2° Condensación - 3° Precipitación',
         hint: 'Primero el agua sube como vapor (Evaporación), luego forma nubes (Condensación) y al final llueve (Precipitación).',
         explanation: '¡Brillante! El orden del ciclo del agua es Evaporación, Condensación y Precipitación.'
+      },
+{
+            "id": "q10_6",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Información científica",
+            "readingText": "Las abejas melíferas transportan polen en unas estructuras llamadas corbículas situadas en sus patas traseras.",
+            "illustration": "nature",
+            "prompt": "¿Por qué este fragmento pertenece a un texto expositivo?",
+            "visual": "🐝 Datos sobre las abejas",
+            "options": [
+                  "Porque brinda información real y datos científicos objetivos",
+                  "Porque cuenta una historia fantástica inventada",
+                  "Porque es un poema con rima y estrofas",
+                  "Porque expresa los sentimientos de la abeja"
+            ],
+            "correctAnswer": "Porque brinda información real y datos científicos objetivos",
+            "hint": "Los textos expositivos explican la realidad con datos verdaderos.",
+            "explanation": "¡Exacto! Comunica información real, comprobable y objetiva."
+      },
+      {
+            "id": "q10_7",
+            "type": "reading",
+            "interactionType": "fill_blank",
+            "readingTitle": "Partes del texto expositivo",
+            "readingText": "La estructura clásica de un texto explicativo comprende introducción, desarrollo y conclusión.",
+            "illustration": "book",
+            "prompt": "¿Cómo se llama la sección final donde se resumen las ideas clave del tema?",
+            "visual": "📑 Estructura: Introducción ➔ Desarrollo ➔ [ ? ]",
+            "inputPlaceholder": "Escribe la parte final...",
+            "options": [
+                  "título",
+                  "conclusión",
+                  "introducción",
+                  "glosario"
+            ],
+            "correctAnswer": "conclusión",
+            "hint": "Es el cierre o desenlace explicativo: la conclusión.",
+            "explanation": "¡Muy bien! La conclusión sintetiza y cierra el tema."
+      },
+      {
+            "id": "q10_8",
+            "type": "reading",
+            "interactionType": "drag_drop",
+            "readingTitle": "Conectores de orden",
+            "readingText": "Para explicar etapas sucesivas de un proceso, usamos conectores de orden.",
+            "illustration": "nature",
+            "prompt": "Completa la secuencia: «______ el agua líquida se calienta con el sol; luego se evapora hacia el cielo.»",
+            "visual": "💧 [ ______ ] el agua se calienta; luego...",
+            "options": [
+                  "Primero",
+                  "Pero",
+                  "Aunque",
+                  "Sin embargo"
+            ],
+            "correctAnswer": "Primero",
+            "hint": "Indica el comienzo de una secuencia temporal.",
+            "explanation": "¡Excelente! «Primero» marca el inicio del proceso de evaporación."
+      },
+      {
+            "id": "q10_9",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Propósito comunicativo",
+            "readingText": "Los textos expositivos se publican en enciclopedias, manuales y revistas científicas.",
+            "illustration": "book",
+            "prompt": "¿Cuál es el objetivo principal de los textos expositivos?",
+            "visual": "📚 Función informativa",
+            "options": [
+                  "Informar y explicar un tema con claridad",
+                  "Hacer reír con chistes graciosos",
+                  "Convencer de comprar un videojuego",
+                  "Cantar canciones con rima"
+            ],
+            "correctAnswer": "Informar y explicar un tema con claridad",
+            "hint": "Su misión es transmitir conocimientos de manera comprensible.",
+            "explanation": "¡Genial! Su propósito primordial es informar y enseñar."
+      },
+      {
+            "id": "q10_10",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Uso de subtítulos",
+            "readingText": "En un libro sobre volcanes encontramos subtítulos como «Tipos de lava» y «Zonas activas».",
+            "illustration": "solar",
+            "prompt": "¿Para qué se utilizan los subtítulos en un texto expositivo?",
+            "visual": "🌋 Subtítulos organizadores",
+            "options": [
+                  "Para organizar la información en temas específicos y facilitar la lectura",
+                  "Para cambiar el título del libro por completo",
+                  "Para dibujar adornos sin importancia",
+                  "Para firmar el autor de la página"
+            ],
+            "correctAnswer": "Para organizar la información en temas específicos y facilitar la lectura",
+            "hint": "Guían al lector dividiendo el contenido en secciones claras.",
+            "explanation": "¡Perfecto! Los subtítulos ordenan el texto y ayudan a encontrar información rápida."
       }
     ],
     questionsGrade4: [
@@ -2146,17 +3870,154 @@ export const LEVELS_DATA = [
         correctAnswer: '1° Productores - 2° Consumidores herbívoros - 3° Descomponedores',
         hint: 'Comienza por las plantas (Productores), sigue con los herbívoros y termina con los descomponedores.',
         explanation: '¡Brillante! Ese es el orden de la energía en el ecosistema.'
+      },
+      {
+            "id": "q10_4g_6",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Conectores de causa",
+            "readingText": "Los conectores causales explican el motivo o razón por el cual sucede un fenómeno.",
+            "illustration": "book",
+            "prompt": "¿Cuál de los siguientes es un conector de causa?",
+            "visual": "🔗 Conectores causales",
+            "options": [
+                  "ya que",
+                  "por lo tanto",
+                  "en primer lugar",
+                  "finalmente"
+            ],
+            "correctAnswer": "ya que",
+            "hint": "Explica el porqué: porque, ya que, puesto que.",
+            "explanation": "¡Exacto! «ya que» es un conector de causa."
+      },
+      {
+            "id": "q10_4g_7",
+            "type": "reading",
+            "interactionType": "fill_blank",
+            "readingTitle": "La introducción formal",
+            "readingText": "La primera sección de un artículo expositivo presenta el tema, los objetivos y la importancia del estudio.",
+            "illustration": "book",
+            "prompt": "¿Cómo se llama la sección que presenta y delimita el tema al lector?",
+            "visual": "📖 Sección inicial: [ ? ]",
+            "inputPlaceholder": "Escribe el nombre de la sección...",
+            "options": [
+                  "introducción",
+                  "conclusión",
+                  "bibliografía",
+                  "anexo"
+            ],
+            "correctAnswer": "introducción",
+            "hint": "Es la parte introductoria: introducción.",
+            "explanation": "¡Muy bien! La introducción presenta y contextualiza el tema."
+      },
+      {
+            "id": "q10_4g_8",
+            "type": "reading",
+            "interactionType": "drag_drop",
+            "readingTitle": "Recursos visuales de apoyo",
+            "readingText": "Las infografías, esquemas y tablas sintetizan datos complejos.",
+            "illustration": "solar",
+            "prompt": "En un informe climático, una gráfica con la evolución de la temperatura funciona como:",
+            "visual": "📈 Gráfica de temperaturas ➔ [ ______ ]",
+            "options": [
+                  "Recurso visual de apoyo explicativo",
+                  "Distractor sin utilidad",
+                  "Cuento de ficción",
+                  "Opinión personal del autor"
+            ],
+            "correctAnswer": "Recurso visual de apoyo explicativo",
+            "hint": "Complementa visualmente los datos explicados en el texto.",
+            "explanation": "¡Brillante! Apoya y hace comprensible la información numérica."
+      },
+      {
+            "id": "q10_4g_9",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Registro y lenguaje formal",
+            "readingText": "Los textos expositivos se caracterizan por el rigor léxico y la precisión terminológica.",
+            "illustration": "book",
+            "prompt": "¿Qué rasgo lingüístico predomina en los textos expositivos formales?",
+            "visual": "🔬 Rasgos lingüísticos expositivos",
+            "options": [
+                  "Uso de verbos en tercera persona y vocabulario técnico preciso",
+                  "Uso de exageraciones y frases poéticas con rima",
+                  "Uso de preguntas confusas sin responder",
+                  "Uso de diálogos entre personajes imaginarios"
+            ],
+            "correctAnswer": "Uso de verbos en tercera persona y vocabulario técnico preciso",
+            "hint": "Predomina la objetividad, la tercera persona y la exactitud conceptual.",
+            "explanation": "¡Excelente! El rigor técnico y la tercera persona aseguran neutralidad y claridad."
+      },
+      {
+            "id": "q10_4g_10",
+            "type": "reading",
+            "interactionType": "multiple_choice",
+            "readingTitle": "Conectores de consecuencia",
+            "readingText": "Los conectores consecutivos expresan el efecto derivado de una acción previa.",
+            "illustration": "solar",
+            "prompt": "En «El vapor se condensó; por consiguiente, se formaron gotas de lluvia», el conector expresa:",
+            "visual": "💧 Condensación ➔ [ por consiguiente ] ➔ Lluvia",
+            "options": [
+                  "Consecuencia",
+                  "Causa",
+                  "Oposición",
+                  "Condición"
+            ],
+            "correctAnswer": "Consecuencia",
+            "hint": "«Por consiguiente» introduce el efecto o resultado.",
+            "explanation": "¡Fantástico! «por consiguiente» expresa la consecuencia de la condensación."
       }
     ]
   }
 ];
 
-export function getQuestionsForLevel(level, grade = '3') {
+export function getQuestionsForLevel(level, grade = '3', options = {}) {
   if (!level) return [];
-  if (String(grade) === '4' && Array.isArray(level.questionsGrade4) && level.questionsGrade4.length > 0) {
-    return level.questionsGrade4;
+  const pool =
+    String(grade) === '4' && Array.isArray(level.questionsGrade4) && level.questionsGrade4.length > 0
+      ? level.questionsGrade4
+      : level.questions || [];
+
+  if (options.count || options.shuffle) {
+    const count = Number(options.count) || 5;
+    const excludeIds = Array.isArray(options.excludeIds) ? options.excludeIds : [];
+
+    // Separar en preguntas no vistas en el último intento (fresh) y ya vistas (seen)
+    const fresh = pool.filter((q) => !excludeIds.includes(q.id));
+    const seen = pool.filter((q) => excludeIds.includes(q.id));
+
+    const shuffleArray = (arr) => {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    };
+
+    const shuffledFresh = shuffleArray(fresh);
+    const shuffledSeen = shuffleArray(seen);
+
+    // Priorizar preguntas no vistas en la sesión anterior para evitar repetición
+    const picked = [...shuffledFresh, ...shuffledSeen].slice(0, count);
+
+    return picked.map((q) => {
+      if (
+        !Array.isArray(q.options) ||
+        q.interactionType === 'ordering' ||
+        q.interactionType === 'matching' ||
+        q.interactionType === 'true_false'
+      ) {
+        return { ...q };
+      }
+      return {
+        ...q,
+        options: shuffleArray(q.options)
+      };
+    });
   }
-  return level.questions || [];
+
+  return pool;
 }
 
 export const CATEGORIES = [

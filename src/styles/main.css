@@ -2811,6 +2811,99 @@ h3,
   align-items: center;
 }
 
+.profiles-manager-section {
+  margin-top: 1.15rem;
+  padding: 0.85rem 1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  text-align: left;
+}
+
+.profiles-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.profiles-label {
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: #334155;
+}
+
+.btn-new-child-profile {
+  background: #ffffff;
+  border: 2px dashed #a855f7;
+  color: #7e22ce;
+  border-radius: var(--radius-full);
+  padding: 0.3rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-new-child-profile:hover {
+  background: #f3e8ff;
+  border-style: solid;
+}
+
+.profiles-list-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+}
+
+.profile-chip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-radius: var(--radius-full);
+  padding: 0.3rem 0.65rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.profile-chip-btn.active-profile {
+  border-color: #8b5cf6;
+  background: #f5f3ff;
+  font-weight: 800;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.25);
+}
+
+.profile-chip-btn .chip-avatar {
+  font-size: 0.95rem;
+}
+
+.profile-chip-btn .chip-grade {
+  background: #e2e8f0;
+  border-radius: 6px;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #475569;
+}
+
+.profile-chip-btn.active-profile .chip-grade {
+  background: #ddd6fe;
+  color: #5b21b6;
+}
+
+.profiles-device-tip {
+  margin: 0.4rem 0 0;
+  font-size: 0.8rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
 .subject-progress-cards-row {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

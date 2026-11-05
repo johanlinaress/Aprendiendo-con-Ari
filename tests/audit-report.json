@@ -197,7 +197,7 @@
     },
     {
       "category": "4. Ejercicios",
-      "description": "Las 10 unidades cuentan con banco completo de 4° Grado (5 preguntas por unidad, 0 enunciados repetidos respecto a 3° Grado)",
+      "description": "Las 10 unidades cuentan con banco completo de 4° Grado (banco ampliado con al menos 5 preguntas por unidad, 0 enunciados repetidos respecto a 3° Grado)",
       "details": ""
     },
     {
@@ -307,8 +307,8 @@
     },
     {
       "category": "4. Ejercicios",
-      "description": "Las 10 unidades (50 preguntas base + bancos de 4° grado) incluyen las 6 modalidades interactivas y respuestas verificadas",
-      "details": "Unidades=10, Modalidades=multiple_choice,fill_blank,drag_drop,true_false,ordering,matching"
+      "description": "Las 10 unidades (banco ampliado con más de 50 preguntas base + bancos de 4° grado) incluyen las 6 modalidades interactivas y respuestas verificadas",
+      "details": "Unidades=10, Total 3°=100, Modalidades=multiple_choice,fill_blank,drag_drop,true_false,ordering,matching"
     },
     {
       "category": "6. Desbloqueo de niveles",
@@ -468,7 +468,7 @@
     {
       "category": "7. Persistencia de progreso",
       "description": "Recargar el navegador recupera exactamente nombre, puntaje, 30/30 estrellas, 10 unidades desbloqueadas y las 9 medallas desde localStorage",
-      "details": "{\"playerName\":\"Valentina\",\"totalScore\":36325,\"totalStars\":30,\"unlockedCount\":10,\"achievementsCount\":9,\"navScoreText\":\"36325\",\"navStarsText\":\"30/30\"}"
+      "details": "{\"playerName\":\"Valentina\",\"totalScore\":36600,\"totalStars\":30,\"unlockedCount\":10,\"achievementsCount\":9,\"navScoreText\":\"36600\",\"navStarsText\":\"30/30\"}"
     },
     {
       "category": "3. Botones",
@@ -798,7 +798,7 @@
     {
       "category": "10. Responsive",
       "description": "Escritorio-1920 (1920x1080) en #/nivel/10 sin desbordamiento horizontal",
-      "details": "scrollWidth=1920, clientWidth=1920"
+      "details": "scrollWidth=1905, clientWidth=1905"
     },
     {
       "category": "10. Responsive",

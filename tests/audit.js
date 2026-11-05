@@ -385,7 +385,7 @@ async function runAudit() {
       (() => {
         const levels = window.__ARI_APP__.LEVELS_DATA;
         const lvl1 = levels.find((l) => l.id === 1);
-        const all10HaveBank = levels.every((l) => Array.isArray(l.questionsGrade4) && l.questionsGrade4.length === 5);
+        const all10HaveBank = levels.every((l) => Array.isArray(l.questionsGrade4) && l.questionsGrade4.length >= 5);
         const zeroDuplicatePrompts = levels.every((l) => {
           const p3 = new Set(l.questions.map((q) => q.prompt));
           return l.questionsGrade4.every((q) => !p3.has(q.prompt));
@@ -395,7 +395,7 @@ async function runAudit() {
     `);
     assertCheck(
       '4. Ejercicios',
-      'Las 10 unidades cuentan con banco completo de 4° Grado (5 preguntas por unidad, 0 enunciados repetidos respecto a 3° Grado)',
+      'Las 10 unidades cuentan con banco completo de 4° Grado (banco ampliado con al menos 5 preguntas por unidad, 0 enunciados repetidos respecto a 3° Grado)',
       grade4Check === true
     );
 
@@ -673,12 +673,12 @@ async function runAudit() {
     `);
     assertCheck(
       '4. Ejercicios',
-      'Las 10 unidades (50 preguntas base + bancos de 4° grado) incluyen las 6 modalidades interactivas y respuestas verificadas',
+      'Las 10 unidades (banco ampliado con más de 50 preguntas base + bancos de 4° grado) incluyen las 6 modalidades interactivas y respuestas verificadas',
       curriculumAudit.totalLevels === 10 &&
-        curriculumAudit.totalQuestions3 === 50 &&
+        curriculumAudit.totalQuestions3 >= 50 &&
         curriculumAudit.modalities.length === 6 &&
         curriculumAudit.issues.length === 0,
-      `Unidades=${curriculumAudit.totalLevels}, Modalidades=${curriculumAudit.modalities.join(',')}`
+      `Unidades=${curriculumAudit.totalLevels}, Total 3°=${curriculumAudit.totalQuestions3}, Modalidades=${curriculumAudit.modalities.join(',')}`
     );
 
     // =========================================================================
@@ -764,7 +764,9 @@ async function runAudit() {
     await sleep(60);
 
     // Test 3/5 correct = 60% (< 70% threshold) on Level 1 -> should NOT unlock Level 2!
-    const level1Questions = await cdp.eval(`window.__ARI_APP__.LEVELS_DATA[0].questions`);
+    const level1Questions = await cdp.eval(
+      `window.__ARI_APP__.getActiveSession()?.questions || window.__ARI_APP__.LEVELS_DATA[0].questions.slice(0, 5)`
+    );
     for (let i = 0; i < level1Questions.length; i++) {
       const q = level1Questions[i];
       const shouldAnswerCorrect = i < 3; // Q1, Q2, Q3 right (60%), Q4 & Q5 wrong
@@ -772,19 +774,21 @@ async function runAudit() {
         ? q.correctAnswer
         : q.options.find((o) => o !== q.correctAnswer);
 
-      if (i === 1 && q.interactionType === 'fill_blank') {
+      if (q.interactionType === 'fill_blank') {
         // Test typing into #input-fill-blank with extra spaces
         await cdp.eval(`
           const inp = document.querySelector('#input-fill-blank');
-          inp.value = '  75  ';
-          document.querySelector('#btn-apply-blank').click();
+          if (inp) {
+            inp.value = ${JSON.stringify(shouldAnswerCorrect ? ' ' + q.correctAnswer + ' ' : ' 999 ')};
+            document.querySelector('#btn-apply-blank')?.click();
+          }
         `);
       } else {
         await cdp.eval(`
           const btn = Array.from(document.querySelectorAll('.option-btn')).find(
             (b) => b.getAttribute('data-option-value') === ${JSON.stringify(chosenOption)}
           );
-          btn.click();
+          btn?.click();
         `);
       }
       await sleep(45);
@@ -849,8 +853,9 @@ async function runAudit() {
       `);
       await sleep(55);
 
-      for (let qIdx = 0; qIdx < lvl.questions.length; qIdx++) {
-        const q = lvl.questions[qIdx];
+      const sessionQuestions = await cdp.eval(`window.__ARI_APP__.getActiveSession()?.questions || []`);
+      for (let qIdx = 0; qIdx < sessionQuestions.length; qIdx++) {
+        const q = sessionQuestions[qIdx];
 
         if (lvl.id === 1 && qIdx === 0) {
           await cdp.eval(`document.querySelector('#btn-hint')?.click()`);

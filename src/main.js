@@ -7,7 +7,7 @@ import { renderFooter, bindFooterEvents } from './components/Footer.js';
 import { renderHomeView, bindHomeViewEvents } from './components/HomeView.js';
 import { renderGradeSelectView, bindGradeSelectViewEvents } from './components/GradeSelectView.js';
 import { renderLevelsMapView, bindLevelsMapViewEvents } from './components/LevelsMapView.js';
-import { renderExerciseView, bindExerciseViewEvents } from './components/ExerciseView.js';
+import { renderExerciseView, bindExerciseViewEvents, getActiveSession } from './components/ExerciseView.js';
 import { renderPracticeView, bindPracticeViewEvents } from './components/PracticeView.js';
 import { renderProgressView, bindProgressViewEvents } from './components/ProgressView.js';
 import { renderNotFoundView, bindNotFoundViewEvents } from './components/NotFoundView.js';
@@ -134,7 +134,11 @@ function bootstrap() {
     SoundService,
     LEVELS_DATA,
     ACHIEVEMENTS_DATA,
-    EXPOSITIVE_READINGS_DATA
+    EXPOSITIVE_READINGS_DATA,
+    getActiveSession,
+    get activeSession() {
+      return getActiveSession();
+    }
   };
 
   Router.onRouteChange((route) => {

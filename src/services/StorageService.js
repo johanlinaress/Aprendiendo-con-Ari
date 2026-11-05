@@ -167,6 +167,7 @@ class StorageManager {
       const payload = {
         levelId: Number(session.levelId),
         grade: String(session.grade || '3'),
+        questionIds: Array.isArray(session.questions) ? session.questions.map((q) => q.id) : [],
         activePhase: session.activePhase || 'aprendo',
         questionIndex: Number(session.questionIndex) || 0,
         correctCount: Number(session.correctCount) || 0,
@@ -245,6 +246,105 @@ class StorageManager {
     this.state.selectedGrade = clean;
     this.persist();
     return clean;
+  }
+
+  recordLevelQuestionsSeen(levelId, questionIds) {
+    const id = Number(levelId);
+    if (!this.state.levels || !this.state.levels[id]) return;
+    this.state.levels[id].lastSeenQuestionIds = Array.isArray(questionIds) ? [...questionIds] : [];
+    this.persist();
+  }
+
+  getLastSeenQuestionIds(levelId) {
+    const id = Number(levelId);
+    return (this.state.levels && this.state.levels[id]?.lastSeenQuestionIds) || [];
+  }
+
+  getProfiles() {
+    if (typeof window === 'undefined' || !window.localStorage) {
+      return [{ id: 'default', name: this.state.playerName, grade: this.state.selectedGrade, stars: this.getTotalStars() }];
+    }
+    try {
+      const raw = window.localStorage.getItem('aprendiendo_con_ari_profiles_v1');
+      if (raw) {
+        const list = JSON.parse(raw);
+        if (Array.isArray(list) && list.length > 0) return list;
+      }
+    } catch (e) {}
+    return [
+      {
+        id: 'default',
+        name: this.state.playerName || 'Juanito',
+        grade: this.state.selectedGrade || '3',
+        stars: this.getTotalStars(),
+        lastUpdated: new Date().toISOString()
+      }
+    ];
+  }
+
+  createProfile(name, grade = '3') {
+    const cleanName = String(name || '').trim().slice(0, 28) || 'Nuevo Estudiante';
+    const cleanGrade = String(grade) === '4' ? '4' : '3';
+    const profileId = 'prof_' + Date.now();
+    const profiles = this.getProfiles();
+
+    // Guardar estado actual del perfil activo antes de cambiar
+    const activeProfId = (typeof window !== 'undefined' && window.localStorage?.getItem('aprendiendo_con_ari_active_profile_v1')) || 'default';
+    if (typeof window !== 'undefined' && window.localStorage) {
+      try {
+        window.localStorage.setItem(`aprendiendo_con_ari_state_${activeProfId}`, JSON.stringify(this.state));
+      } catch (e) {}
+    }
+
+    const newState = getDefaultState();
+    newState.playerName = cleanName;
+    newState.selectedGrade = cleanGrade;
+    newState.startedAt = new Date().toISOString();
+
+    const newProfile = {
+      id: profileId,
+      name: cleanName,
+      grade: cleanGrade,
+      stars: 0,
+      lastUpdated: new Date().toISOString()
+    };
+    profiles.push(newProfile);
+
+    if (typeof window !== 'undefined' && window.localStorage) {
+      try {
+        window.localStorage.setItem('aprendiendo_con_ari_profiles_v1', JSON.stringify(profiles));
+        window.localStorage.setItem('aprendiendo_con_ari_active_profile_v1', profileId);
+        window.localStorage.setItem(`aprendiendo_con_ari_state_${profileId}`, JSON.stringify(newState));
+      } catch (e) {}
+    }
+
+    this.state = newState;
+    this.persist();
+    return newProfile;
+  }
+
+  switchProfile(profileId) {
+    if (typeof window === 'undefined' || !window.localStorage) return;
+    try {
+      const activeProfId = window.localStorage.getItem('aprendiendo_con_ari_active_profile_v1') || 'default';
+      window.localStorage.setItem(`aprendiendo_con_ari_state_${activeProfId}`, JSON.stringify(this.state));
+
+      window.localStorage.setItem('aprendiendo_con_ari_active_profile_v1', profileId);
+      const raw = window.localStorage.getItem(`aprendiendo_con_ari_state_${profileId}`);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        this.state = { ...getDefaultState(), ...parsed };
+      } else {
+        const profiles = this.getProfiles();
+        const p = profiles.find((item) => item.id === profileId);
+        this.state = getDefaultState();
+        if (p) {
+          this.state.playerName = p.name;
+          this.state.selectedGrade = p.grade;
+        }
+      }
+      this.persist();
+    } catch (e) {}
   }
 
   markLevelInProgress(levelId) {
