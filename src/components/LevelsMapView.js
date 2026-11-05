@@ -72,7 +72,7 @@ export function renderLevelsMapView(routeSubject = 'todas') {
               <span>Progreso de la Aventura (${completedCount}/${LEVELS_DATA.length} unidades completadas)</span>
               <strong id="map-progress-percent">${progressPercent}%</strong>
             </div>
-            <div class="progress-track" role="progressbar" aria-valuenow="${progressPercent}" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-track" role="progressbar" aria-label="Progreso general de unidades completadas" aria-valuenow="${progressPercent}" aria-valuemin="0" aria-valuemax="100">
               <div class="progress-fill" style="width: ${progressPercent}%"></div>
             </div>
             <div class="map-quick-badges">
@@ -113,7 +113,7 @@ export function renderLevelsMapView(routeSubject = 'todas') {
                 data-unlocked="${isUnlocked}"
               >
                 <div class="level-card-header">
-                  <div class="level-number-badge" style="background: ${isUnlocked ? lvl.badgeColor : '#94a3b8'}">
+                  <div class="level-number-badge" style="background: ${isUnlocked ? '#3b0764' : '#475569'}">
                     Nivel ${lvl.id} • ${subjectLabel}
                   </div>
                   <div class="level-stars-group" aria-label="${lvlState.stars} de 3 estrellas">
@@ -123,7 +123,7 @@ export function renderLevelsMapView(routeSubject = 'todas') {
 
                 <div class="level-card-body">
                   <div class="level-title-row">
-                    <div class="level-icon-circle" style="background: ${lvl.badgeColor}18; color: ${lvl.badgeColor}">
+                    <div class="level-icon-circle" aria-hidden="true" style="background: ${lvl.badgeColor}18; color: ${lvl.badgeColor}">
                       ${isUnlocked ? lvl.icon : '🔒'}
                     </div>
                     <div class="level-title-text">

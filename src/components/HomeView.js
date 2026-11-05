@@ -67,7 +67,7 @@ function renderUnitsPreviewSection(state) {
               <article class="world-preview-card ${isUnlocked ? 'world-unlocked' : 'world-locked'}" data-level-card="${lvl.id}">
                 <div class="world-card-top">
                   <div class="level-title-row">
-                    <span class="world-icon" style="background: ${lvl.badgeColor}20; color: ${lvl.badgeColor}">${lvl.icon}</span>
+                    <span class="world-icon" aria-hidden="true" style="background: ${lvl.badgeColor}20; color: ${lvl.badgeColor}">${lvl.icon}</span>
                     <h3 class="world-card-title">${escapeHtml(lvl.title)}</h3>
                   </div>
                   <span class="world-status-badge ${isUnlocked ? 'badge-unlocked' : 'badge-locked'} ${statusMeta.className}">
@@ -175,14 +175,14 @@ function renderSubjectsCatalogSection(state) {
                     return `
                       <li class="subject-unit-row ${isUnlocked ? 'is-unlocked' : 'is-locked'}">
                         <div class="subject-unit-info">
-                          <span class="subject-unit-icon" style="background:${lvl.badgeColor}20;color:${lvl.badgeColor}">${lvl.icon}</span>
+                          <span class="subject-unit-icon" aria-hidden="true" style="background:${lvl.badgeColor}20;color:${lvl.badgeColor}">${lvl.icon}</span>
                           <div>
                             <strong>Nivel ${lvl.id}: ${escapeHtml(lvl.title)}</strong>
                             <small>${escapeHtml(lvl.subtitle)}</small>
                           </div>
                         </div>
                         <div class="subject-unit-right">
-                          <span class="unit-stars-inline">${renderStarsHtml(st.stars, 'star-item')}</span>
+                          <span class="unit-stars-inline" aria-label="${st.stars} de 3 estrellas">${renderStarsHtml(st.stars, 'star-item')}</span>
                           <span class="world-status-badge ${isUnlocked ? 'badge-unlocked' : 'badge-locked'}">${statusMeta.label}</span>
                           <button
                             type="button"

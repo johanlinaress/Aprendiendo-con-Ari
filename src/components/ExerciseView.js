@@ -212,6 +212,8 @@ function renderExpositiveInteractiveViewer() {
           (item, idx) => `
             <button
               type="button"
+              role="tab"
+              aria-selected="${idx === activeSession.readingTopicIndex ? 'true' : 'false'}"
               class="expositive-topic-pill ${idx === activeSession.readingTopicIndex ? 'active' : ''}"
               data-reading-topic-index="${idx}"
               id="btn-reading-topic-${idx}"
@@ -591,7 +593,7 @@ export function renderExerciseView(levelId, preserveSession = false) {
                 <span id="exercise-step-label">Pregunta ${activeSession.questionIndex + 1} de ${totalQuestions} (${state.selectedGrade}° Grado)</span>
                 <span id="exercise-progress-percent">${progressPercent}% completado (Mínimo 70% para aprobar)</span>
               </div>
-              <div class="progress-track" role="progressbar" aria-valuenow="${progressPercent}" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-track" role="progressbar" aria-label="Avance de preguntas de la unidad" aria-valuenow="${progressPercent}" aria-valuemin="0" aria-valuemax="100">
                 <div class="progress-fill" id="exercise-progress-bar" style="width: ${progressPercent}%"></div>
               </div>
             </div>

@@ -15,7 +15,7 @@ export function renderStarsHtml(stars, className = 'level-star') {
   return [1, 2, 3]
     .map((idx) => {
       const earned = idx <= stars;
-      return `<span class="${className} ${earned ? 'star-on' : 'star-off'}">${earned ? '⭐' : '☆'}</span>`;
+      return `<span class="${className} ${earned ? 'star-on' : 'star-off'}" aria-hidden="true">${earned ? '⭐' : '☆'}</span>`;
     })
     .join('');
 }
