@@ -3,61 +3,65 @@ import { StorageService } from '../services/StorageService.js';
 import { SoundService } from '../services/SoundService.js';
 import { Router } from '../router/Router.js';
 import { renderAriMascot, bindAriMascotEvents } from './AriMascot.js';
+import { LEVEL_STATUS_META, SUBJECT_LABELS, renderStarsHtml } from '../utils/levelStatus.js';
+import { escapeHtml } from '../utils/escapeHtml.js';
 
-let currentSubjectFilter = 'todas';
-
-export function renderLevelsMapView(routeSubject = null) {
-  if (routeSubject && ['todas', 'matematicas', 'espanol'].includes(routeSubject)) {
-    currentSubjectFilter = routeSubject;
+const SUBJECT_BANNER_META = {
+  todas: {
+    title: 'Mapa de Unidades y Niveles de Ari',
+    getSubtitle: (grade) =>
+      `Supera cada unidad con al menos un 70% de aciertos para desbloquear el siguiente desafío (${grade}° Grado).`
+  },
+  matematicas: {
+    title: '¡Vamos a aprender Matemáticas!',
+    getSubtitle: (grade) =>
+      `Matemáticas (${grade}° Grado): Sumas, Restas, Multiplicaciones, Divisiones y Desafío Matemático.`
+  },
+  espanol: {
+    title: '¡Descubramos el mundo de las palabras!',
+    getSubtitle: (grade) =>
+      `Español (${grade}° Grado): Los Verbos, El Sujeto, El Predicado, Comprensión Lectora y Textos Expositivos.`
   }
+};
+
+export function renderLevelsMapView(routeSubject = 'todas') {
+  const subjectFilter = ['todas', 'matematicas', 'espanol'].includes(routeSubject) ? routeSubject : 'todas';
 
   const state = StorageService.getState();
   const totalStars = StorageService.getTotalStars();
   const maxStars = StorageService.getMaxPossibleStars();
   const unlockedCount = state.unlockedLevels.length;
-  const completedCount = Object.values(state.levels).filter((l) => l.completed).length;
-  const progressPercent = Math.round((completedCount / LEVELS_DATA.length) * 100);
+  const completedCount = StorageService.getCompletedCount();
+  const progressPercent = StorageService.getOverallProgressPercent();
 
   const visibleLevels =
-    currentSubjectFilter === 'todas'
+    subjectFilter === 'todas'
       ? LEVELS_DATA
-      : LEVELS_DATA.filter((l) => l.subject === currentSubjectFilter);
+      : LEVELS_DATA.filter((l) => l.subject === subjectFilter);
 
-  const bannerTitle =
-    currentSubjectFilter === 'matematicas'
-      ? '¡Vamos a aprender Matemáticas!'
-      : currentSubjectFilter === 'espanol'
-      ? '¡Descubramos el mundo de las palabras!'
-      : 'Mapa de Unidades y Niveles de Ari';
-
-  const bannerSubtitle =
-    currentSubjectFilter === 'matematicas'
-      ? `Matemáticas (${state.selectedGrade}° Grado): Sumas, Restas, Multiplicaciones, Divisiones y Desafío Matemático.`
-      : currentSubjectFilter === 'espanol'
-      ? `Español (${state.selectedGrade}° Grado): Los Verbos, El Sujeto, El Predicado, Comprensión Lectora y Textos Expositivos.`
-      : `Supera cada unidad con al menos un 70% de aciertos para desbloquear el siguiente desafío (${state.selectedGrade}° Grado).`;
+  const bannerMeta = SUBJECT_BANNER_META[subjectFilter] || SUBJECT_BANNER_META.todas;
 
   return `
-    <section class="levels-map-view view-fade-anim" data-component="LevelsMapView" data-subject-filter="${currentSubjectFilter}">
+    <section class="levels-map-view view-fade-anim" data-component="LevelsMapView" data-subject-filter="${subjectFilter}">
       <div class="map-header-banner">
         <div class="map-header-info">
           <span class="hero-pill">🗺️ Ruta de Aprendizaje • ${state.selectedGrade}° Grado</span>
-          <h1 class="section-title" id="map-main-title">${bannerTitle}</h1>
-          <p class="section-subtitle">${bannerSubtitle}</p>
+          <h1 class="section-title" id="map-main-title">${bannerMeta.title}</h1>
+          <p class="section-subtitle">${bannerMeta.getSubtitle(state.selectedGrade)}</p>
 
           <!-- Pestañas de Filtro por Materia -->
-          <div class="category-tabs" role="tablist" aria-label="Filtrar unidades por materia" style="margin-bottom: 0.9rem;">
+          <div class="category-tabs" role="tablist" aria-label="Filtrar unidades por materia">
             ${CATEGORIES.map(
               (cat) => `
                 <button
                   type="button"
                   role="tab"
                   id="map-filter-${cat.id}"
-                  class="category-tab-btn ${currentSubjectFilter === cat.id ? 'active' : ''}"
+                  class="category-tab-btn ${subjectFilter === cat.id ? 'active' : ''}"
                   data-map-filter="${cat.id}"
-                  aria-selected="${currentSubjectFilter === cat.id ? 'true' : 'false'}"
+                  aria-selected="${subjectFilter === cat.id ? 'true' : 'false'}"
                 >
-                  <span>${cat.icon}</span> ${cat.label}
+                  <span aria-hidden="true">${cat.icon}</span> ${escapeHtml(cat.label)}
                 </button>
               `
             ).join('')}
@@ -96,29 +100,10 @@ export function renderLevelsMapView(routeSubject = null) {
         ${visibleLevels
           .map((lvl) => {
             const isUnlocked = StorageService.isLevelUnlocked(lvl.id);
-            const lvlState = state.levels[lvl.id] || {
-              completed: false,
-              inProgress: false,
-              stars: 0,
-              bestScore: 0,
-              bestAccuracy: 0,
-              attempts: 0
-            };
-
-            const starsMarkup = [1, 2, 3]
-              .map((idx) => {
-                const earned = idx <= lvlState.stars;
-                return `<span class="level-star ${earned ? 'star-on' : 'star-off'}">${earned ? '⭐' : '☆'}</span>`;
-              })
-              .join('');
-
-            const stateLabel = lvlState.completed
-              ? '✅ Completado'
-              : isUnlocked
-              ? lvlState.inProgress
-                ? '⏳ En progreso'
-                : '🟢 Disponible'
-              : '🔒 Bloqueado';
+            const lvlState = StorageService.getLevelState(lvl.id);
+            const statusKey = StorageService.getLevelStatus(lvl.id);
+            const statusMeta = LEVEL_STATUS_META[statusKey];
+            const subjectLabel = SUBJECT_LABELS[lvl.subject] || 'Materia';
 
             return `
               <article
@@ -129,10 +114,10 @@ export function renderLevelsMapView(routeSubject = null) {
               >
                 <div class="level-card-header">
                   <div class="level-number-badge" style="background: ${isUnlocked ? lvl.badgeColor : '#94a3b8'}">
-                    Nivel ${lvl.id} • ${lvl.subject === 'matematicas' ? 'Matemáticas' : 'Español'}
+                    Nivel ${lvl.id} • ${subjectLabel}
                   </div>
                   <div class="level-stars-group" aria-label="${lvlState.stars} de 3 estrellas">
-                    ${starsMarkup}
+                    ${renderStarsHtml(lvlState.stars, 'level-star')}
                   </div>
                 </div>
 
@@ -140,9 +125,9 @@ export function renderLevelsMapView(routeSubject = null) {
                   <div class="level-icon-circle" style="background: ${lvl.badgeColor}18; color: ${lvl.badgeColor}">
                     ${isUnlocked ? lvl.icon : '🔒'}
                   </div>
-                  <h2 class="level-card-title">${lvl.title}</h2>
-                  <p class="level-card-subtitle">${lvl.subtitle}</p>
-                  <p class="level-card-description">${lvl.description}</p>
+                  <h2 class="level-card-title">${escapeHtml(lvl.title)}</h2>
+                  <p class="level-card-subtitle">${escapeHtml(lvl.subtitle)}</p>
+                  <p class="level-card-description">${escapeHtml(lvl.description)}</p>
                   <div class="unit-phases-pills" aria-label="Etapas de la unidad">
                     <span class="phase-mini-pill">📘 1. Aprendo</span>
                     <span class="phase-mini-pill">✏️ 2. Practico</span>
@@ -161,7 +146,7 @@ export function renderLevelsMapView(routeSubject = null) {
                   </div>
                   <div class="level-mini-stat">
                     <span>Estado</span>
-                    <strong>${stateLabel}</strong>
+                    <strong>${statusMeta.label}</strong>
                   </div>
                 </div>
 
@@ -191,7 +176,7 @@ export function renderLevelsMapView(routeSubject = null) {
   `;
 }
 
-export function bindLevelsMapViewEvents(rootElement = document, rerenderCallback = null) {
+export function bindLevelsMapViewEvents(rootElement = document) {
   bindAriMascotEvents(rootElement);
 
   const filterButtons = rootElement.querySelectorAll('[data-map-filter]');
@@ -199,17 +184,8 @@ export function bindLevelsMapViewEvents(rootElement = document, rerenderCallback
     btn.addEventListener('click', () => {
       const filter = btn.getAttribute('data-map-filter') || 'todas';
       SoundService.play('click');
-      currentSubjectFilter = filter;
-      if (filter === 'matematicas') {
-        Router.navigate('/matematicas');
-      } else if (filter === 'espanol') {
-        Router.navigate('/espanol');
-      } else {
-        Router.navigate('/niveles');
-      }
-      if (rerenderCallback) {
-        rerenderCallback();
-      }
+      const targetRoute = filter === 'matematicas' ? '/matematicas' : filter === 'espanol' ? '/espanol' : '/niveles';
+      Router.navigate(targetRoute);
     });
   });
 

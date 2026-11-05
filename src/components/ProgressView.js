@@ -4,14 +4,16 @@ import { SoundService } from '../services/SoundService.js';
 import { Router } from '../router/Router.js';
 import { renderAriMascot, bindAriMascotEvents } from './AriMascot.js';
 import { showConfirmModal } from './ConfirmModal.js';
+import { LEVEL_STATUS_META, renderStarsHtml } from '../utils/levelStatus.js';
 import { escapeHtml } from '../utils/escapeHtml.js';
 
-export function renderProgressView() {
+export function renderProgressView(focus = 'resumen') {
+  const activeTab = focus === 'logros' ? 'logros' : 'resumen';
   const state = StorageService.getState();
   const safeName = escapeHtml(state.playerName);
   const totalStars = StorageService.getTotalStars();
   const maxStars = StorageService.getMaxPossibleStars();
-  const completedLevels = Object.values(state.levels).filter((l) => l.completed).length;
+  const completedLevels = StorageService.getCompletedCount();
   const mathPercent = StorageService.getSubjectProgress('matematicas');
   const espPercent = StorageService.getSubjectProgress('espanol');
   const globalAccuracy =
@@ -20,7 +22,7 @@ export function renderProgressView() {
       : 0;
 
   return `
-    <section class="progress-view view-fade-anim" data-component="ProgressView">
+    <section class="progress-view view-fade-anim" data-component="ProgressView" data-focus="${activeTab}">
       <div class="section-header-row">
         <div>
           <span class="hero-pill">🏅 Panel del Estudiante • ${state.selectedGrade}° Grado</span>
@@ -30,6 +32,28 @@ export function renderProgressView() {
           </p>
         </div>
         <div class="progress-header-actions">
+          <div class="category-tabs progress-subtabs" role="tablist" aria-label="Secciones de progreso">
+            <button
+              type="button"
+              role="tab"
+              id="btn-prog-tab-resumen"
+              class="category-tab-btn ${activeTab === 'resumen' ? 'active' : ''}"
+              data-progress-tab="/progreso"
+              aria-selected="${activeTab === 'resumen' ? 'true' : 'false'}"
+            >
+              📊 Resumen General
+            </button>
+            <button
+              type="button"
+              role="tab"
+              id="btn-prog-tab-logros"
+              class="category-tab-btn ${activeTab === 'logros' ? 'active' : ''}"
+              data-progress-tab="/logros"
+              aria-selected="${activeTab === 'logros' ? 'true' : 'false'}"
+            >
+              🏆 Medallas (${state.achievements.length}/${ACHIEVEMENTS_DATA.length})
+            </button>
+          </div>
           <button type="button" class="btn btn-primary" id="btn-progress-to-map">
             🗺️ Ir al Mapa
           </button>
@@ -94,7 +118,7 @@ export function renderProgressView() {
       </div>
 
       <div class="progress-main-columns">
-        <div class="achievements-section">
+        <div class="achievements-section" id="achievements-panel">
           <h2 class="subsection-title">🎖️ Medallas y Logros (${state.achievements.length}/${ACHIEVEMENTS_DATA.length})</h2>
           <div class="achievements-grid">
             ${ACHIEVEMENTS_DATA.map((ach) => {
@@ -150,22 +174,18 @@ export function renderProgressView() {
             <tbody>
               ${LEVELS_DATA.map((lvl) => {
                 const isUnlocked = StorageService.isLevelUnlocked(lvl.id);
-                const ls = state.levels[lvl.id] || {
-                  completed: false,
-                  stars: 0,
-                  bestScore: 0,
-                  bestAccuracy: 0,
-                  attempts: 0
-                };
+                const ls = StorageService.getLevelState(lvl.id);
+                const statusKey = StorageService.getLevelStatus(lvl.id);
+                const statusMeta = LEVEL_STATUS_META[statusKey];
                 return `
                   <tr data-progress-row="${lvl.id}">
-                    <td><strong>${lvl.icon} Nivel ${lvl.id}: ${lvl.unitLabel}</strong></td>
+                    <td><strong>${lvl.icon} Nivel ${lvl.id}: ${escapeHtml(lvl.unitLabel)}</strong></td>
                     <td>
-                      <span class="status-pill ${ls.completed ? 'pill-completed' : isUnlocked ? 'pill-unlocked' : 'pill-locked'}">
-                        ${ls.completed ? '✅ Completado' : isUnlocked ? '🔓 Disponible' : '🔒 Bloqueado'}
+                      <span class="status-pill ${ls.completed ? 'pill-completed' : isUnlocked ? 'pill-unlocked' : 'pill-locked'} ${statusMeta.className}">
+                        ${statusMeta.label}
                       </span>
                     </td>
-                    <td>${[1, 2, 3].map((s) => (s <= ls.stars ? '⭐' : '☆')).join('')}</td>
+                    <td>${renderStarsHtml(ls.stars, 'star-item')}</td>
                     <td>${ls.bestScore} pts</td>
                     <td>${ls.bestAccuracy}%</td>
                     <td>${ls.attempts}</td>
@@ -190,8 +210,24 @@ export function renderProgressView() {
   `;
 }
 
-export function bindProgressViewEvents(rootElement, rerenderCallback) {
+export function bindProgressViewEvents(rootElement, rerenderCallback, focus = 'resumen') {
   bindAriMascotEvents(rootElement);
+
+  rootElement.querySelectorAll('[data-progress-tab]').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      SoundService.play('click');
+      Router.navigate(tab.getAttribute('data-progress-tab'));
+    });
+  });
+
+  if (focus === 'logros') {
+    const achPanel = rootElement.querySelector('#achievements-panel');
+    if (achPanel && typeof achPanel.scrollIntoView === 'function') {
+      setTimeout(() => {
+        achPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 60);
+    }
+  }
 
   const toMapBtn = rootElement.querySelector('#btn-progress-to-map');
   if (toMapBtn) {
