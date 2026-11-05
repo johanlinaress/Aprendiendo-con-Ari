@@ -10,7 +10,8 @@ export const NAV_ITEMS = [
   { id: 'materias', path: '/materias', icon: '📚', label: 'Materias' },
   { id: 'niveles', path: '/niveles', icon: '🗺️', label: 'Niveles' },
   { id: 'practica', path: '/practica', icon: '⚡', label: 'Práctica' },
-  { id: 'progreso', path: '/progreso', icon: '🏅', label: 'Progreso' }
+  { id: 'progreso', path: '/progreso', icon: '🏅', label: 'Progreso' },
+  { id: 'donaciones', path: '/donaciones', icon: '💖', label: 'Donaciones', isHighlighted: true }
 ];
 
 export function renderNavbar(currentRoute) {
@@ -53,11 +54,12 @@ export function renderNavbar(currentRoute) {
         <nav class="navbar-links" id="navbar-links-group" aria-label="Navegación principal">
           ${NAV_ITEMS.map((item) => {
             const isActive = item.id === activeSection;
+            const highlightClass = item.isHighlighted ? 'nav-link-highlight' : '';
             return `
               <button
                 type="button"
                 id="nav-${item.id}"
-                class="nav-link-btn ${isActive ? 'active' : ''}"
+                class="nav-link-btn ${isActive ? 'active' : ''} ${highlightClass}"
                 data-nav="${item.path}"
                 ${isActive ? 'aria-current="page"' : ''}
               >

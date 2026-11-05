@@ -14,7 +14,9 @@ const STATIC_ROUTES = {
   '/espanol': { name: 'niveles', section: 'niveles', title: 'Español', params: { subject: 'espanol' } },
   '/practica': { name: 'practica', section: 'practica', title: 'Práctica libre' },
   '/progreso': { name: 'progreso', section: 'progreso', title: 'Mi progreso', params: { focus: 'resumen' } },
-  '/logros': { name: 'progreso', section: 'progreso', title: 'Mis logros', params: { focus: 'logros' } }
+  '/logros': { name: 'progreso', section: 'progreso', title: 'Mis logros', params: { focus: 'logros' } },
+  '/donaciones': { name: 'donaciones', section: 'donaciones', title: 'Donaciones y Apoyo' },
+  '/apoyar': { name: 'donaciones', section: 'donaciones', title: 'Donaciones y Apoyo' }
 };
 
 export const DEFAULT_PATH = '/inicio';

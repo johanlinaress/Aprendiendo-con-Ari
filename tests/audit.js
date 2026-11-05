@@ -230,6 +230,7 @@ async function runAudit() {
       { hash: '#/practica', component: 'PracticeView' },
       { hash: '#/progreso', component: 'ProgressView' },
       { hash: '#/logros', component: 'ProgressView' },
+      { hash: '#/donaciones', component: 'DonationsView' },
       { hash: '#/ruta-no-existente', component: 'NotFoundView' }
     ];
 
@@ -249,6 +250,30 @@ async function runAudit() {
         `Navbar=${hasNavbar}, Footer=${hasFooter}, AriMascot=${hasAri}`
       );
     }
+
+    // Verify Donations View content and options (Nequi, ARQ, PayPal)
+    await cdp.eval(`window.location.hash = '#/donaciones';`);
+    await sleep(90);
+    const donationsCheck = await cdp.eval(`
+      (() => {
+        const title = document.querySelector('.donations-main-heading')?.textContent.trim() || '';
+        const hasNequi = Boolean(document.querySelector('#card-nequi #nequi-qr-img') && document.querySelector('#val-nequi-llave'));
+        const hasArq = Boolean(document.querySelector('#card-arq #val-arq-user') && document.querySelector('#val-arq-user').textContent.includes('$sttive'));
+        const hasPaypal = Boolean(document.querySelector('#card-paypal #val-paypal-email') && document.querySelector('#val-paypal-email').textContent.includes('johansttivelinaresb@gmail.com'));
+        return {
+          titleMatches: title.includes('¿Quieres apoyar al creador para ver más páginas como esta?'),
+          hasNequi,
+          hasArq,
+          hasPaypal
+        };
+      })()
+    `);
+    assertCheck(
+      '1. Componentes',
+      'Página de Donaciones muestra el encabezado de apoyo al creador y las 3 opciones (Nequi con QR, ARQ $sttive, PayPal)',
+      donationsCheck.titleMatches && donationsCheck.hasNequi && donationsCheck.hasArq && donationsCheck.hasPaypal,
+      JSON.stringify(donationsCheck)
+    );
 
     // Verify subject-specific map headings (#/matematicas y #/espanol)
     await cdp.eval(`window.location.hash = '#/matematicas';`);

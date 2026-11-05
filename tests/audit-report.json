@@ -132,6 +132,16 @@
     },
     {
       "category": "2. Rutas",
+      "description": "Ruta #/donaciones renderiza DonationsView",
+      "details": "Componente=DonationsView"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Componentes globales (Navbar, Footer, AriMascot) presentes en #/donaciones",
+      "details": "Navbar=true, Footer=true, AriMascot=true"
+    },
+    {
+      "category": "2. Rutas",
       "description": "Ruta #/ruta-no-existente renderiza NotFoundView",
       "details": "Componente=NotFoundView"
     },
@@ -139,6 +149,11 @@
       "category": "1. Componentes",
       "description": "Componentes globales (Navbar, Footer, AriMascot) presentes en #/ruta-no-existente",
       "details": "Navbar=true, Footer=true, AriMascot=true"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Página de Donaciones muestra el encabezado de apoyo al creador y las 3 opciones (Nequi con QR, ARQ $sttive, PayPal)",
+      "details": "{\"titleMatches\":true,\"hasNequi\":true,\"hasArq\":true,\"hasPaypal\":true}"
     },
     {
       "category": "2. Rutas",
@@ -468,7 +483,7 @@
     {
       "category": "7. Persistencia de progreso",
       "description": "Recargar el navegador recupera exactamente nombre, puntaje, 30/30 estrellas, 10 unidades desbloqueadas y las 9 medallas desde localStorage",
-      "details": "{\"playerName\":\"Valentina\",\"totalScore\":36600,\"totalStars\":30,\"unlockedCount\":10,\"achievementsCount\":9,\"navScoreText\":\"36600\",\"navStarsText\":\"30/30\"}"
+      "details": "{\"playerName\":\"Valentina\",\"totalScore\":36530,\"totalStars\":30,\"unlockedCount\":10,\"achievementsCount\":9,\"navScoreText\":\"36530\",\"navStarsText\":\"30/30\"}"
     },
     {
       "category": "3. Botones",

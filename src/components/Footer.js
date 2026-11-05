@@ -15,6 +15,7 @@ export function renderFooter() {
           <button type="button" class="footer-nav-btn" data-footer-nav="/niveles">Mapa de Niveles</button>
           <button type="button" class="footer-nav-btn" data-footer-nav="/practica">Práctica Libre</button>
           <button type="button" class="footer-nav-btn" data-footer-nav="/progreso">Mi Progreso</button>
+          <button type="button" class="footer-nav-btn footer-donation-btn" data-footer-nav="/donaciones">💖 Donaciones</button>
         </div>
       </div>
     </footer>

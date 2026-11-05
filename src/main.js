@@ -10,6 +10,7 @@ import { renderLevelsMapView, bindLevelsMapViewEvents } from './components/Level
 import { renderExerciseView, bindExerciseViewEvents, getActiveSession } from './components/ExerciseView.js';
 import { renderPracticeView, bindPracticeViewEvents } from './components/PracticeView.js';
 import { renderProgressView, bindProgressViewEvents } from './components/ProgressView.js';
+import { renderDonationsView, bindDonationsViewEvents } from './components/DonationsView.js';
 import { renderNotFoundView, bindNotFoundViewEvents } from './components/NotFoundView.js';
 import { renderSceneBackgroundSvg } from './components/Illustrations.js';
 import { enhanceA11yKeyboardNavigation } from './utils/a11yKeyboard.js';
@@ -50,6 +51,10 @@ const VIEWS = {
   progreso: {
     render: (route) => renderProgressView(route.params.focus),
     bind: (root, rerender, route) => bindProgressViewEvents(root, rerender, route.params.focus)
+  },
+  donaciones: {
+    render: () => renderDonationsView(),
+    bind: (root) => bindDonationsViewEvents(root)
   },
   notfound: {
     render: (route) => renderNotFoundView(route.path),
