@@ -589,6 +589,10 @@ class StorageManager {
     this.persist();
     return this.state;
   }
+
+  normalizeAnswerText(value) {
+    return normalizeAnswerText(value);
+  }
 }
 
 export const StorageService = new StorageManager();

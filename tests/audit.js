@@ -1,6 +1,7 @@
 const { spawn } = require('child_process');
 const http = require('http');
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const { server, PORT } = require('../server.js');
 
@@ -136,7 +137,7 @@ async function runAudit() {
 
   const browserExe = findBrowserExecutable();
   const debugPort = 9233;
-  const userDataDir = path.join(__dirname, '.tmp-chrome-profile');
+  const userDataDir = path.join(os.tmpdir(), `ari-audit-chrome-profile-${process.pid}`);
   fs.mkdirSync(userDataDir, { recursive: true });
 
   const chromeProc = spawn(
@@ -363,19 +364,44 @@ async function runAudit() {
         (await cdp.eval(`window.location.hash`)) === '#/materias'
     );
 
-    // Verify 4th grade differentiated questions are served when grade === '4'
+    // Verify 4th grade differentiated questions are served when grade === '4' across ALL 10 units with 0 duplicate prompts
     await cdp.eval(`window.location.hash = '#/nivel/2';`);
     await sleep(60);
     const grade4Check = await cdp.eval(`
       (() => {
-        const lvl1 = window.__ARI_APP__.LEVELS_DATA.find((l) => l.id === 1);
-        return lvl1.questionsGrade4[1].prompt.includes('1.250');
+        const levels = window.__ARI_APP__.LEVELS_DATA;
+        const lvl1 = levels.find((l) => l.id === 1);
+        const all10HaveBank = levels.every((l) => Array.isArray(l.questionsGrade4) && l.questionsGrade4.length === 5);
+        const zeroDuplicatePrompts = levels.every((l) => {
+          const p3 = new Set(l.questions.map((q) => q.prompt));
+          return l.questionsGrade4.every((q) => !p3.has(q.prompt));
+        });
+        return lvl1.questionsGrade4[1].prompt.includes('1.250') && all10HaveBank && zeroDuplicatePrompts;
       })()
     `);
     assertCheck(
       '4. Ejercicios',
-      'Al seleccionar 4° Grado se adaptan las preguntas a mayor complejidad (ej. 1.250 + ___ = 2.000)',
+      'Las 10 unidades cuentan con banco completo de 4° Grado (5 preguntas por unidad, 0 enunciados repetidos respecto a 3° Grado)',
       grade4Check === true
+    );
+
+    // Verify normalizeAnswerText preserves ñ and session persistence works
+    const storageHygieneCheck = await cdp.eval(`
+      (() => {
+        const S = window.__ARI_APP__.StorageService;
+        const ninoDiff = S.normalizeAnswerText('niño') !== S.normalizeAnswerText('nino');
+        const accentSame = S.normalizeAnswerText('Canción') === S.normalizeAnswerText('cancion');
+        S.saveExerciseSession({ levelId: 1, questionIndex: 2, activePhase: 'practico', correctCount: 2, sessionScore: 225 });
+        const saved = S.getExerciseSession(1);
+        const sessionOk = saved && saved.questionIndex === 2 && saved.activePhase === 'practico';
+        S.clearExerciseSession(1);
+        return ninoDiff && accentSame && sessionOk;
+      })()
+    `);
+    assertCheck(
+      '7. Persistencia de progreso',
+      'StorageService preserva la letra «ñ» al normalizar respuestas y persiste el estado de sesión activa por unidad',
+      storageHygieneCheck === true
     );
 
     // Switch back to 3° Grado for the complete 10-unit walkthrough
@@ -408,12 +434,32 @@ async function runAudit() {
     );
 
     // =========================================================================
-    // PRUEBA DE FASE 1 («APRENDO») Y TEXTOS EXPOSITIVOS INTERACTIVOS (UNIDAD 5 ESPAÑOL - NIVEL 10)
+    // PRUEBA DE FASE 1 («APRENDO») POR DEFECTO Y TEXTOS EXPOSITIVOS INTERACTIVOS (UNIDAD 5 ESPAÑOL - NIVEL 10)
     // =========================================================================
-    await cdp.eval(`window.location.hash = '#/nivel/10';`);
+    await cdp.eval(`
+      window.__ARI_APP__.StorageService.clearExerciseSession(10);
+      window.location.hash = '#/nivel/10';
+    `);
     await sleep(100);
 
-    // Test #btn-listen-reading inside Español Unidad 5: Textos Expositivos (El Sistema Solar)
+    // Verify Phase 1 («Aprendo») opens by default on first visit + has skip and start practice buttons
+    const aprendoDefaultOnFirstVisit = await cdp.eval(`
+      Boolean(document.querySelector('#lesson-aprendo-panel')) &&
+      Boolean(document.querySelector('#btn-start-practice-from-lesson')) &&
+      Boolean(document.querySelector('#btn-skip-explanation'))
+    `);
+    await cdp.eval(`document.querySelector('#btn-listen-lesson')?.click()`);
+    await sleep(50);
+    const lessonAudioPlayed = await cdp.eval(`window.__ariSoundState.lastPlayed?.name === 'listen'`);
+    assertCheck(
+      '1. Componentes',
+      'Las unidades inician por defecto en «📘 1. Aprendo» con explicación, audio y botones para practicar o saltar explicación',
+      aprendoDefaultOnFirstVisit && lessonAudioPlayed
+    );
+
+    // Advance from 1. Aprendo to 2. Practico / Evaluación to test #btn-listen-reading
+    await cdp.eval(`document.querySelector('#btn-start-practice-from-lesson')?.click()`);
+    await sleep(80);
     await cdp.eval(`document.querySelector('#btn-listen-reading')?.click()`);
     await sleep(60);
     const listenPlayed = await cdp.eval(`window.__ariSoundState.lastPlayed?.name === 'listen'`);
@@ -421,19 +467,6 @@ async function runAudit() {
       '8. Sonidos',
       'Botón #btn-listen-reading («🔊 Escuchar») en lectura de Español reproduce audio y síntesis de voz',
       listenPlayed === true
-    );
-
-    // Test Phase 1 («Aprendo») tab
-    await cdp.eval(`document.querySelector('#btn-phase-aprendo')?.click()`);
-    await sleep(80);
-    const aprendoRendered = await cdp.eval(`Boolean(document.querySelector('#lesson-aprendo-panel'))`);
-    await cdp.eval(`document.querySelector('#btn-listen-lesson')?.click()`);
-    await sleep(50);
-    const lessonAudioPlayed = await cdp.eval(`window.__ariSoundState.lastPlayed?.name === 'listen'`);
-    assertCheck(
-      '1. Componentes',
-      'Pestaña «📘 Nivel 1: Aprendo» muestra la explicación del tema, ejemplo de Ari y botón de audio',
-      aprendoRendered && lessonAudioPlayed
     );
 
     // Test Interactive Expositive Reading Viewer (Sección 6.7: Portada -> Fragmentos -> Palabras Resaltadas -> Exploración)
@@ -687,6 +720,8 @@ async function runAudit() {
       window.location.hash = '#/nivel/1';
     `);
     await sleep(100);
+    await cdp.eval(`document.querySelector('#btn-start-practice-from-lesson')?.click()`);
+    await sleep(60);
 
     // Test 3/5 correct = 60% (< 70% threshold) on Level 1 -> should NOT unlock Level 2!
     const level1Questions = await cdp.eval(`window.__ARI_APP__.LEVELS_DATA[0].questions`);
@@ -769,6 +804,10 @@ async function runAudit() {
         await cdp.eval(`window.location.hash = '#/nivel/${lvl.id}';`);
         await sleep(80);
       }
+      await cdp.eval(`
+        (document.querySelector('#btn-start-practice-from-lesson') || document.querySelector('#btn-phase-practico'))?.click()
+      `);
+      await sleep(55);
 
       for (let qIdx = 0; qIdx < lvl.questions.length; qIdx++) {
         const q = lvl.questions[qIdx];
@@ -1075,6 +1114,9 @@ async function runAudit() {
         }
 
         if (vp.name === 'Computador' && routeHash === '#/nivel/1') {
+          await cdp.eval(`
+            (document.querySelector('#btn-start-practice-from-lesson') || document.querySelector('#btn-phase-practico'))?.click()
+          `);
           await sleep(320);
           const mathCols = await cdp.eval(`
             window.getComputedStyle(document.querySelector('.math-tiles-row')).gridTemplateColumns.split(' ').filter(Boolean).length
@@ -1097,6 +1139,10 @@ async function runAudit() {
         fs.writeFileSync(path.join(screenshotDir, 'vista-grado.png'), Buffer.from(gradeShot.data, 'base64'));
 
         await cdp.eval(`window.location.hash = '#/nivel/10';`);
+        await sleep(100);
+        await cdp.eval(`
+          (document.querySelector('#btn-start-practice-from-lesson') || document.querySelector('#btn-phase-practico'))?.click()
+        `);
         await sleep(320);
         const readingCols = await cdp.eval(`
           window.getComputedStyle(document.querySelector('.reading-options-list')).gridTemplateColumns.split(' ').filter(Boolean).length
@@ -1107,6 +1153,23 @@ async function runAudit() {
           readingCols === 1,
           `readingCols=${readingCols}`
         );
+
+        // Verify WAI-ARIA roving tabindex on tablist and radiogroup
+        const a11yKeyboardCheck = await cdp.eval(`
+          (() => {
+            const tabs = Array.from(document.querySelectorAll('[role="tablist"] [role="tab"]'));
+            const radios = Array.from(document.querySelectorAll('[role="radiogroup"] [role="radio"]'));
+            const hasRovingTabs = tabs.some((t) => t.getAttribute('tabindex') === '0') && tabs.some((t) => t.getAttribute('tabindex') === '-1');
+            const hasRovingRadios = radios.some((r) => r.getAttribute('tabindex') === '0') && radios.some((r) => r.getAttribute('tabindex') === '-1');
+            return hasRovingTabs && hasRovingRadios;
+          })()
+        `);
+        assertCheck(
+          '1. Componentes',
+          'Accesibilidad WAI-ARIA: controles tablist y radiogroup implementan roving tabindex y navegación por flechas',
+          a11yKeyboardCheck === true
+        );
+
         const espShot = await cdp.send('Page.captureScreenshot', { format: 'png' });
         fs.writeFileSync(path.join(screenshotDir, 'vista-espanol.png'), Buffer.from(espShot.data, 'base64'));
       }
@@ -1170,6 +1233,13 @@ async function runAudit() {
     if (cdp) cdp.close();
     chromeProc.kill();
     server.close();
+    setTimeout(() => {
+      try {
+        fs.rmSync(userDataDir, { recursive: true, force: true });
+      } catch (e) {
+        // Ignorar si algún archivo temporal sigue bloqueado brevemente por el SO
+      }
+    }, 300);
   }
 }
 

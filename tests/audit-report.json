@@ -192,7 +192,12 @@
     },
     {
       "category": "4. Ejercicios",
-      "description": "Al seleccionar 4° Grado se adaptan las preguntas a mayor complejidad (ej. 1.250 + ___ = 2.000)",
+      "description": "Las 10 unidades cuentan con banco completo de 4° Grado (5 preguntas por unidad, 0 enunciados repetidos respecto a 3° Grado)",
+      "details": ""
+    },
+    {
+      "category": "7. Persistencia de progreso",
+      "description": "StorageService preserva la letra «ñ» al normalizar respuestas y persiste el estado de sesión activa por unidad",
       "details": ""
     },
     {
@@ -211,13 +216,13 @@
       "details": ""
     },
     {
-      "category": "8. Sonidos",
-      "description": "Botón #btn-listen-reading («🔊 Escuchar») en lectura de Español reproduce audio y síntesis de voz",
+      "category": "1. Componentes",
+      "description": "Las unidades inician por defecto en «📘 1. Aprendo» con explicación, audio y botones para practicar o saltar explicación",
       "details": ""
     },
     {
-      "category": "1. Componentes",
-      "description": "Pestaña «📘 Nivel 1: Aprendo» muestra la explicación del tema, ejemplo de Ari y botón de audio",
+      "category": "8. Sonidos",
+      "description": "Botón #btn-listen-reading («🔊 Escuchar») en lectura de Español reproduce audio y síntesis de voz",
       "details": ""
     },
     {
@@ -693,7 +698,7 @@
     {
       "category": "10. Responsive",
       "description": "Computador (1280x800) en #/nivel/1 sin desbordamiento horizontal",
-      "details": "scrollWidth=1280, clientWidth=1280"
+      "details": "scrollWidth=1265, clientWidth=1265"
     },
     {
       "category": "10. Responsive",
@@ -719,6 +724,11 @@
       "category": "10. Responsive",
       "description": "En Español, las opciones de lectura (.reading-options-list) se apilan verticalmente en 1 columna con botones radio",
       "details": "readingCols=1"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Accesibilidad WAI-ARIA: controles tablist y radiogroup implementan roving tabindex y navegación por flechas",
+      "details": ""
     },
     {
       "category": "10. Responsive",
