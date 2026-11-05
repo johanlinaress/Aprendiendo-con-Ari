@@ -753,7 +753,7 @@
     {
       "category": "10. Responsive",
       "description": "Portátil-1366 (1366x768) en #/nivel/1 sin desbordamiento horizontal",
-      "details": "scrollWidth=1366, clientWidth=1366"
+      "details": "scrollWidth=1351, clientWidth=1351"
     },
     {
       "category": "10. Responsive",

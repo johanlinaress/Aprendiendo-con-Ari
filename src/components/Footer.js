@@ -8,6 +8,7 @@ export function renderFooter() {
         <div class="footer-brand">
           <span class="footer-logo">🦉 Aprendiendo con Ari</span>
           <p class="footer-tagline">Plataforma interactiva para aprender matemáticas, lectura, lógica, ciencias y geometría.</p>
+          <p class="footer-copyright">© 2026 Johan Linares. Todos los derechos reservados.</p>
         </div>
         <div class="footer-links" role="navigation" aria-label="Enlaces del pie de página">
           <button type="button" class="footer-nav-btn" data-footer-nav="/inicio">Inicio</button>

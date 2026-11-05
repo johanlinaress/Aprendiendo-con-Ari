@@ -165,9 +165,12 @@ Aprendiendo-con-Ari/
 
 ---
 
-## 👨‍💻 Autor y Licencia
+## ⚖️ Derechos de Autor y Propiedad Intelectual
 
-Desarrollado con dedicación para brindar a los niños de primaria una experiencia de aprendizaje alegre, accesible y motivadora.
+**Copyright © 2026 Johan Linares. Todos los derechos reservados.**
 
-- **Repositorio:** [github.com/johanlinaress/Aprendiendo-con-Ari](https://github.com/johanlinaress/Aprendiendo-con-Ari)
-- **Licencia:** MIT
+Este proyecto, su código fuente, arquitectura técnica, diseño gráfico, metodología didáctica y el personaje **"Ari"** (búho sabio en SVG, diseño visual, expresiones e identidad) son una obra original y propiedad intelectual exclusiva de **Johan Linares**.
+
+- **Prohibición de copia o plagio:** Queda estrictamente prohibida la copia, reproducción, duplicación, distribución, ingeniería inversa, modificación o explotación comercial o no autorizada de cualquier parte de esta plataforma, su concepto o su personaje, en cualquier medio digital o físico, sin autorización previa y por escrito del autor.
+- **Términos legales completos:** Consulta el archivo [`LICENSE`](./LICENSE) para revisar los términos oficiales de protección de propiedad intelectual.
+- **Contacto y colaboraciones:** [github.com/johanlinaress/Aprendiendo-con-Ari](https://github.com/johanlinaress/Aprendiendo-con-Ari)
