@@ -122,17 +122,16 @@ export function renderLevelsMapView(routeSubject = 'todas') {
                 </div>
 
                 <div class="level-card-body">
-                  <div class="level-icon-circle" style="background: ${lvl.badgeColor}18; color: ${lvl.badgeColor}">
-                    ${isUnlocked ? lvl.icon : '🔒'}
+                  <div class="level-title-row">
+                    <div class="level-icon-circle" style="background: ${lvl.badgeColor}18; color: ${lvl.badgeColor}">
+                      ${isUnlocked ? lvl.icon : '🔒'}
+                    </div>
+                    <div class="level-title-text">
+                      <h2 class="level-card-title">${escapeHtml(lvl.title)}</h2>
+                      <p class="level-card-subtitle">${escapeHtml(lvl.subtitle)}</p>
+                    </div>
                   </div>
-                  <h2 class="level-card-title">${escapeHtml(lvl.title)}</h2>
-                  <p class="level-card-subtitle">${escapeHtml(lvl.subtitle)}</p>
                   <p class="level-card-description">${escapeHtml(lvl.description)}</p>
-                  <div class="unit-phases-pills" aria-label="Etapas de la unidad">
-                    <span class="phase-mini-pill">📘 1. Aprendo</span>
-                    <span class="phase-mini-pill">✏️ 2. Practico</span>
-                    <span class="phase-mini-pill">🏅 3. Demuestro</span>
-                  </div>
                 </div>
 
                 <div class="level-card-stats">

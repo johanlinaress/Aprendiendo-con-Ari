@@ -66,14 +66,16 @@ function renderUnitsPreviewSection(state) {
             return `
               <article class="world-preview-card ${isUnlocked ? 'world-unlocked' : 'world-locked'}" data-level-card="${lvl.id}">
                 <div class="world-card-top">
-                  <span class="world-icon" style="background: ${lvl.badgeColor}20; color: ${lvl.badgeColor}">${lvl.icon}</span>
+                  <div class="level-title-row">
+                    <span class="world-icon" style="background: ${lvl.badgeColor}20; color: ${lvl.badgeColor}">${lvl.icon}</span>
+                    <h3 class="world-card-title">${escapeHtml(lvl.title)}</h3>
+                  </div>
                   <span class="world-status-badge ${isUnlocked ? 'badge-unlocked' : 'badge-locked'} ${statusMeta.className}">
                     ${statusMeta.label}
                   </span>
                 </div>
                 <div class="world-card-content">
-                  <h3 class="world-card-title">${escapeHtml(lvl.unitLabel)}</h3>
-                  <p class="world-card-desc">${escapeHtml(lvl.description)}</p>
+                  <p class="world-card-desc">${escapeHtml(lvl.subtitle)}</p>
                 </div>
                 <div class="world-card-footer">
                   <div class="world-stars" aria-label="${lvlProgress.stars} de 3 estrellas">

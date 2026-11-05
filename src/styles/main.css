@@ -2586,10 +2586,23 @@ body {
 }
 
 /* Consistencia de tamaños en tarjetas de unidades y estados */
+.level-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.level-title-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
 .world-card-content,
 .level-card-body {
   display: flex;
   flex-direction: column;
+  gap: 0.55rem;
   flex: 1;
 }
 
