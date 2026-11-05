@@ -2868,5 +2868,99 @@ h3,
     width: 100%;
     justify-content: space-between;
   }
+
+  /* Optimización First-Fold Móvil (375x667): compactar cabecera de inicio para mostrar materias antes */
+  .home-hero-card {
+    padding: 0.75rem 0.9rem !important;
+    gap: 0.55rem !important;
+  }
+
+  .hero-top-welcome-row {
+    gap: 0.45rem !important;
+  }
+
+  .hero-ari-stage {
+    flex-direction: row !important;
+    align-items: center !important;
+    padding: 0.45rem 0.65rem !important;
+    gap: 0.55rem !important;
+  }
+
+  .hero-ari-mascot .ari-character-wrapper {
+    gap: 0.4rem !important;
+  }
+
+  .hero-ari-mascot .ari-svg-container {
+    width: 64px !important;
+    height: 64px !important;
+  }
+
+  .hero-ari-mascot .ari-speech-bubble {
+    padding: 0.45rem 0.65rem !important;
+    font-size: 0.82rem !important;
+  }
+
+  .hero-title {
+    font-size: 1.25rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.15rem !important;
+  }
+
+  .hero-description {
+    font-size: 0.85rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .student-inline-row {
+    padding: 0.4rem 0.55rem !important;
+    margin-top: 0.15rem !important;
+  }
 }
+
+/* Acciones duales en la fase 1. Aprendo */
+.lesson-aprendo-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.85rem;
+}
+
+/* Indicador de foco de teclado de alto contraste (WCAG 2.4.7 / 2.4.11) */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[role="tab"]:focus-visible,
+[role="radio"]:focus-visible,
+[tabindex]:not([tabindex="-1"]):focus-visible {
+  outline: 3px solid #f59e0b !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 6px rgba(114, 81, 181, 0.28) !important;
+}
+
+/* Respeto a la preferencia del sistema de reducir movimiento (WCAG 2.3.3) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .ari-float,
+  .ari-jump,
+  .ari-svg,
+  .view-fade-in,
+  .pulse-correct,
+  .shake-wrong,
+  .star-earned {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
 

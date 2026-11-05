@@ -12,6 +12,7 @@ import { renderPracticeView, bindPracticeViewEvents } from './components/Practic
 import { renderProgressView, bindProgressViewEvents } from './components/ProgressView.js';
 import { renderNotFoundView, bindNotFoundViewEvents } from './components/NotFoundView.js';
 import { renderSceneBackgroundSvg } from './components/Illustrations.js';
+import { enhanceA11yKeyboardNavigation } from './utils/a11yKeyboard.js';
 
 const APP_TITLE = 'Aprendiendo con Ari';
 
@@ -115,6 +116,7 @@ function renderApp(route, { isRerender = false } = {}) {
   if (typeof cleanup === 'function') {
     activeCleanup = cleanup;
   }
+  enhanceA11yKeyboardNavigation(shell);
 
   if (!isRerender) {
     document.title = route.title ? `${route.title} · ${APP_TITLE}` : APP_TITLE;
