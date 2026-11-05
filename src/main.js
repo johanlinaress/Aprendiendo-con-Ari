@@ -10,155 +10,132 @@ import { renderLevelsMapView, bindLevelsMapViewEvents } from './components/Level
 import { renderExerciseView, bindExerciseViewEvents } from './components/ExerciseView.js';
 import { renderPracticeView, bindPracticeViewEvents } from './components/PracticeView.js';
 import { renderProgressView, bindProgressViewEvents } from './components/ProgressView.js';
-import { renderAriMascot, bindAriMascotEvents } from './components/AriMascot.js';
+import { renderNotFoundView, bindNotFoundViewEvents } from './components/NotFoundView.js';
 import { renderSceneBackgroundSvg } from './components/Illustrations.js';
-import { escapeHtml } from './utils/escapeHtml.js';
 
-function renderNotFoundView(routePath) {
-  return `
-    <section class="not-found-view view-fade-anim" data-component="NotFoundView">
-      <div class="guard-card">
-        <div class="guard-icon">🧭</div>
-        <h1>Ruta no encontrada</h1>
-        <p>La dirección <code>${escapeHtml(routePath)}</code> no existe en Aprendiendo con Ari.</p>
-        <div class="guard-mascot">
-          ${renderAriMascot({
-            mood: 'thinking',
-            message: '¡Parece que nos desviamos del mapa! Volvamos al inicio o al mapa de niveles.',
-            compact: true,
-            showGreetButton: false
-          })}
-        </div>
-        <div class="guard-actions">
-          <button type="button" class="btn btn-primary btn-lg" id="btn-404-home">
-            🏠 Volver al Inicio
-          </button>
-          <button type="button" class="btn btn-outline btn-lg" id="btn-404-map">
-            🗺️ Ir al Mapa de Niveles
-          </button>
-        </div>
-      </div>
-    </section>
-  `;
-}
+const APP_TITLE = 'Aprendiendo con Ari';
 
-function renderApp(route, preserveExerciseSession = false) {
-  const appRoot = document.getElementById('app');
-  if (!appRoot) return;
-
-  let mainContentHtml = '';
-
-  switch (route.name) {
-    case 'inicio':
-      mainContentHtml = renderHomeView('inicio');
-      break;
-    case 'materias':
-      mainContentHtml = renderHomeView('materias');
-      break;
-    case 'grado':
-      mainContentHtml = renderGradeSelectView();
-      break;
-    case 'niveles':
-      mainContentHtml = renderLevelsMapView(route.params?.subject);
-      break;
-    case 'nivel':
-      mainContentHtml = renderExerciseView(route.params.id, preserveExerciseSession);
-      break;
-    case 'practica':
-      mainContentHtml = renderPracticeView();
-      break;
-    case 'progreso':
-      mainContentHtml = renderProgressView();
-      break;
-    default:
-      mainContentHtml = renderNotFoundView(route.path);
-      break;
+/**
+ * Registro de vistas: cada ruta tiene UNA función de renderizado y UNA de eventos.
+ * - render(route, { isRerender }) devuelve el HTML de la vista.
+ * - bind(root, rerender, route) conecta eventos y opcionalmente devuelve una
+ *   función de limpieza (por ejemplo, para detener temporizadores).
+ */
+const VIEWS = {
+  inicio: {
+    render: () => renderHomeView('inicio'),
+    bind: (root, rerender) => bindHomeViewEvents(root, rerender)
+  },
+  materias: {
+    render: () => renderHomeView('materias'),
+    bind: (root, rerender) => bindHomeViewEvents(root, rerender)
+  },
+  grado: {
+    render: () => renderGradeSelectView(),
+    bind: (root) => bindGradeSelectViewEvents(root)
+  },
+  niveles: {
+    render: (route) => renderLevelsMapView(route.params.subject),
+    bind: (root) => bindLevelsMapViewEvents(root)
+  },
+  nivel: {
+    render: (route, { isRerender }) => renderExerciseView(route.params.id, isRerender),
+    bind: (root, rerender) => bindExerciseViewEvents(root, rerender)
+  },
+  practica: {
+    render: () => renderPracticeView(),
+    bind: (root, rerender) => bindPracticeViewEvents(root, rerender)
+  },
+  progreso: {
+    render: (route) => renderProgressView(route.params.focus),
+    bind: (root, rerender, route) => bindProgressViewEvents(root, rerender, route.params.focus)
+  },
+  notfound: {
+    render: (route) => renderNotFoundView(route.path),
+    bind: (root) => bindNotFoundViewEvents(root)
   }
+};
+
+let activeCleanup = null;
+
+function ensureShell(appRoot) {
+  let shell = appRoot.querySelector('.app-shell');
+  if (shell) return shell;
 
   appRoot.innerHTML = `
     <div class="app-shell">
+      <a class="skip-link" href="#main-content">Saltar al contenido</a>
       ${renderSceneBackgroundSvg()}
-      ${renderNavbar(route)}
-      <main class="app-main-container" id="main-content" tabindex="-1">
-        ${mainContentHtml}
-      </main>
+      <header class="app-navbar" data-component="Navbar"></header>
+      <main class="app-main-container" id="main-content" tabindex="-1"></main>
       ${renderFooter()}
     </div>
   `;
+  shell = appRoot.querySelector('.app-shell');
+  bindFooterEvents(shell);
 
-  bindNavbarEvents(appRoot);
-  bindFooterEvents(appRoot);
+  // El enlace de accesibilidad no debe cambiar la ruta (hash), solo mover el foco.
+  shell.querySelector('.skip-link')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    shell.querySelector('#main-content')?.focus();
+  });
+  return shell;
+}
 
-  switch (route.name) {
-    case 'inicio':
-    case 'materias':
-      bindHomeViewEvents(appRoot);
-      break;
-    case 'grado':
-      bindGradeSelectViewEvents(appRoot);
-      break;
-    case 'niveles':
-      bindLevelsMapViewEvents(appRoot, () => {
-        renderApp(Router.getCurrentRoute(), false);
-      });
-      break;
-    case 'nivel':
-      bindExerciseViewEvents(appRoot, (keepSession = true) => {
-        renderApp(Router.getCurrentRoute(), keepSession);
-      });
-      break;
-    case 'practica':
-      bindPracticeViewEvents(appRoot, () => {
-        renderApp(Router.getCurrentRoute(), false);
-      });
-      break;
-    case 'progreso':
-      bindProgressViewEvents(appRoot, () => {
-        renderApp(Router.getCurrentRoute(), false);
-      });
-      break;
-    default: {
-      bindAriMascotEvents(appRoot);
-      const btnHome = appRoot.querySelector('#btn-404-home');
-      const btnMap = appRoot.querySelector('#btn-404-map');
-      if (btnHome) {
-        btnHome.addEventListener('click', () => {
-          SoundService.play('click');
-          Router.navigate('/inicio');
-        });
-      }
-      if (btnMap) {
-        btnMap.addEventListener('click', () => {
-          SoundService.play('click');
-          Router.navigate('/niveles');
-        });
-      }
-      break;
-    }
+/**
+ * Renderiza la ruta actual.
+ * @param {object} route  Ruta parseada por el Router.
+ * @param {object} opts   isRerender=true cuando la vista se actualiza sin cambiar de ruta
+ *                        (respuesta seleccionada, pestaña interna, etc.).
+ */
+function renderApp(route, { isRerender = false } = {}) {
+  const appRoot = document.getElementById('app');
+  if (!appRoot) return;
+
+  if (typeof activeCleanup === 'function') {
+    activeCleanup();
+  }
+  activeCleanup = null;
+
+  const view = VIEWS[route.name] || VIEWS.notfound;
+  const shell = ensureShell(appRoot);
+
+  // 1. Barra de navegación (siempre refleja puntaje, estrellas y pestaña activa).
+  const oldNavbar = shell.querySelector('.app-navbar');
+  oldNavbar.outerHTML = renderNavbar(route);
+  bindNavbarEvents(shell);
+
+  // 2. Contenido principal.
+  const main = shell.querySelector('#main-content');
+  main.classList.toggle('is-rerender', isRerender);
+  main.innerHTML = view.render(route, { isRerender });
+
+  const rerender = () => renderApp(Router.getCurrentRoute(), { isRerender: true });
+  const cleanup = view.bind(main, rerender, route);
+  if (typeof cleanup === 'function') {
+    activeCleanup = cleanup;
+  }
+
+  if (!isRerender) {
+    document.title = route.title ? `${route.title} · ${APP_TITLE}` : APP_TITLE;
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    main.focus({ preventScroll: true });
   }
 }
 
 function bootstrap() {
   SoundService.syncDebugState();
 
-  if (typeof window !== 'undefined') {
-    window.__ARI_APP__ = {
-      Router,
-      StorageService,
-      SoundService,
-      LEVELS_DATA,
-      ACHIEVEMENTS_DATA,
-      EXPOSITIVE_READINGS_DATA
-    };
-  }
+  window.__ARI_APP__ = {
+    Router,
+    StorageService,
+    SoundService,
+    LEVELS_DATA,
+    ACHIEVEMENTS_DATA,
+    EXPOSITIVE_READINGS_DATA
+  };
 
-  Router.onRouteChange((route) => {
-    renderApp(route, false);
-    if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  });
-
+  Router.onRouteChange((route) => renderApp(route));
   Router.init();
 }
 
