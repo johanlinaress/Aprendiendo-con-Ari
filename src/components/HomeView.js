@@ -282,50 +282,52 @@ export function renderHomeView(mode = 'inicio') {
                 <span class="play-triangle" aria-hidden="true">▶</span> ¡Comenzar!
                 <small class="cta-subtext">(${escapeHtml(recommendedLevel?.title || 'Nivel 1')})</small>
               </button>
-              <button type="button" class="btn-pill-glass" id="btn-start-adventure">🗺️ Mapa de Unidades</button>
-              <button type="button" class="btn-pill-glass" id="btn-go-practice">⚡ Práctica Libre</button>
-              <button type="button" class="btn-pill-glass" id="btn-go-progress">📊 Mi Progreso</button>
-              <button type="button" class="btn-pill-glass" id="btn-go-achievements">🏆 Logros</button>
-            </div>
-
-            <div class="profile-customizer-strip">
-              <form class="player-name-form" id="form-player-name" aria-label="Personalizar nombre de estudiante">
-                <label for="input-player-name" class="sr-only">Tu nombre</label>
-                <input
-                  type="text"
-                  id="input-player-name"
-                  class="input-player-name"
-                  maxlength="28"
-                  value="${safeName}"
-                  placeholder="Tu nombre..."
-                  autocomplete="off"
-                />
-                <button type="submit" class="btn btn-secondary btn-sm" id="btn-save-name">💾 Guardar Nombre</button>
-                <span class="name-feedback" id="name-saved-feedback" aria-live="polite"></span>
-              </form>
-
-              <div class="inline-grade-selector" role="group" aria-label="Seleccionar grado escolar">
-                <span class="grade-selector-label">¿En qué grado estás?</span>
-                ${['3', '4']
-                  .map(
-                    (g) => `
-                      <button
-                        type="button"
-                        id="btn-home-grade-${g}"
-                        class="grade-mini-pill ${state.selectedGrade === g ? 'active' : ''}"
-                        data-select-grade="${g}"
-                        aria-pressed="${state.selectedGrade === g ? 'true' : 'false'}"
-                      >
-                        ${g === '3' ? '👦' : '👧'} ${g}° Grado
-                      </button>
-                    `
-                  )
-                  .join('')}
+              <div class="hero-secondary-shortcuts" role="group" aria-label="Accesos rápidos">
+                <button type="button" class="btn-pill-glass" id="btn-start-adventure">🗺️ Mapa</button>
+                <button type="button" class="btn-pill-glass" id="btn-go-practice">⚡ Práctica</button>
+                <button type="button" class="btn-pill-glass" id="btn-go-progress">📊 Progreso</button>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Barra de Perfil Independiente (Separada de la portada para evitar saturación visual) -->
+      <section class="profile-customizer-strip" aria-label="Configuración rápida de estudiante y grado">
+        <form class="player-name-form" id="form-player-name" aria-label="Personalizar nombre de estudiante">
+          <label for="input-player-name" class="grade-selector-label">👤 Estudiante:</label>
+          <input
+            type="text"
+            id="input-player-name"
+            class="input-player-name"
+            maxlength="28"
+            value="${safeName}"
+            placeholder="Tu nombre..."
+            autocomplete="off"
+          />
+          <button type="submit" class="btn btn-secondary btn-sm" id="btn-save-name">💾 Guardar</button>
+          <span class="name-feedback" id="name-saved-feedback" aria-live="polite"></span>
+        </form>
+
+        <div class="inline-grade-selector" role="group" aria-label="Seleccionar grado escolar">
+          <span class="grade-selector-label">🎓 Grado escolar:</span>
+          ${['3', '4']
+            .map(
+              (g) => `
+                <button
+                  type="button"
+                  id="btn-home-grade-${g}"
+                  class="grade-mini-pill ${state.selectedGrade === g ? 'active' : ''}"
+                  data-select-grade="${g}"
+                  aria-pressed="${state.selectedGrade === g ? 'true' : 'false'}"
+                >
+                  ${g === '3' ? '👦' : '👧'} ${g}° Grado
+                </button>
+              `
+            )
+            .join('')}
+        </div>
+      </section>
 
       <div class="home-stats-grid" aria-label="Resumen rápido de progreso">
         <article class="summary-stat-card">
