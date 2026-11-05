@@ -226,15 +226,16 @@ body {
 .navbar-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0.55rem 1rem;
+  padding: 0.5rem 0.9rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
 }
 
-.navbar-left-cluster {
+.navbar-left-cluster,
+.navbar-brand-cluster {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -326,11 +327,12 @@ body {
   background: transparent;
   color: rgba(255, 255, 255, 0.9);
   font-weight: 800;
-  font-size: 0.88rem;
-  padding: 0.45rem 0.8rem;
+  font-size: 0.84rem;
+  padding: 0.4rem 0.68rem;
   border-radius: var(--radius-full);
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .nav-link-btn:hover {
@@ -347,30 +349,31 @@ body {
 .navbar-stats-bar {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
-  flex-wrap: wrap;
+  gap: 0.35rem;
+  flex-wrap: nowrap;
 }
 
 .stat-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.32rem 0.7rem;
+  gap: 0.3rem;
+  padding: 0.28rem 0.58rem;
   border-radius: var(--radius-full);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 800;
   background: rgba(15, 23, 42, 0.38);
   color: #ffffff;
   border: 2px solid rgba(255, 255, 255, 0.35);
+  white-space: nowrap;
 }
 
 .stat-pill-progress {
-  gap: 0.45rem;
+  gap: 0.35rem;
 }
 
 .mini-progress-track {
-  width: 54px;
-  height: 11px;
+  width: 42px;
+  height: 10px;
   background: rgba(15, 23, 42, 0.45);
   border-radius: var(--radius-full);
   overflow: hidden;
@@ -2398,10 +2401,279 @@ body {
   box-shadow: var(--shadow-sm);
 }
 
+/* =========================================================
+   ORGANIZACIÓN DE TAMAÑOS, ESCALA VISUAL Y PESTAÑAS
+========================================================= */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 200;
+  background: #4c1d95;
+  color: #ffffff;
+  font-weight: 800;
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  box-shadow: var(--shadow-md);
+}
+
+.skip-link:focus {
+  top: 0.65rem;
+}
+
+.is-rerender .view-fade-anim {
+  animation: none;
+}
+
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #ede9fe;
+  color: #5b21b6;
+  border: 1.5px solid #c4b5fd;
+  font-weight: 800;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 0.45rem;
+}
+
+.cta-subtext {
+  font-size: 0.82rem;
+  font-weight: 700;
+  opacity: 0.92;
+}
+
+/* Catálogo de Materias (#/materias) */
+.materias-top-banner {
+  margin-bottom: 1.15rem;
+}
+
+.subjects-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.35rem;
+  align-items: stretch;
+}
+
+.subject-module-card {
+  background: var(--bg-surface);
+  border: 3px solid #ffffff;
+  border-radius: var(--radius-lg);
+  padding: 1.35rem;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.1rem;
+}
+
+.subject-module-header {
+  display: grid;
+  grid-template-columns: 0.95fr 1.25fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+.subject-module-summary h2 {
+  margin: 0 0 0.3rem;
+  font-size: 1.25rem;
+  color: #1e1b4b;
+}
+
+.subject-module-summary p {
+  margin: 0 0 0.65rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.subject-module-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.7rem;
+}
+
+.subject-units-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.subject-unit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 0.6rem 0.85rem;
+}
+
+.subject-unit-row.is-locked {
+  opacity: 0.78;
+  border-style: dashed;
+}
+
+.subject-unit-info {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.subject-unit-info div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.subject-unit-info strong {
+  font-size: 0.92rem;
+  color: #1e1b4b;
+}
+
+.subject-unit-info small {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.subject-unit-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.subject-unit-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.unit-stars-inline {
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+}
+
+/* Consistencia de tamaños en tarjetas de unidades y estados */
+.world-card-content,
+.level-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.22rem 0.65rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.pill-completed,
+.status-completed {
+  background: var(--success-bg);
+  color: #15803d;
+}
+
+.pill-unlocked,
+.status-available,
+.status-in-progress {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.pill-locked,
+.status-locked {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.progress-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.progress-subtabs {
+  margin-bottom: 0;
+}
+
+.subsection-title {
+  margin: 0 0 0.85rem;
+  font-size: 1.25rem;
+  color: #1e1b4b;
+}
+
+.guard-icon {
+  font-size: 3rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.guard-mascot {
+  max-width: 540px;
+  margin: 1rem auto;
+}
+
+.reading-ari-helper {
+  margin-top: 0.85rem;
+}
+
+.new-achievements-banner {
+  background: #fef9c3;
+  border: 2px solid #fde047;
+  border-radius: 16px;
+  padding: 0.75rem 1rem;
+  margin-top: 0.65rem;
+}
+
+.new-achievements-banner h4 {
+  margin: 0 0 0.45rem;
+  color: #854d0e;
+  font-size: 0.95rem;
+}
+
+.new-achievements-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.new-achievement-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #ffffff;
+  border: 1.5px solid #facc15;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+}
+
 @media (max-width: 1024px) {
   .lesson-aprendo-grid,
   .expositive-cover-box,
-  .expositive-fragment-body {
+  .expositive-fragment-body,
+  .subjects-detail-grid,
+  .subject-module-header {
     grid-template-columns: 1fr;
   }
 }
@@ -2409,6 +2681,16 @@ body {
 @media (max-width: 767px) {
   .subject-progress-cards-row {
     grid-template-columns: 1fr;
+  }
+
+  .subject-unit-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .subject-unit-right {
+    width: 100%;
+    justify-content: space-between;
   }
 }
 
