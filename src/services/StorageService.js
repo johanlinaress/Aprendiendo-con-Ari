@@ -2,6 +2,7 @@ import { LEVELS_DATA, ACHIEVEMENTS_DATA } from '../data/levelsData.js';
 import { SoundService } from './SoundService.js';
 
 export const STORAGE_KEY = 'aprendiendo_con_ari_state_v1';
+export const SESSION_STORAGE_KEY = 'aprendiendo_con_ari_active_session_v1';
 export const INITIAL_UNLOCKED_LEVELS = [1, 6, 10];
 
 export function normalizeAnswerText(value) {
@@ -9,8 +10,10 @@ export function normalizeAnswerText(value) {
     .trim()
     .replace(/\s+/g, ' ')
     .toLowerCase()
+    .replace(/ñ/g, '__enie__')
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/__enie__/g, 'ñ');
 
   // Si es numérico con puntos de mil (ej. 1.400 -> 1400), normalizar
   if (/^\d{1,3}(\.\d{3})+$/.test(str)) {
@@ -79,6 +82,7 @@ export function getDefaultState() {
 class StorageManager {
   constructor() {
     this.listeners = new Set();
+    this.storageWarning = null;
     this.state = this.loadState();
     SoundService.setEnabled(this.state.soundEnabled);
     SoundService.setMusicEnabled(this.state.musicEnabled);
@@ -144,11 +148,70 @@ class StorageManager {
     if (typeof window !== 'undefined' && window.localStorage) {
       try {
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
+        this.storageWarning = null;
       } catch (e) {
-        // Ignore quota errors
+        this.storageWarning =
+          'No fue posible guardar en el almacenamiento del navegador (espacio lleno o modo restringido). Tu avance se mantiene activo durante esta sesión.';
       }
     }
     this.notify();
+  }
+
+  getStorageWarning() {
+    return this.storageWarning;
+  }
+
+  saveExerciseSession(session) {
+    if (!session || typeof window === 'undefined' || !window.localStorage) return;
+    try {
+      const payload = {
+        levelId: Number(session.levelId),
+        grade: String(session.grade || '3'),
+        activePhase: session.activePhase || 'aprendo',
+        questionIndex: Number(session.questionIndex) || 0,
+        correctCount: Number(session.correctCount) || 0,
+        sessionScore: Number(session.sessionScore) || 0,
+        usedHint: Boolean(session.usedHint),
+        readingTopicIndex: Number(session.readingTopicIndex) || 0,
+        readingStarted: Boolean(session.readingStarted),
+        readingFragmentIndex: Number(session.readingFragmentIndex) || 0,
+        isFinished: Boolean(session.isFinished),
+        updatedAt: new Date().toISOString()
+      };
+      window.localStorage.setItem(`${SESSION_STORAGE_KEY}_${payload.levelId}`, JSON.stringify(payload));
+    } catch (e) {
+      // Fallo silencioso secundario si almacenamiento está lleno
+    }
+  }
+
+  getExerciseSession(levelId, grade) {
+    if (typeof window === 'undefined' || !window.localStorage) return null;
+    try {
+      const raw = window.localStorage.getItem(`${SESSION_STORAGE_KEY}_${Number(levelId)}`);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (!parsed || parsed.levelId !== Number(levelId)) return null;
+      if (grade && String(parsed.grade) !== String(grade)) return null;
+      if (parsed.isFinished) return null;
+      return parsed;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  clearExerciseSession(levelId) {
+    if (typeof window === 'undefined' || !window.localStorage) return;
+    try {
+      if (levelId) {
+        window.localStorage.removeItem(`${SESSION_STORAGE_KEY}_${Number(levelId)}`);
+      } else {
+        for (const lvl of LEVELS_DATA) {
+          window.localStorage.removeItem(`${SESSION_STORAGE_KEY}_${lvl.id}`);
+        }
+      }
+    } catch (e) {
+      // Ignorar errores de limpieza
+    }
   }
 
   getState() {
@@ -519,6 +582,7 @@ class StorageManager {
   resetProgress() {
     const soundPref = this.state.soundEnabled;
     const musicPref = this.state.musicEnabled;
+    this.clearExerciseSession();
     this.state = getDefaultState();
     this.state.soundEnabled = soundPref;
     this.state.musicEnabled = musicPref;

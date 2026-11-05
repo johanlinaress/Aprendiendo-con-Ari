@@ -61,7 +61,7 @@ function highlightKeywordsHtml(rawText, keywords = []) {
   return html;
 }
 
-export function initExerciseSession(levelId) {
+export function initExerciseSession(levelId, options = {}) {
   const id = Number(levelId);
   const state = StorageService.getState();
   const level = LEVELS_DATA.find((l) => l.id === id) || null;
@@ -69,34 +69,47 @@ export function initExerciseSession(levelId) {
 
   StorageService.markLevelInProgress(id);
 
+  const savedSession = !options.forceFresh
+    ? StorageService.getExerciseSession(id, state.selectedGrade)
+    : null;
+
+  const safeQuestionIndex =
+    savedSession &&
+    Number.isInteger(savedSession.questionIndex) &&
+    savedSession.questionIndex >= 0 &&
+    savedSession.questionIndex < questions.length
+      ? savedSession.questionIndex
+      : 0;
+
   activeSession = {
     levelId: id,
     grade: state.selectedGrade,
     level,
     questions,
-    activePhase: 'practico', // 'aprendo' | 'lectura' | 'practico'
-    questionIndex: 0,
+    activePhase: options.initialPhase || savedSession?.activePhase || 'aprendo', // 'aprendo' | 'lectura' | 'practico'
+    questionIndex: safeQuestionIndex,
     selectedOption: null,
     typedAnswer: '',
     orderedTokens: [],
     hasChecked: false,
     isCurrentCorrect: false,
     lastPointsEarned: 0,
-    usedHint: false,
-    correctCount: 0,
-    sessionScore: 0,
+    usedHint: Boolean(savedSession?.usedHint),
+    correctCount: Number(savedSession?.correctCount) || 0,
+    sessionScore: Number(savedSession?.sessionScore) || 0,
     isFinished: false,
     completionResult: null,
     // Estado para Textos Expositivos Interactivos (Sección 6.7)
-    readingTopicIndex: 0,
-    readingStarted: false,
-    readingFragmentIndex: 0,
+    readingTopicIndex: Number(savedSession?.readingTopicIndex) || 0,
+    readingStarted: Boolean(savedSession?.readingStarted),
+    readingFragmentIndex: Number(savedSession?.readingFragmentIndex) || 0,
     selectedKeywordInfo: null,
     explorationAnswer: null,
     // Cronómetro opcional sin penalización (Sección 5.5 Actividad D)
     timerEnabled: false,
     timerSeconds: 0
   };
+  StorageService.saveExerciseSession(activeSession);
   return activeSession;
 }
 
@@ -189,6 +202,9 @@ function renderLessonPhaseView(level, state) {
             </button>
             <button type="button" class="btn-3d-orange" id="btn-start-practice-from-lesson">
               ▶️ ¡Ir a Practicar!
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" id="btn-skip-explanation">
+              ⏭️ Saltar explicación
             </button>
           </div>
         </div>
@@ -891,12 +907,14 @@ export function bindExerciseViewEvents(rootElement, rerenderCallback) {
   if (activeSession && activeSession.isFinished) {
     bindLevelCompleteEvents(rootElement, {
       onRetry: () => {
-        initExerciseSession(activeSession.levelId);
+        initExerciseSession(activeSession.levelId, { forceFresh: true, initialPhase: 'practico' });
         rerenderCallback(true);
       },
       onReadAgain: () => {
-        initExerciseSession(activeSession.levelId);
-        activeSession.activePhase = activeSession.level?.isInteractiveExpositiveUnit ? 'lectura' : 'aprendo';
+        initExerciseSession(activeSession.levelId, {
+          forceFresh: true,
+          initialPhase: activeSession.level?.isInteractiveExpositiveUnit ? 'lectura' : 'aprendo'
+        });
         rerenderCallback(true);
       }
     });
@@ -932,6 +950,7 @@ export function bindExerciseViewEvents(rootElement, rerenderCallback) {
       if (!activeSession) return;
       SoundService.play('click');
       activeSession.activePhase = tab.getAttribute('data-phase-tab') || 'practico';
+      StorageService.saveExerciseSession(activeSession);
       rerenderCallback(true);
     });
   });
@@ -950,6 +969,17 @@ export function bindExerciseViewEvents(rootElement, rerenderCallback) {
     startPracticeFromLessonBtn.addEventListener('click', () => {
       SoundService.play('click');
       activeSession.activePhase = 'practico';
+      StorageService.saveExerciseSession(activeSession);
+      rerenderCallback(true);
+    });
+  }
+
+  const skipExplanationBtn = rootElement.querySelector('#btn-skip-explanation');
+  if (skipExplanationBtn && activeSession) {
+    skipExplanationBtn.addEventListener('click', () => {
+      SoundService.play('click');
+      activeSession.activePhase = 'practico';
+      StorageService.saveExerciseSession(activeSession);
       rerenderCallback(true);
     });
   }
@@ -1212,6 +1242,7 @@ export function bindExerciseViewEvents(rootElement, rerenderCallback) {
         activeSession.isCurrentCorrect = false;
         activeSession.lastPointsEarned = 0;
         activeSession.usedHint = false;
+        StorageService.saveExerciseSession(activeSession);
         rerenderCallback(true);
       } else {
         const result = StorageService.completeLevel({
@@ -1220,6 +1251,7 @@ export function bindExerciseViewEvents(rootElement, rerenderCallback) {
           totalQuestions,
           sessionScore: activeSession.sessionScore
         });
+        StorageService.clearExerciseSession(activeSession.levelId);
         activeSession.isFinished = true;
         activeSession.completionResult = result;
         if (result && result.passed) {
