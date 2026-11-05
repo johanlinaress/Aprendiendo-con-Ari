@@ -3,3 +3,4 @@ tests/.tmp-chrome-profile/
 .DS_Store
 Thumbs.db
 *.log
+*.zip
