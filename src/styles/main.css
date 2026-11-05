@@ -3664,6 +3664,441 @@ select:focus-visible,
   margin-top: 1.5rem;
 }
 
+/* ==========================================================================
+   ESTILOS ADICIONALES: SELECCIÓN INTERACTIVA Y VISTAS DEDICADAS DE DONACIONES
+   ========================================================================== */
+
+.donation-card-interactive {
+  cursor: pointer;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s ease, border-color 0.2s ease;
+}
+
+.donation-card-interactive:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 20px 35px rgba(99, 102, 241, 0.18), 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+.donation-card-interactive:focus-visible {
+  outline: 4px solid #8b5cf6;
+  outline-offset: 4px;
+}
+
+.donation-qr-thumb {
+  max-height: 160px;
+  overflow: hidden;
+}
+
+.donation-qr-thumb .donation-qr-image {
+  max-height: 145px;
+}
+
+.btn-select-method {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 900;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.btn-select-nequi {
+  background: linear-gradient(135deg, #ff0077, #be185d);
+  color: #ffffff;
+}
+
+.btn-select-nequi:hover {
+  background: linear-gradient(135deg, #e6006c, #9d174d);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(255, 0, 119, 0.35);
+}
+
+.btn-select-arq {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+}
+
+.btn-select-arq:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+}
+
+.btn-select-paypal {
+  background: linear-gradient(135deg, #0079c1, #00457c);
+  color: #ffffff;
+}
+
+.btn-select-paypal:hover {
+  background: linear-gradient(135deg, #005f9e, #003660);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 121, 193, 0.35);
+}
+
+/* VISTAS DEDICADAS (PÁGINA INDIVIDUAL PARA CADA MÉTODO) */
+.donations-subnav-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.donations-subnav-label {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #64748b;
+  background: #ffffff;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+}
+
+.dedicated-wrapper {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.dedicated-donation-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 2.25rem;
+  box-shadow: 0 20px 40px rgba(76, 29, 149, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
+  margin-top: 1.5rem;
+  border: 4px solid #ffffff;
+}
+
+.dedicated-card-nequi {
+  border-top: 8px solid #ff0077;
+}
+
+.dedicated-card-arq {
+  border-top: 8px solid #2563eb;
+}
+
+.dedicated-card-paypal {
+  border-top: 8px solid #0079c1;
+}
+
+.dedicated-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.dedicated-brand-pill {
+  font-size: 1rem;
+  font-weight: 900;
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-full);
+}
+
+.dedicated-country-tag {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+}
+
+.dedicated-tagline {
+  font-size: 1.08rem;
+  line-height: 1.6;
+  color: #334155;
+  margin-bottom: 1.75rem;
+}
+
+/* Nequi QR Showcase Grande */
+.nequi-qr-showcase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.75rem;
+}
+
+.nequi-big-qr-stage {
+  background: #ffffff;
+  padding: 1.5rem;
+  border: 3px solid #e2e8f0;
+  border-radius: 24px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  max-width: 360px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.nequi-big-qr-stage:hover {
+  transform: scale(1.02);
+}
+
+.nequi-big-qr-img {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  border-radius: 12px;
+  display: block;
+}
+
+.nequi-qr-actions {
+  margin-top: 1rem;
+}
+
+.btn-download-qr {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #fdf2f8;
+  color: #be185d;
+  border: 2px solid #fbcfe8;
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-full);
+  font-size: 0.92rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-download-qr:hover {
+  background: #fce7f3;
+  border-color: #f472b6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(190, 24, 93, 0.15);
+}
+
+/* Ficha de datos */
+.dedicated-info-box {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.dedicated-info-item .info-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.25rem;
+}
+
+.dedicated-info-item .info-value {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.dedicated-info-item .info-highlight {
+  color: #be185d;
+  word-break: break-all;
+}
+
+.dedicated-copy-section {
+  margin-bottom: 1.75rem;
+}
+
+.btn-copy-large {
+  font-size: 1.05rem !important;
+  padding: 0.95rem 1.5rem !important;
+  border-radius: 14px !important;
+}
+
+/* ARQ Hero Showcase */
+.arq-hero-showcase {
+  background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
+  border: 2px solid #bfdbfe;
+  border-radius: 20px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.arq-symbol-large {
+  width: 120px !important;
+  height: 120px !important;
+  font-size: 4rem !important;
+}
+
+.arq-user-highlight {
+  text-align: center;
+}
+
+.arq-user-label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.35rem;
+}
+
+.arq-user-tag {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #1d4ed8;
+  letter-spacing: 0.02em;
+}
+
+/* PayPal Showcase */
+.paypal-hero-showcase {
+  background: linear-gradient(135deg, #eff6ff 0%, #f0fdfa 100%);
+  border: 2px solid #bae6fd;
+  border-radius: 20px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.paypal-symbol-large {
+  width: 120px !important;
+  height: 120px !important;
+  font-size: 4rem !important;
+}
+
+.paypal-user-highlight {
+  text-align: center;
+}
+
+.paypal-user-label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.paypal-user-name {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.paypal-user-email {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #0284c7;
+  word-break: break-all;
+}
+
+.paypal-actions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.75rem;
+}
+
+.btn-paypal-primary {
+  padding: 1.1rem 1.5rem !important;
+  font-size: 1.1rem !important;
+  border-radius: 14px !important;
+  background: linear-gradient(135deg, #0079c1, #00457c) !important;
+  box-shadow: 0 8px 22px rgba(0, 121, 193, 0.35) !important;
+}
+
+.btn-paypal-primary:hover {
+  background: linear-gradient(135deg, #005f9e, #002b4d) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 28px rgba(0, 121, 193, 0.45) !important;
+}
+
+.btn-donation-subtle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 2px solid #cbd5e1;
+  color: #334155;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-donation-subtle:hover {
+  background: #e2e8f0;
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+
+/* Steps Panel */
+.dedicated-steps-panel {
+  background: #fafaf9;
+  border: 2px dashed #cbd5e1;
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.dedicated-steps-panel h3 {
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #1c1917;
+}
+
+.donation-steps-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.donation-steps-list li {
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: #44403c;
+}
+
+.donation-steps-list code {
+  background: #e2e8f0;
+  color: #0f172a;
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+  font-weight: 800;
+}
+
+.dedicated-bottom-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+  border-top: 2px solid #f1f5f9;
+}
+
 @media (max-width: 991px) {
   .donations-stage-grid {
     grid-template-columns: 1fr;
@@ -3673,6 +4108,15 @@ select:focus-visible,
   }
   .donations-cards-grid {
     grid-template-columns: 1fr;
+  }
+  .dedicated-donation-card {
+    padding: 1.5rem 1.1rem;
+  }
+  .dedicated-bottom-nav {
+    flex-direction: column;
+  }
+  .dedicated-bottom-nav button {
+    width: 100%;
   }
 }
 

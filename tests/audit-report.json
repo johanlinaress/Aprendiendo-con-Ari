@@ -156,6 +156,21 @@
       "details": "{\"titleMatches\":true,\"hasNequi\":true,\"hasArq\":true,\"hasPaypal\":true}"
     },
     {
+      "category": "1. Componentes",
+      "description": "Página dedicada de Nequi (#/donaciones/nequi) muestra QR ampliado, descarga y llave",
+      "details": "{\"isNequiView\":true,\"hasBigQr\":true,\"hasDownload\":true,\"hasLlave\":true}"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Página dedicada de ARQ (#/donaciones/arq) muestra usuario $sttive destacado y pasos",
+      "details": "{\"isArqView\":true,\"tagMatches\":true}"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Página dedicada de PayPal (#/donaciones/paypal) tiene portal oficial corregido y correo",
+      "details": "{\"isPaypalView\":true,\"hasCorrectUrl\":true,\"hasEmail\":true}"
+    },
+    {
       "category": "2. Rutas",
       "description": "Ruta #/matematicas muestra el encabezado «¡Vamos a aprender Matemáticas!» y filtra las 5 unidades",
       "details": ""
@@ -483,7 +498,7 @@
     {
       "category": "7. Persistencia de progreso",
       "description": "Recargar el navegador recupera exactamente nombre, puntaje, 30/30 estrellas, 10 unidades desbloqueadas y las 9 medallas desde localStorage",
-      "details": "{\"playerName\":\"Valentina\",\"totalScore\":36480,\"totalStars\":30,\"unlockedCount\":10,\"achievementsCount\":9,\"navScoreText\":\"36480\",\"navStarsText\":\"30/30\"}"
+      "details": "{\"playerName\":\"Valentina\",\"totalScore\":36530,\"totalStars\":30,\"unlockedCount\":10,\"achievementsCount\":9,\"navScoreText\":\"36530\",\"navStarsText\":\"30/30\"}"
     },
     {
       "category": "3. Botones",

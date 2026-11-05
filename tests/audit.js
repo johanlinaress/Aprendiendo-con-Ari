@@ -275,6 +275,60 @@ async function runAudit() {
       JSON.stringify(donationsCheck)
     );
 
+    // Verify Dedicated Method Pages: Nequi, ARQ, PayPal
+    await cdp.eval(`window.location.hash = '#/donaciones/nequi';`);
+    await sleep(90);
+    const nequiPageCheck = await cdp.eval(`
+      (() => {
+        const view = document.querySelector('.donations-dedicated-view[data-view="nequi"]');
+        const hasBigQr = Boolean(document.querySelector('#nequi-dedicated-qr-img'));
+        const hasDownload = Boolean(document.querySelector('.btn-download-qr'));
+        const hasLlave = document.body.textContent.includes('johansttivelinaresb@gmail.com');
+        return { isNequiView: Boolean(view), hasBigQr, hasDownload, hasLlave };
+      })()
+    `);
+    assertCheck(
+      '1. Componentes',
+      'Página dedicada de Nequi (#/donaciones/nequi) muestra QR ampliado, descarga y llave',
+      nequiPageCheck.isNequiView && nequiPageCheck.hasBigQr && nequiPageCheck.hasDownload && nequiPageCheck.hasLlave,
+      JSON.stringify(nequiPageCheck)
+    );
+
+    await cdp.eval(`window.location.hash = '#/donaciones/arq';`);
+    await sleep(90);
+    const arqPageCheck = await cdp.eval(`
+      (() => {
+        const view = document.querySelector('.donations-dedicated-view[data-view="arq"]');
+        const tag = document.querySelector('.arq-user-tag')?.textContent.trim() || '';
+        return { isArqView: Boolean(view), tagMatches: tag.includes('$sttive') };
+      })()
+    `);
+    assertCheck(
+      '1. Componentes',
+      'Página dedicada de ARQ (#/donaciones/arq) muestra usuario $sttive destacado y pasos',
+      arqPageCheck.isArqView && arqPageCheck.tagMatches,
+      JSON.stringify(arqPageCheck)
+    );
+
+    await cdp.eval(`window.location.hash = '#/donaciones/paypal';`);
+    await sleep(90);
+    const paypalPageCheck = await cdp.eval(`
+      (() => {
+        const view = document.querySelector('.donations-dedicated-view[data-view="paypal"]');
+        const donateBtn = document.querySelector('#btn-paypal-official-donate');
+        const href = donateBtn?.getAttribute('href') || '';
+        const hasCorrectUrl = href.includes('business=johansttivelinaresb%40gmail.com') && href.includes('paypal.com/donate');
+        const hasEmail = document.body.textContent.includes('johansttivelinaresb@gmail.com');
+        return { isPaypalView: Boolean(view), hasCorrectUrl, hasEmail };
+      })()
+    `);
+    assertCheck(
+      '1. Componentes',
+      'Página dedicada de PayPal (#/donaciones/paypal) tiene portal oficial corregido y correo',
+      paypalPageCheck.isPaypalView && paypalPageCheck.hasCorrectUrl && paypalPageCheck.hasEmail,
+      JSON.stringify(paypalPageCheck)
+    );
+
     // Verify subject-specific map headings (#/matematicas y #/espanol)
     await cdp.eval(`window.location.hash = '#/matematicas';`);
     await sleep(90);

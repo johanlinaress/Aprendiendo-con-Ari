@@ -53,8 +53,8 @@ const VIEWS = {
     bind: (root, rerender, route) => bindProgressViewEvents(root, rerender, route.params.focus)
   },
   donaciones: {
-    render: () => renderDonationsView(),
-    bind: (root) => bindDonationsViewEvents(root)
+    render: (route) => renderDonationsView(route?.params?.method || 'hub'),
+    bind: (root, rerender, route) => bindDonationsViewEvents(root, rerender, route?.params?.method || 'hub')
   },
   notfound: {
     render: (route) => renderNotFoundView(route.path),

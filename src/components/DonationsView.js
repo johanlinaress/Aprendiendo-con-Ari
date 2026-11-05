@@ -3,11 +3,39 @@ import { Router } from '../router/Router.js';
 import { renderAriMascot, bindAriMascotEvents } from './AriMascot.js';
 import { escapeHtml } from '../utils/escapeHtml.js';
 
-export function renderDonationsView() {
+// URL oficial verificada para donaciones directas en PayPal
+const PAYPAL_DONATE_URL = 'https://www.paypal.com/donate/?business=johansttivelinaresb%40gmail.com&no_recurring=0&currency_code=USD';
+const PAYPAL_TRANSFER_URL = 'https://www.paypal.com/myaccount/transfer/homepage';
+
+/**
+ * Renderiza la vista de donaciones según el método seleccionado:
+ * - 'hub': Menú principal con los 3 bloques interactivos para elegir.
+ * - 'nequi': Página dedicada para Nequi / Bre-B con QR ampliado y paso a paso.
+ * - 'arq': Página dedicada para ARQ con usuario $sttive y guía.
+ * - 'paypal': Página dedicada para PayPal con enlace directo oficial corregido.
+ */
+export function renderDonationsView(method = 'hub') {
   const qrImageUrl = resolveSoundUrl('assets/nequi-qr.jpg');
 
+  if (method === 'nequi') {
+    return renderNequiDedicatedView(qrImageUrl);
+  }
+  if (method === 'arq') {
+    return renderArqDedicatedView();
+  }
+  if (method === 'paypal') {
+    return renderPaypalDedicatedView();
+  }
+
+  return renderDonationsHubView(qrImageUrl);
+}
+
+/**
+ * HUB PRINCIPAL: Muestra los 3 bloques interactivos para elegir a qué página ir.
+ */
+function renderDonationsHubView(qrImageUrl) {
   return `
-    <section class="donations-view view-fade-anim" data-component="DonationsView">
+    <section class="donations-view view-fade-anim" data-component="DonationsView" data-view="hub">
       <div class="stage-top-bar">
         <button type="button" class="btn-back-circle" id="btn-donations-back" title="Volver al inicio" aria-label="Volver al inicio">
           ⬅
@@ -19,7 +47,7 @@ export function renderDonationsView() {
           ${renderAriMascot({
             mood: 'excited',
             message:
-              '¡Hola! Tu apoyo voluntario nos ayuda a seguir creando más plataformas educativas gratuitas, sin publicidad y con muchos más juegos para todos los niños.',
+              '¡Hola! Tu apoyo voluntario nos ayuda a seguir creando más plataformas educativas gratuitas, sin anuncios y con nuevos juegos para todos los niños.',
             compact: false,
             showGreetButton: false
           })}
@@ -35,19 +63,19 @@ export function renderDonationsView() {
               ¿Quieres apoyar al creador para ver más páginas como esta?
             </h2>
             <p class="donations-intro-text">
-              <strong>Aprendiendo con Ari</strong> es un proyecto independiente desarrollado con dedicación para fortalecer el aprendizaje infantil de matemáticas, lectura y razonamiento. Si esta plataforma te ha sido útil o deseas impulsar la creación de nuevas materias y herramientas educativas abiertas, puedes realizar una donación voluntaria a través de cualquiera de los siguientes medios:
+              <strong>Aprendiendo con Ari</strong> es un proyecto independiente desarrollado con dedicación para fortalecer el aprendizaje infantil de matemáticas, lectura y razonamiento. Selecciona cualquiera de las opciones siguientes para ver su página completa con código QR ampliado, enlaces directos y datos de envío:
             </p>
           </div>
 
-          <div class="donations-cards-grid">
-            <!-- OPCIÓN 1: NEQUI / BRE-B -->
-            <article class="donation-method-card donation-card-nequi" id="card-nequi">
+          <div class="donations-cards-grid donations-hub-grid">
+            <!-- BLOQUE 1: NEQUI / BRE-B -->
+            <article class="donation-method-card donation-card-nequi donation-card-interactive" id="card-nequi" data-navigate="/donaciones/nequi" role="button" tabindex="0" aria-label="Ver detalles y Código QR de Nequi y Bre-B">
               <div class="donation-card-badge-row">
                 <span class="donation-badge badge-nequi">🟣 Bre-B • Nequi</span>
                 <span class="donation-country-tag">🇨🇴 Colombia</span>
               </div>
 
-              <div class="donation-qr-box">
+              <div class="donation-qr-box donation-qr-thumb">
                 <img
                   src="${qrImageUrl}"
                   onerror="if (!this.dataset.triedFallback) { this.dataset.triedFallback = '1'; this.src = './src/assets/nequi-qr.jpg'; }"
@@ -65,22 +93,22 @@ export function renderDonationsView() {
                   <strong class="field-value" id="val-nequi-llave">johansttivelinaresb@gmail.com</strong>
                 </div>
                 <p class="donation-instructions">
-                  Escanea el código QR desde tu app <strong>Nequi</strong> o mediante <strong>Bre-B</strong> de cualquier entidad financiera en Colombia.
+                  Paga desde <strong>Nequi</strong>, <strong>Bancolombia</strong>, <strong>Daviplata</strong> o cualquier banco con Bre-B.
                 </p>
               </div>
 
               <button
                 type="button"
-                class="btn-donation-copy btn-copy-nequi"
-                data-copy-target="johansttivelinaresb@gmail.com"
-                aria-label="Copiar llave o correo de Nequi"
+                class="btn-select-method btn-select-nequi"
+                data-nav="/donaciones/nequi"
+                aria-label="Abrir página dedicada de Nequi"
               >
-                📋 Copiar Llave Nequi
+                🔍 Ver Código QR Grande y Datos ➜
               </button>
             </article>
 
-            <!-- OPCIÓN 2: ARQ -->
-            <article class="donation-method-card donation-card-arq" id="card-arq">
+            <!-- BLOQUE 2: ARQ -->
+            <article class="donation-method-card donation-card-arq donation-card-interactive" id="card-arq" data-navigate="/donaciones/arq" role="button" tabindex="0" aria-label="Ver detalles de donación con ARQ">
               <div class="donation-card-badge-row">
                 <span class="donation-badge badge-arq">🔵 ARQ</span>
                 <span class="donation-country-tag">⚡ Dólares Digitales</span>
@@ -99,22 +127,22 @@ export function renderDonationsView() {
                   <strong class="field-value arq-username" id="val-arq-user">$sttive</strong>
                 </div>
                 <p class="donation-instructions">
-                  Envía tu donación directamente al tag de usuario <strong>$sttive</strong> dentro de la aplicación <strong>ARQ</strong> de forma instantánea.
+                  Envía dólares digitales de forma instantánea y sin comisiones intermediarias.
                 </p>
               </div>
 
               <button
                 type="button"
-                class="btn-donation-copy btn-copy-arq"
-                data-copy-target="$sttive"
-                aria-label="Copiar usuario $sttive de ARQ"
+                class="btn-select-method btn-select-arq"
+                data-nav="/donaciones/arq"
+                aria-label="Abrir página dedicada de ARQ"
               >
-                📋 Copiar Usuario ($sttive)
+                🔍 Ver Usuario y Datos de ARQ ➜
               </button>
             </article>
 
-            <!-- OPCIÓN 3: PAYPAL -->
-            <article class="donation-method-card donation-card-paypal" id="card-paypal">
+            <!-- BLOQUE 3: PAYPAL -->
+            <article class="donation-method-card donation-card-paypal donation-card-interactive" id="card-paypal" data-navigate="/donaciones/paypal" role="button" tabindex="0" aria-label="Ver detalles y donar con PayPal">
               <div class="donation-card-badge-row">
                 <span class="donation-badge badge-paypal">🔷 PayPal</span>
                 <span class="donation-country-tag">🌎 Internacional</span>
@@ -127,36 +155,24 @@ export function renderDonationsView() {
               </div>
 
               <div class="donation-info-block">
-                <h3 class="donation-recipient-name">Johan Linares</h3>
+                <h3 class="donation-recipient-name">Johan Sttive Linares</h3>
                 <div class="donation-field-row">
                   <span class="field-label">Correo PayPal:</span>
                   <strong class="field-value" id="val-paypal-email">johansttivelinaresb@gmail.com</strong>
                 </div>
                 <p class="donation-instructions">
-                  Acepta tarjetas de crédito, débito o saldo en USD/EUR desde cualquier país del mundo.
+                  Acepta tarjetas de crédito, débito y saldo PayPal desde cualquier país del mundo.
                 </p>
               </div>
 
-              <div class="donation-actions-group">
-                <button
-                  type="button"
-                  class="btn-donation-copy btn-copy-paypal"
-                  data-copy-target="johansttivelinaresb@gmail.com"
-                  aria-label="Copiar correo de PayPal"
-                >
-                  📋 Copiar Correo PayPal
-                </button>
-
-                <a
-                  href="https://www.paypal.com/paypalme/johansttivelinaresb"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn-donation-direct"
-                  id="link-paypal-direct"
-                >
-                  ↗️ Donar en PayPal
-                </a>
-              </div>
+              <button
+                type="button"
+                class="btn-select-method btn-select-paypal"
+                data-nav="/donaciones/paypal"
+                aria-label="Abrir página dedicada de PayPal"
+              >
+                🔍 Ver Datos y Donar con PayPal ➜
+              </button>
             </article>
           </div>
 
@@ -171,9 +187,309 @@ export function renderDonationsView() {
   `;
 }
 
-export function bindDonationsViewEvents(rootElement = document) {
+/**
+ * PÁGINA DEDICADA 1: NEQUI / BRE-B (Con QR Ampliado y Pasos Claros)
+ */
+function renderNequiDedicatedView(qrImageUrl) {
+  return `
+    <section class="donations-view view-fade-anim donations-dedicated-view" data-component="DonationsView" data-view="nequi">
+      <div class="stage-top-bar donations-subnav-bar">
+        <button type="button" class="btn-back-circle" id="btn-back-to-hub" title="Volver a métodos de donación" aria-label="Volver a métodos de donación">
+          ⬅
+        </button>
+        <span class="donations-subnav-label">Opciones de Apoyo / Nequi</span>
+      </div>
+
+      <div class="dedicated-wrapper">
+        <div class="purple-ribbon-banner donations-ribbon">
+          <h1>🟣 Donar con Nequi y Bre-B</h1>
+        </div>
+
+        <article class="dedicated-donation-card dedicated-card-nequi">
+          <div class="dedicated-header-row">
+            <div class="dedicated-brand-pill badge-nequi">
+              <span>🟣 Bre-B • Nequi</span>
+            </div>
+            <span class="dedicated-country-tag">🇨🇴 Válido para toda Colombia (Sin comisiones)</span>
+          </div>
+
+          <p class="dedicated-tagline">
+            Escanea el código QR desde tu app <strong>Nequi</strong> o mediante <strong>Bre-B</strong> de cualquier entidad financiera en Colombia (Bancolombia, Daviplata, BBVA, etc.).
+          </p>
+
+          <div class="nequi-qr-showcase">
+            <div class="nequi-big-qr-stage">
+              <img
+                src="${qrImageUrl}"
+                onerror="if (!this.dataset.triedFallback) { this.dataset.triedFallback = '1'; this.src = './src/assets/nequi-qr.jpg'; }"
+                alt="Código QR Bre-B Nequi de Johan Linares en alta resolución"
+                class="nequi-big-qr-img"
+                id="nequi-dedicated-qr-img"
+              />
+            </div>
+
+            <div class="nequi-qr-actions">
+              <a
+                href="${qrImageUrl}"
+                download="QR-Nequi-Johan-Linares.jpg"
+                class="btn-download-qr"
+                title="Descargar imagen del código QR"
+              >
+                📥 Descargar Imagen QR para tu Celular
+              </a>
+            </div>
+          </div>
+
+          <div class="dedicated-info-box">
+            <div class="dedicated-info-item">
+              <span class="info-label">Titular de la cuenta:</span>
+              <strong class="info-value">Johan Linares</strong>
+            </div>
+
+            <div class="dedicated-info-item">
+              <span class="info-label">Llave / Correo oficial de Bre-B:</span>
+              <strong class="info-value info-highlight">johansttivelinaresb@gmail.com</strong>
+            </div>
+          </div>
+
+          <div class="dedicated-copy-section">
+            <button
+              type="button"
+              class="btn-donation-copy btn-copy-nequi btn-copy-large"
+              data-copy-target="johansttivelinaresb@gmail.com"
+              aria-label="Copiar correo o llave de Nequi"
+            >
+              📋 Copiar Llave (johansttivelinaresb@gmail.com)
+            </button>
+          </div>
+
+          <div class="dedicated-steps-panel">
+            <h3>📖 ¿Cómo hacer tu donación paso a paso?</h3>
+            <ol class="donation-steps-list">
+              <li>
+                <strong>1. Abre tu app financiera:</strong> Ingresa a <em>Nequi</em>, <em>Bancolombia</em>, <em>Daviplata</em> o la app de tu banco favorito en Colombia.
+              </li>
+              <li>
+                <strong>2. Selecciona Escanear QR o Bre-B:</strong> Apunta la cámara al código QR de arriba, o sube la imagen descargada de tu galería.
+              </li>
+              <li>
+                <strong>3. O ingresa la llave manual:</strong> Si prefieres escribirla, usa el correo <code>johansttivelinaresb@gmail.com</code>.
+              </li>
+              <li>
+                <strong>4. Elige el monto y confirma:</strong> Digita la cantidad voluntaria con la que deseas aportar y presiona Enviar. ¡Tu aporte apoya la educación de miles de niños!
+              </li>
+            </ol>
+          </div>
+
+          <div class="dedicated-bottom-nav">
+            <button type="button" class="btn-3d-secondary" id="btn-back-hub-bottom">
+              ⬅ Ver otros medios de donación
+            </button>
+            <button type="button" class="btn-3d-purple" id="btn-back-to-adventure">
+              🦉 Volver al Mapa de Niveles
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+  `;
+}
+
+/**
+ * PÁGINA DEDICADA 2: ARQ (Dólares Digitales)
+ */
+function renderArqDedicatedView() {
+  return `
+    <section class="donations-view view-fade-anim donations-dedicated-view" data-component="DonationsView" data-view="arq">
+      <div class="stage-top-bar donations-subnav-bar">
+        <button type="button" class="btn-back-circle" id="btn-back-to-hub" title="Volver a métodos de donación" aria-label="Volver a métodos de donación">
+          ⬅
+        </button>
+        <span class="donations-subnav-label">Opciones de Apoyo / ARQ</span>
+      </div>
+
+      <div class="dedicated-wrapper">
+        <div class="purple-ribbon-banner donations-ribbon">
+          <h1>🔵 Donar con ARQ (Dólares Digitales)</h1>
+        </div>
+
+        <article class="dedicated-donation-card dedicated-card-arq">
+          <div class="dedicated-header-row">
+            <div class="dedicated-brand-pill badge-arq">
+              <span>🔵 ARQ</span>
+            </div>
+            <span class="dedicated-country-tag">⚡ Transferencias Instantáneas (USDT / USDC)</span>
+          </div>
+
+          <p class="dedicated-tagline">
+            Envía tu apoyo en dólares digitales sin comisiones bancarias directamente a nuestro tag de usuario en la aplicación ARQ.
+          </p>
+
+          <div class="arq-hero-showcase">
+            <div class="arq-symbol-circle arq-symbol-large">
+              <span>$</span>
+            </div>
+            <div class="arq-user-highlight">
+              <span class="arq-user-label">Tag de Usuario en ARQ:</span>
+              <strong class="arq-user-tag">$sttive</strong>
+            </div>
+          </div>
+
+          <div class="dedicated-copy-section">
+            <button
+              type="button"
+              class="btn-donation-copy btn-copy-arq btn-copy-large"
+              data-copy-target="$sttive"
+              aria-label="Copiar usuario $sttive de ARQ"
+            >
+              📋 Copiar Usuario ($sttive)
+            </button>
+          </div>
+
+          <div class="dedicated-steps-panel">
+            <h3>📖 ¿Cómo enviar tu donación en ARQ?</h3>
+            <ol class="donation-steps-list">
+              <li>
+                <strong>1. Abre la app ARQ:</strong> Inicia sesión en tu cuenta de ARQ en tu teléfono móvil o navegador.
+              </li>
+              <li>
+                <strong>2. Ve a Enviar / Transferir:</strong> Selecciona la opción de enviar saldo a otro usuario.
+              </li>
+              <li>
+                <strong>3. Escribe el tag de usuario:</strong> Ingresa exactamente <code>$sttive</code> en el buscador de destinatario.
+              </li>
+              <li>
+                <strong>4. Ingresa el monto y envía:</strong> Selecciona la cantidad en dólares digitales y confirma la transferencia inmediata.
+              </li>
+            </ol>
+          </div>
+
+          <div class="dedicated-bottom-nav">
+            <button type="button" class="btn-3d-secondary" id="btn-back-hub-bottom">
+              ⬅ Ver otros medios de donación
+            </button>
+            <button type="button" class="btn-3d-purple" id="btn-back-to-adventure">
+              🦉 Volver al Mapa de Niveles
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+  `;
+}
+
+/**
+ * PÁGINA DEDICADA 3: PAYPAL (Internacional con Redirección Verificada)
+ */
+function renderPaypalDedicatedView() {
+  return `
+    <section class="donations-view view-fade-anim donations-dedicated-view" data-component="DonationsView" data-view="paypal">
+      <div class="stage-top-bar donations-subnav-bar">
+        <button type="button" class="btn-back-circle" id="btn-back-to-hub" title="Volver a métodos de donación" aria-label="Volver a métodos de donación">
+          ⬅
+        </button>
+        <span class="donations-subnav-label">Opciones de Apoyo / PayPal</span>
+      </div>
+
+      <div class="dedicated-wrapper">
+        <div class="purple-ribbon-banner donations-ribbon">
+          <h1>🔷 Donar con PayPal (Internacional)</h1>
+        </div>
+
+        <article class="dedicated-donation-card dedicated-card-paypal">
+          <div class="dedicated-header-row">
+            <div class="dedicated-brand-pill badge-paypal">
+              <span>🔷 PayPal Oficial</span>
+            </div>
+            <span class="dedicated-country-tag">🌎 Disponible en todo el mundo (USD / EUR)</span>
+          </div>
+
+          <p class="dedicated-tagline">
+            Puedes donar de manera 100% segura mediante tu tarjeta de crédito o débito (Visa, Mastercard, American Express) o utilizando el saldo de tu cuenta PayPal.
+          </p>
+
+          <div class="paypal-hero-showcase">
+            <div class="paypal-symbol-circle paypal-symbol-large">
+              <span>🅿️</span>
+            </div>
+            <div class="paypal-user-highlight">
+              <span class="paypal-user-label">Titular de la cuenta:</span>
+              <strong class="paypal-user-name">Johan Sttive Linares Barragan</strong>
+              <span class="paypal-user-label" style="margin-top: 0.5rem;">Correo verificado en PayPal:</span>
+              <strong class="paypal-user-email">johansttivelinaresb@gmail.com</strong>
+            </div>
+          </div>
+
+          <div class="paypal-actions-container">
+            <!-- Botón 1: Redirección directa al Portal Oficial de Donación de PayPal -->
+            <a
+              href="${PAYPAL_DONATE_URL}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-donation-direct btn-paypal-primary"
+              id="btn-paypal-official-donate"
+            >
+              💳 Abrir Portal Oficial de Donación en PayPal ↗
+            </a>
+
+            <!-- Botón 2: Copiar correo para enviar saldo desde la app -->
+            <button
+              type="button"
+              class="btn-donation-copy btn-copy-paypal btn-copy-large"
+              data-copy-target="johansttivelinaresb@gmail.com"
+              aria-label="Copiar correo de PayPal"
+            >
+              📋 Copiar Correo (johansttivelinaresb@gmail.com)
+            </button>
+
+            <!-- Botón 3: Enlace alternativo para usuarios con sesión de PayPal abierta -->
+            <a
+              href="${PAYPAL_TRANSFER_URL}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-donation-subtle"
+              id="btn-paypal-transfer"
+            >
+              ↗️ Abrir PayPal para Transferir Dinero
+            </a>
+          </div>
+
+          <div class="dedicated-steps-panel">
+            <h3>📖 ¿Cómo donar con PayPal?</h3>
+            <ol class="donation-steps-list">
+              <li>
+                <strong>Opción A (Recomendada):</strong> Haz clic en el botón superior <strong>"Abrir Portal Oficial de Donación en PayPal"</strong> para ingresar al formulario oficial de pago donde puedes colocar la cantidad que gustes.
+              </li>
+              <li>
+                <strong>Opción B (Desde tu App de PayPal):</strong> Abre la app de PayPal en tu teléfono, selecciona <em>"Enviar dinero"</em> y escribe el correo <code>johansttivelinaresb@gmail.com</code>.
+              </li>
+              <li>
+                <strong>Sin cuenta previa:</strong> PayPal te permite pagar directamente con tarjeta de crédito o débito internacional sin necesidad de registrarte.
+              </li>
+            </ol>
+          </div>
+
+          <div class="dedicated-bottom-nav">
+            <button type="button" class="btn-3d-secondary" id="btn-back-hub-bottom">
+              ⬅ Ver otros medios de donación
+            </button>
+            <button type="button" class="btn-3d-purple" id="btn-back-to-adventure">
+              🦉 Volver al Mapa de Niveles
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+  `;
+}
+
+/**
+ * Vincula los eventos de la vista de donaciones.
+ */
+export function bindDonationsViewEvents(rootElement = document, rerender = null, method = 'hub') {
   bindAriMascotEvents(rootElement);
 
+  // Botón superior de volver al inicio
   const backBtn = rootElement.querySelector('#btn-donations-back');
   if (backBtn) {
     backBtn.addEventListener('click', () => {
@@ -182,18 +498,54 @@ export function bindDonationsViewEvents(rootElement = document) {
     });
   }
 
-  const backAdventureBtn = rootElement.querySelector('#btn-back-to-adventure');
-  if (backAdventureBtn) {
-    backAdventureBtn.addEventListener('click', () => {
+  // Botones para volver al hub de donaciones desde una página dedicada
+  const backToHubBtns = rootElement.querySelectorAll('#btn-back-to-hub, #btn-back-hub-bottom');
+  backToHubBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      SoundService.play('click');
+      Router.navigate('/donaciones');
+    });
+  });
+
+  // Botón para volver a aprender y jugar (mapa de niveles)
+  const backAdventureBtns = rootElement.querySelectorAll('#btn-back-to-adventure');
+  backAdventureBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
       SoundService.play('click');
       Router.navigate('/niveles');
     });
-  }
+  });
 
-  // Manejo de botones de copiado al portapapeles con feedback accesible
+  // Navegación interactiva desde los bloques del Hub
+  const interactiveCards = rootElement.querySelectorAll('.donation-card-interactive, [data-nav]');
+  interactiveCards.forEach((elem) => {
+    const targetPath = elem.getAttribute('data-navigate') || elem.getAttribute('data-nav');
+    if (!targetPath) return;
+
+    elem.addEventListener('click', (e) => {
+      // Si el clic fue dentro de un botón de copiado, no navegar
+      if (e.target.closest('[data-copy-target]')) return;
+      SoundService.play('click');
+      Router.navigate(targetPath);
+    });
+
+    // Soporte de accesibilidad por teclado (Enter / Espacio)
+    if (elem.getAttribute('role') === 'button') {
+      elem.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          SoundService.play('click');
+          Router.navigate(targetPath);
+        }
+      });
+    }
+  });
+
+  // Manejo de botones de copiado al portapapeles con confirmación visual
   const copyButtons = rootElement.querySelectorAll('[data-copy-target]');
   copyButtons.forEach((btn) => {
-    btn.addEventListener('click', async () => {
+    btn.addEventListener('click', async (e) => {
+      e.stopPropagation(); // Evita navegar si está dentro de una tarjeta
       const textToCopy = btn.getAttribute('data-copy-target') || '';
       const originalHtml = btn.innerHTML;
 
@@ -201,7 +553,6 @@ export function bindDonationsViewEvents(rootElement = document) {
         if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
           await navigator.clipboard.writeText(textToCopy);
         } else {
-          // Fallback clásico
           const textArea = document.createElement('textarea');
           textArea.value = textToCopy;
           textArea.style.position = 'fixed';
