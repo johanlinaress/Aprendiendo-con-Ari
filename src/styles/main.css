@@ -286,15 +286,25 @@ body {
 }
 
 .btn-grade-switch {
-  background: rgba(255, 255, 255, 0.18);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(255, 255, 255, 0.2);
   color: #ffffff;
-  border: 1.5px solid rgba(255, 255, 255, 0.42);
+  border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: var(--radius-full);
-  padding: 0.3rem 0.6rem;
+  padding: 0.35rem 0.78rem;
   font-weight: 800;
-  font-size: 0.76rem;
+  font-size: 0.8rem;
   cursor: pointer;
   white-space: nowrap;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.btn-grade-switch:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
 }
 
 .mobile-menu-toggle {
@@ -326,12 +336,16 @@ body {
 }
 
 .nav-link-btn {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
   border: none;
   background: transparent;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.94);
   font-weight: 800;
-  font-size: 0.82rem;
-  padding: 0.38rem 0.62rem;
+  font-size: 0.85rem;
+  padding: 0.45rem 0.72rem;
   border-radius: var(--radius-full);
   cursor: pointer;
   transition: all 0.2s ease;
@@ -390,20 +404,30 @@ body {
   border-radius: var(--radius-full);
 }
 
+.navbar-audio-cluster {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-left: 0.25rem;
+}
+
 .btn-circle-audio {
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.7);
+  border: 2px solid rgba(255, 255, 255, 0.78);
   background: linear-gradient(180deg, #a855f7, #6d28d9);
   color: #ffffff;
-  font-size: 1rem;
+  font-size: 1.05rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 3px 0 #4c1d95;
   transition: transform 0.15s ease;
+  flex-shrink: 0;
 }
 
 .btn-circle-audio.audio-off {

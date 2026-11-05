@@ -35,7 +35,7 @@ export function renderNavbar(currentRoute) {
             <span class="profile-avatar-ring">${renderPlayerAvatarSvg()}</span>
             <span class="profile-text-col">
               <strong id="nav-player-greeting">Hola, ${safeName}</strong>
-              <small id="nav-grade-label">${state.selectedGrade}° Grado</small>
+              <small>🦉 Aprendiendo con Ari</small>
             </span>
           </button>
           <button
@@ -46,7 +46,7 @@ export function renderNavbar(currentRoute) {
             title="Cambiar grado o perfil (${state.selectedGrade}° Grado)"
             aria-label="Cambiar grado escolar (actual: ${state.selectedGrade}° Grado)"
           >
-            🎓 ${state.selectedGrade}°
+            🎓 <span id="nav-grade-label">${state.selectedGrade}° Grado</span>
           </button>
         </div>
 
@@ -86,26 +86,28 @@ export function renderNavbar(currentRoute) {
             <span aria-hidden="true">🔥</span>
             <span id="nav-streak-value">${state.currentStreak}</span>
           </div>
-          <button
-            type="button"
-            id="btn-music-toggle"
-            class="btn-circle-audio ${state.musicEnabled ? 'audio-on' : 'audio-off'}"
-            aria-pressed="${state.musicEnabled ? 'true' : 'false'}"
-            title="${state.musicEnabled ? 'Silenciar música' : 'Activar música'}"
-          >
-            <span aria-hidden="true">🎵</span>
-            <span class="sr-only">Música</span>
-          </button>
-          <button
-            type="button"
-            id="btn-sound-toggle"
-            class="btn-circle-audio ${state.soundEnabled ? 'audio-on' : 'audio-off'}"
-            aria-pressed="${state.soundEnabled ? 'true' : 'false'}"
-            title="${state.soundEnabled ? 'Silenciar efectos de sonido' : 'Activar efectos de sonido'}"
-          >
-            <span class="sound-icon" aria-hidden="true">${state.soundEnabled ? '🔊' : '🔇'}</span>
-            <span class="sr-only">Efectos de sonido</span>
-          </button>
+          <div class="navbar-audio-cluster" role="group" aria-label="Controles de audio">
+            <button
+              type="button"
+              id="btn-music-toggle"
+              class="btn-circle-audio ${state.musicEnabled ? 'audio-on' : 'audio-off'}"
+              aria-pressed="${state.musicEnabled ? 'true' : 'false'}"
+              title="${state.musicEnabled ? 'Silenciar música' : 'Activar música'}"
+            >
+              <span aria-hidden="true">🎵</span>
+              <span class="sr-only">Música</span>
+            </button>
+            <button
+              type="button"
+              id="btn-sound-toggle"
+              class="btn-circle-audio ${state.soundEnabled ? 'audio-on' : 'audio-off'}"
+              aria-pressed="${state.soundEnabled ? 'true' : 'false'}"
+              title="${state.soundEnabled ? 'Silenciar efectos de sonido' : 'Activar efectos de sonido'}"
+            >
+              <span class="sound-icon" aria-hidden="true">${state.soundEnabled ? '🔊' : '🔇'}</span>
+              <span class="sr-only">Efectos de sonido</span>
+            </button>
+          </div>
         </div>
 
         <button
