@@ -452,6 +452,51 @@ function renderInteractiveModalityHelper(currentQuestion) {
   return '';
 }
 
+function renderExerciseFeedbackBanner(currentQuestion, session, positiveCorrectPhrase, positiveRetryPhrase) {
+  if (!session.hasChecked) return '';
+
+  if (session.isCurrentCorrect) {
+    return `
+      <div class="feedback-banner feedback-success" id="exercise-feedback-box" role="status" aria-live="polite">
+        <div class="feedback-header">
+          <span class="feedback-icon">🎉</span>
+          <strong>${positiveCorrectPhrase} ¡Respuesta Correcta! (+${session.lastPointsEarned} pts)</strong>
+        </div>
+        <p class="feedback-explanation">${escapeHtml(currentQuestion.explanation)}</p>
+      </div>
+    `;
+  }
+
+  const selectedDisplay = session.selectedOption || session.typedAnswer || 'Sin respuesta seleccionada';
+
+  return `
+    <div class="feedback-banner feedback-error" id="exercise-feedback-box" role="status" aria-live="polite">
+      <div class="feedback-header">
+        <span class="feedback-icon">❌</span>
+        <strong>${positiveRetryPhrase} ¡Analicemos juntos qué pasó!</strong>
+      </div>
+      <div class="feedback-comparison-row">
+        <div class="feedback-choice-bad">
+          <span class="choice-tag">Tu selección:</span>
+          <span class="choice-value">«${escapeHtml(selectedDisplay)}»</span>
+        </div>
+        <div class="feedback-choice-good">
+          <span class="choice-tag">Respuesta correcta:</span>
+          <span class="choice-value">«${escapeHtml(currentQuestion.correctAnswer)}»</span>
+        </div>
+      </div>
+      <div class="feedback-pedagogical-tip">
+        <span class="tip-icon">💡</span>
+        <div class="tip-content">
+          <strong>¿Por qué es así? Aprendo del error con Ari:</strong>
+          <p class="feedback-explanation">${escapeHtml(currentQuestion.explanation)}</p>
+          ${currentQuestion.hint ? `<p class="feedback-hint-ref">🔑 <em>Pista para recordar: ${escapeHtml(currentQuestion.hint)}</em></p>` : ''}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 export function renderExerciseView(levelId, preserveSession = false) {
   const id = Number(levelId);
   const level = LEVELS_DATA.find((l) => l.id === id);
@@ -701,21 +746,7 @@ export function renderExerciseView(levelId, preserveSession = false) {
                           : ''
                       }
 
-                      ${
-                        activeSession.hasChecked
-                          ? `<div class="feedback-banner ${activeSession.isCurrentCorrect ? 'feedback-success' : 'feedback-error'}" id="exercise-feedback-box" role="status" aria-live="polite">
-                              <div class="feedback-header">
-                                <span class="feedback-icon">${activeSession.isCurrentCorrect ? '✅' : '❌'}</span>
-                                <strong>${
-                                  activeSession.isCurrentCorrect
-                                    ? `${positiveCorrectPhrase} ¡Respuesta Correcta! (+${activeSession.lastPointsEarned} pts)`
-                                    : `${positiveRetryPhrase} La respuesta correcta es: «${escapeHtml(currentQuestion.correctAnswer)}»`
-                                }</strong>
-                              </div>
-                              <p class="feedback-explanation">${escapeHtml(currentQuestion.explanation)}</p>
-                            </div>`
-                          : ''
-                      }
+                      ${renderExerciseFeedbackBanner(currentQuestion, activeSession, positiveCorrectPhrase, positiveRetryPhrase)}
 
                       <div class="exercise-actions-footer">
                         <button
@@ -819,21 +850,7 @@ export function renderExerciseView(levelId, preserveSession = false) {
                           : ''
                       }
 
-                      ${
-                        activeSession.hasChecked
-                          ? `<div class="feedback-banner ${activeSession.isCurrentCorrect ? 'feedback-success' : 'feedback-error'}" id="exercise-feedback-box" role="status" aria-live="polite">
-                              <div class="feedback-header">
-                                <span class="feedback-icon">${activeSession.isCurrentCorrect ? '✅' : '❌'}</span>
-                                <strong>${
-                                  activeSession.isCurrentCorrect
-                                    ? `${positiveCorrectPhrase} ¡Respuesta Correcta! (+${activeSession.lastPointsEarned} pts)`
-                                    : `${positiveRetryPhrase} La opción correcta es: «${escapeHtml(currentQuestion.correctAnswer)}»`
-                                }</strong>
-                              </div>
-                              <p class="feedback-explanation">${escapeHtml(currentQuestion.explanation)}</p>
-                            </div>`
-                          : ''
-                      }
+                      ${renderExerciseFeedbackBanner(currentQuestion, activeSession, positiveCorrectPhrase, positiveRetryPhrase)}
 
                       <div class="exercise-actions-footer math-actions-bar">
                         <button

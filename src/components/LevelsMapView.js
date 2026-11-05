@@ -40,6 +40,9 @@ export function renderLevelsMapView(routeSubject = 'todas') {
       : LEVELS_DATA.filter((l) => l.subject === subjectFilter);
 
   const bannerMeta = SUBJECT_BANNER_META[subjectFilter] || SUBJECT_BANNER_META.todas;
+  const recommendedLevelId = StorageService.getNextPlayableLevelForSubject(
+    subjectFilter === 'todas' ? null : subjectFilter
+  );
 
   return `
     <section class="levels-map-view view-fade-anim" data-component="LevelsMapView" data-subject-filter="${subjectFilter}">
@@ -104,17 +107,27 @@ export function renderLevelsMapView(routeSubject = 'todas') {
             const statusKey = StorageService.getLevelStatus(lvl.id);
             const statusMeta = LEVEL_STATUS_META[statusKey];
             const subjectLabel = SUBJECT_LABELS[lvl.subject] || 'Materia';
+            const isRecommended = lvl.id === recommendedLevelId;
 
             return `
               <article
-                class="level-map-card ${isUnlocked ? 'is-unlocked' : 'is-locked'} ${lvlState.completed ? 'is-completed' : ''}"
+                class="level-map-card ${isUnlocked ? 'is-unlocked' : 'is-locked'} ${lvlState.completed ? 'is-completed' : ''} ${isRecommended ? 'is-recommended' : ''}"
                 id="level-card-${lvl.id}"
                 data-level-id="${lvl.id}"
                 data-unlocked="${isUnlocked}"
               >
+                ${
+                  isRecommended
+                    ? `<div class="ari-path-marker" aria-label="Nivel recomendado por Ari">
+                        <span class="ari-marker-avatar">🦉</span>
+                        <span class="ari-marker-text">¡Ari te espera aquí!</span>
+                      </div>`
+                    : ''
+                }
                 <div class="level-card-header">
                   <div class="level-number-badge" style="background: ${isUnlocked ? '#3b0764' : '#475569'}">
-                    Nivel ${lvl.id} • ${subjectLabel}
+                    <span class="path-step-flag">${lvlState.completed ? '⭐' : isUnlocked ? '🚩' : '🔒'}</span>
+                    Estación ${lvl.id} • ${subjectLabel}
                   </div>
                   <div class="level-stars-group" role="img" aria-label="${lvlState.stars} de 3 estrellas">
                     ${renderStarsHtml(lvlState.stars, 'level-star')}

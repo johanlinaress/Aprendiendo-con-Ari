@@ -3,6 +3,7 @@ import { StorageService } from '../services/StorageService.js';
 import { renderAriMascot, bindAriMascotEvents } from './AriMascot.js';
 import { SoundService } from '../services/SoundService.js';
 import { Router } from '../router/Router.js';
+import { escapeHtml } from '../utils/escapeHtml.js';
 
 export function renderLevelCompleteModal({
   level,
@@ -28,6 +29,14 @@ export function renderLevelCompleteModal({
 
   const mathProgress = StorageService.getSubjectProgress('matematicas');
   const espProgress = StorageService.getSubjectProgress('espanol');
+  const state = StorageService.getState();
+  const isGrade4 = String(state.selectedGrade) === '4';
+  const summaryText = isGrade4
+    ? level.lesson?.summary4 || level.lesson?.summary3 || level.description
+    : level.lesson?.summary3 || level.description;
+  const stepsList = isGrade4
+    ? level.lesson?.steps4 || level.lesson?.steps
+    : level.lesson?.steps3 || level.lesson?.steps;
 
   const starsHtml = [1, 2, 3]
     .map((starIdx) => {
@@ -154,6 +163,21 @@ export function renderLevelCompleteModal({
 
             <div class="trophy-corner" aria-hidden="true">🏆</div>
           </aside>
+        </div>
+
+        <div class="learning-summary-card" id="level-learning-summary">
+          <div class="summary-card-header">
+            <span class="summary-card-icon">💡</span>
+            <h3 class="summary-card-title">Lo que aprendiste hoy con Ari (${state.selectedGrade}° Grado):</h3>
+          </div>
+          <p class="summary-card-text">${escapeHtml(summaryText)}</p>
+          ${
+            Array.isArray(stepsList) && stepsList.length > 0
+              ? `<ul class="summary-steps-pills">
+                  ${stepsList.slice(0, 3).map((st) => `<li>✨ ${escapeHtml(st)}</li>`).join('')}
+                </ul>`
+              : ''
+          }
         </div>
 
         <div class="complete-actions">

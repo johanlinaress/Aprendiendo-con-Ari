@@ -156,17 +156,38 @@ export function renderPracticeView() {
 
             ${
               practiceState.hasChecked
-                ? `<div class="feedback-banner ${practiceState.isCurrentCorrect ? 'feedback-success' : 'feedback-error'}" id="practice-feedback-box">
-                    <div class="feedback-header">
-                      <span>${practiceState.isCurrentCorrect ? '✅' : '❌'}</span>
-                      <strong>${
-                        practiceState.isCurrentCorrect
-                          ? `¡Respuesta Correcta! (+${practiceState.lastPointsEarned} pts)`
-                          : `Respuesta Incorrecta. La correcta es: «${escapeHtml(currentQuestion.correctAnswer)}»`
-                      }</strong>
-                    </div>
-                    <p class="feedback-explanation">${escapeHtml(currentQuestion.explanation)}</p>
-                  </div>`
+                ? practiceState.isCurrentCorrect
+                  ? `<div class="feedback-banner feedback-success" id="practice-feedback-box" role="status" aria-live="polite">
+                      <div class="feedback-header">
+                        <span class="feedback-icon">🎉</span>
+                        <strong>¡Respuesta Correcta! (+${practiceState.lastPointsEarned} pts)</strong>
+                      </div>
+                      <p class="feedback-explanation">${escapeHtml(currentQuestion.explanation)}</p>
+                    </div>`
+                  : `<div class="feedback-banner feedback-error" id="practice-feedback-box" role="status" aria-live="polite">
+                      <div class="feedback-header">
+                        <span class="feedback-icon">❌</span>
+                        <strong>¡Buen intento! Analicemos juntos qué pasó:</strong>
+                      </div>
+                      <div class="feedback-comparison-row">
+                        <div class="feedback-choice-bad">
+                          <span class="choice-tag">Tu selección:</span>
+                          <span class="choice-value">«${escapeHtml(practiceState.selectedOption || 'Sin seleccionar')}»</span>
+                        </div>
+                        <div class="feedback-choice-good">
+                          <span class="choice-tag">Respuesta correcta:</span>
+                          <span class="choice-value">«${escapeHtml(currentQuestion.correctAnswer)}»</span>
+                        </div>
+                      </div>
+                      <div class="feedback-pedagogical-tip">
+                        <span class="tip-icon">💡</span>
+                        <div class="tip-content">
+                          <strong>¿Por qué es así? Aprendo del error con Ari:</strong>
+                          <p class="feedback-explanation">${escapeHtml(currentQuestion.explanation)}</p>
+                          ${currentQuestion.hint ? `<p class="feedback-hint-ref">🔑 <em>Pista para recordar: ${escapeHtml(currentQuestion.hint)}</em></p>` : ''}
+                        </div>
+                      </div>
+                    </div>`
                 : ''
             }
 

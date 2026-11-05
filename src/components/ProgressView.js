@@ -130,13 +130,21 @@ export function renderProgressView(focus = 'resumen') {
                   id="achievement-${ach.id}"
                   data-unlocked="${unlocked}"
                 >
-                  <div class="achievement-icon">${unlocked ? ach.icon : '🔒'}</div>
+                  <div class="achievement-icon-wrapper ${unlocked ? 'icon-unlocked' : 'icon-silhouette'}">
+                    <span class="achievement-icon" aria-hidden="true">${ach.icon}</span>
+                    ${!unlocked ? '<span class="achievement-lock-overlay" aria-label="Bloqueada">🔒</span>' : ''}
+                  </div>
                   <div class="achievement-info">
-                    <h3>${ach.title}</h3>
-                    <p>${ach.description}</p>
-                    <span class="achievement-status-tag">
-                      ${unlocked ? '✅ Desbloqueado' : '🔒 Pendiente'}
-                    </span>
+                    <div class="achievement-header-row">
+                      <h3>${escapeHtml(ach.title)}</h3>
+                      <span class="achievement-status-tag ${unlocked ? 'status-unlocked' : 'status-locked'}">
+                        ${unlocked ? '✅ Desbloqueado' : '🔒 Bloqueado'}
+                      </span>
+                    </div>
+                    <div class="achievement-requirement-box">
+                      <strong class="req-title">🎯 Requisito:</strong>
+                      <span class="req-text">${escapeHtml(ach.description)}</span>
+                    </div>
                   </div>
                 </article>
               `;
