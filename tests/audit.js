@@ -329,6 +329,42 @@ async function runAudit() {
       JSON.stringify(paypalPageCheck)
     );
 
+    // Verify Breadcrumbs on non-home pages
+    await cdp.eval(`window.location.hash = '#/materias';`);
+    await sleep(90);
+    const breadcrumbsCheck = await cdp.eval(`
+      (() => {
+        const bar = document.querySelector('.app-breadcrumbs-bar');
+        const items = Array.from(document.querySelectorAll('.breadcrumb-item')).map((el) => el.textContent.trim());
+        const hasInicioLink = Boolean(document.querySelector('[data-breadcrumb-nav="/inicio"]'));
+        return { hasBar: Boolean(bar), items, hasInicioLink };
+      })()
+    `);
+    assertCheck(
+      '2. Rutas',
+      'Barra de Breadcrumbs presente en #/materias con enlace de retorno a Inicio',
+      breadcrumbsCheck.hasBar && breadcrumbsCheck.hasInicioLink && breadcrumbsCheck.items.some((t) => t.includes('Inicio')),
+      JSON.stringify(breadcrumbsCheck)
+    );
+
+    // Verify Active Recall mini-challenge in Lesson Phase
+    await cdp.eval(`window.location.hash = '#/nivel/1';`);
+    await sleep(100);
+    const lessonPhaseCheck = await cdp.eval(`
+      (() => {
+        const hasRecallSection = Boolean(document.querySelector('.active-recall-section'));
+        const hasRecallBtns = document.querySelectorAll('.btn-recall-opt').length >= 2;
+        const hasPulseCta = Boolean(document.querySelector('#btn-start-practice-from-lesson.pulse-cta'));
+        return { hasRecallSection, hasRecallBtns, hasPulseCta };
+      })()
+    `);
+    assertCheck(
+      '3. Flujo Pedagógico',
+      'Fase Aprendo (#/nivel/1) incluye mini-reto de Active Recall y botón CTA destacado con pulso',
+      lessonPhaseCheck.hasRecallSection && lessonPhaseCheck.hasRecallBtns && lessonPhaseCheck.hasPulseCta,
+      JSON.stringify(lessonPhaseCheck)
+    );
+
     // Verify subject-specific map headings (#/matematicas y #/espanol)
     await cdp.eval(`window.location.hash = '#/matematicas';`);
     await sleep(90);

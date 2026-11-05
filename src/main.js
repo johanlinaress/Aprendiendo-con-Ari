@@ -12,6 +12,7 @@ import { renderPracticeView, bindPracticeViewEvents } from './components/Practic
 import { renderProgressView, bindProgressViewEvents } from './components/ProgressView.js';
 import { renderDonationsView, bindDonationsViewEvents } from './components/DonationsView.js';
 import { renderNotFoundView, bindNotFoundViewEvents } from './components/NotFoundView.js';
+import { renderBreadcrumbs, bindBreadcrumbsEvents } from './components/Breadcrumbs.js';
 import { renderSceneBackgroundSvg } from './components/Illustrations.js';
 import { enhanceA11yKeyboardNavigation } from './utils/a11yKeyboard.js';
 
@@ -111,10 +112,12 @@ function renderApp(route, { isRerender = false } = {}) {
   oldNavbar.outerHTML = renderNavbar(route);
   bindNavbarEvents(shell);
 
-  // 2. Contenido principal.
+  // 2. Contenido principal con Breadcrumbs de navegación para orientación espacial.
   const main = shell.querySelector('#main-content');
   main.classList.toggle('is-rerender', isRerender);
-  main.innerHTML = view.render(route, { isRerender });
+  const breadcrumbsHtml = renderBreadcrumbs(route);
+  main.innerHTML = `${breadcrumbsHtml}${view.render(route, { isRerender })}`;
+  bindBreadcrumbsEvents(main);
 
   const rerender = () => renderApp(Router.getCurrentRoute(), { isRerender: true });
   const cleanup = view.bind(main, rerender, route);

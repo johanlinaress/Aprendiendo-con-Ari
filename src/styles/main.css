@@ -4120,5 +4120,265 @@ select:focus-visible,
   }
 }
 
+/* ==========================================================================
+   MEJORAS PROFESIONALES: BREADCRUMBS, LECCIÓN GUIADA, ATAJOS Y PROCEDIMIENTOS
+   ========================================================================== */
+
+/* Breadcrumbs de Navegación */
+.app-breadcrumbs-bar {
+  max-width: 1200px;
+  margin: 0.25rem auto 0.75rem;
+  padding: 0 0.5rem;
+}
+
+.breadcrumbs-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem 0.9rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.86rem;
+}
+
+.breadcrumb-link {
+  background: none;
+  border: none;
+  padding: 0.15rem 0.45rem;
+  color: #6366f1;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.breadcrumb-link:hover {
+  background: #ede9fe;
+  color: #4f46e5;
+  text-decoration: underline;
+}
+
+.breadcrumb-separator {
+  color: #94a3b8;
+  font-weight: 900;
+  font-size: 1rem;
+  margin: 0 0.15rem;
+}
+
+.breadcrumb-active {
+  color: #334155;
+  font-weight: 800;
+  padding: 0.15rem 0.45rem;
+}
+
+/* Fase Aprendo: Secciones modulares y Active Recall */
+.lesson-section-card {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.25rem 1.4rem;
+  margin-bottom: 1.15rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.lesson-section-heading {
+  margin: 0 0 0.65rem;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #3b0764;
+}
+
+.active-recall-section {
+  background: linear-gradient(135deg, #faf5ff 0%, #f0fdf4 100%);
+  border-color: #d8b4fe;
+}
+
+.recall-prompt {
+  margin: 0 0 0.85rem;
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #1e1b4b;
+}
+
+.recall-options-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn-recall-opt {
+  flex: 1;
+  min-width: 200px;
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.btn-recall-opt:hover {
+  border-color: #8b5cf6;
+  background: #f5f3ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+}
+
+.recall-feedback-alert {
+  margin-top: 0.85rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  animation: fadeIn 0.25s ease;
+}
+
+.recall-success {
+  background: #dcfce7;
+  border: 2px solid #86efac;
+  color: #166534;
+}
+
+.recall-retry {
+  background: #fef3c7;
+  border: 2px solid #fde047;
+  color: #854d0e;
+}
+
+/* Procedimiento paso a paso en feedback de error */
+.feedback-procedure-wrapper {
+  margin-top: 0.85rem;
+}
+
+.btn-toggle-procedure {
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-toggle-procedure:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.procedure-dropdown-box {
+  margin-top: 0.65rem;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  animation: fadeIn 0.2s ease;
+}
+
+.procedure-step-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: #334155;
+}
+
+.procedure-badge {
+  background: #ede9fe;
+  color: #5b21b6;
+  font-size: 0.74rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+/* Indicadores de atajos de teclado [1] [2] [3] [4] */
+.option-kbd-hint {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.08);
+  color: inherit;
+  font-size: 0.72rem;
+  font-weight: 900;
+  margin-right: 0.35rem;
+  flex-shrink: 0;
+}
+
+/* Animación de pulso para el CTA principal */
+.pulse-cta {
+  animation: pulse-button 2.8s infinite;
+}
+
+@keyframes pulse-button {
+  0% { transform: scale(1); box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); }
+  50% { transform: scale(1.025); box-shadow: 0 8px 24px rgba(249, 115, 22, 0.5); }
+  100% { transform: scale(1); box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); }
+}
+
+/* Criterios de bloqueo y estrellas en Mapa de Niveles */
+.level-lock-criteria-box {
+  background: #fff1f2;
+  border: 1px dashed #f43f5e;
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: #9f1239;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin-bottom: 0.75rem;
+}
+
+.level-stars-criteria-hint {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748b;
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+/* Bonus pill en práctica libre */
+.bonus-practice-pill {
+  background: #fef08a;
+  border: 1px solid #facc15;
+  color: #854d0e;
+  font-size: 0.8rem;
+  font-weight: 900;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+
 
 

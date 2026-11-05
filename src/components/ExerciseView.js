@@ -199,13 +199,20 @@ function renderLessonPhaseView(level, state) {
     : lesson.exampleVisual3 || lesson.exampleVisual;
   const stepsList = isGrade4 ? lesson.steps4 || lesson.steps : lesson.steps3 || lesson.steps;
 
+  // Mini-reto de active recall contextual para afianzar antes de la práctica
+  const recallPrompt = level.subject === 'matematicas'
+    ? '🎯 Mini-Comprobación de Ari: En cualquier suma o resta, ¿por cuál columna empezamos siempre a calcular?'
+    : '🎯 Mini-Comprobación de Ari: ¿Qué palabra nos indica la acción principal que realiza el sujeto?';
+  const optA = level.subject === 'matematicas' ? 'A) Por las Unidades (a la derecha)' : 'A) El Verbo';
+  const optB = level.subject === 'matematicas' ? 'B) Por las Centenas (a la izquierda)' : 'B) El Signo de puntuación';
+
   return `
     <div class="lesson-aprendo-card view-fade-anim" id="lesson-aprendo-panel">
       <div class="lesson-aprendo-grid">
         <div class="lesson-ari-col">
           ${renderAriMascot({
             mood: 'explaining',
-            message: `¡Bienvenido a «${level.title}» para ${state.selectedGrade}° Grado! Primero repasemos el tema juntos.`,
+            message: `¡Bienvenido a «${level.title}» para ${state.selectedGrade}° Grado! Primero repasemos el tema paso a paso.`,
             compact: false,
             showGreetButton: true
           })}
@@ -214,26 +221,51 @@ function renderLessonPhaseView(level, state) {
         <div class="lesson-content-col">
           <span class="hero-pill">📘 Fase 1: Aprendo • ${state.selectedGrade}° Grado</span>
           <h2 class="lesson-title">${escapeHtml(lesson.title)}</h2>
-          <p class="lesson-summary-text" id="lesson-summary-body">${escapeHtml(summaryText)}</p>
 
-          <div class="lesson-example-highlight">
-            <span class="lesson-example-tag">✨ Ejemplo de Ari (${state.selectedGrade}° Grado):</span>
-            <strong class="lesson-example-visual" id="lesson-example-visual">${escapeHtml(exampleVisual)}</strong>
+          <!-- SECCIÓN 1: ¿De qué se trata este tema? -->
+          <div class="lesson-section-card">
+            <h3 class="lesson-section-heading">💡 1. ¿De qué se trata este tema?</h3>
+            <p class="lesson-summary-text" id="lesson-summary-body">${escapeHtml(summaryText)}</p>
           </div>
 
-          <ul class="lesson-steps-list" id="lesson-steps-list">
-            ${(stepsList || []).map((st) => `<li>${escapeHtml(st)}</li>`).join('')}
-          </ul>
+          <!-- SECCIÓN 2: Ejemplo ilustrado y pasos de Ari -->
+          <div class="lesson-section-card">
+            <h3 class="lesson-section-heading">🔍 2. Pasos y Ejemplo Ilustrado</h3>
+            <div class="lesson-example-highlight">
+              <span class="lesson-example-tag">✨ Ejemplo Ilustrado (${state.selectedGrade}° Grado):</span>
+              <strong class="lesson-example-visual" id="lesson-example-visual">${escapeHtml(exampleVisual)}</strong>
+            </div>
 
+            <ol class="lesson-steps-list" id="lesson-steps-list">
+              ${(stepsList || []).map((st, i) => `<li><strong>Paso ${i + 1}:</strong> ${escapeHtml(st)}</li>`).join('')}
+            </ol>
+          </div>
+
+          <!-- SECCIÓN 3: Mini-Reto interactivo de Ari (Active Recall) -->
+          <div class="lesson-section-card active-recall-section">
+            <h3 class="lesson-section-heading">🎯 3. ¡Mini-Reto de Ari! (Comprobación rápida)</h3>
+            <p class="recall-prompt">${escapeHtml(recallPrompt)}</p>
+            <div class="recall-options-row">
+              <button type="button" class="btn-recall-opt" data-recall-opt="A" data-recall-is-correct="true">
+                ${escapeHtml(optA)}
+              </button>
+              <button type="button" class="btn-recall-opt" data-recall-opt="B" data-recall-is-correct="false">
+                ${escapeHtml(optB)}
+              </button>
+            </div>
+            <div class="recall-feedback-box" id="recall-feedback-box" hidden></div>
+          </div>
+
+          <!-- Acciones de la lección -->
           <div class="lesson-actions-row">
+            <button type="button" class="btn-3d-orange btn-lg pulse-cta" id="btn-start-practice-from-lesson">
+              ▶️ ¡Continuar a Practicar y Demostrar!
+            </button>
             <button type="button" class="btn-listen-purple" id="btn-listen-lesson">
               🔊 Escuchar Explicación
             </button>
-            <button type="button" class="btn-3d-orange" id="btn-start-practice-from-lesson">
-              ▶️ ¡Ir a Practicar!
-            </button>
             <button type="button" class="btn btn-outline btn-sm" id="btn-skip-explanation">
-              ⏭️ Saltar explicación
+              ⏭️ Saltar a la Práctica
             </button>
           </div>
         </div>
@@ -515,6 +547,25 @@ function renderExerciseFeedbackBanner(currentQuestion, session, positiveCorrectP
           <strong>¿Por qué es así? Aprendo del error con Ari:</strong>
           <p class="feedback-explanation">${escapeHtml(currentQuestion.explanation)}</p>
           ${currentQuestion.hint ? `<p class="feedback-hint-ref">🔑 <em>Pista para recordar: ${escapeHtml(currentQuestion.hint)}</em></p>` : ''}
+          <div class="feedback-procedure-wrapper">
+            <button type="button" class="btn-toggle-procedure" id="btn-toggle-procedure" aria-expanded="false">
+              📖 Ver procedimiento paso a paso ▼
+            </button>
+            <div class="procedure-dropdown-box" id="procedure-dropdown-box" hidden>
+              <div class="procedure-step-row">
+                <span class="procedure-badge">Paso 1: Datos</span>
+                <span>Analizar la consigna: «${escapeHtml(currentQuestion.prompt)}».</span>
+              </div>
+              <div class="procedure-step-row">
+                <span class="procedure-badge">Paso 2: Resolución</span>
+                <span>${escapeHtml(currentQuestion.explanation)}</span>
+              </div>
+              <div class="procedure-step-row">
+                <span class="procedure-badge">Paso 3: Conclusión</span>
+                <span>Respuesta correcta verificada: <strong>«${escapeHtml(currentQuestion.correctAnswer)}»</strong>.</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -755,6 +806,7 @@ export function renderExerciseView(levelId, preserveSession = false) {
                                 ${activeSession.hasChecked ? 'disabled' : ''}
                               >
                                 <span class="radio-circle-indicator"></span>
+                                <span class="option-kbd-hint" aria-hidden="true">${idx + 1}</span>
                                 <span class="option-text">${escapeHtml(opt)}</span>
                               </button>
                             `;
@@ -859,6 +911,7 @@ export function renderExerciseView(levelId, preserveSession = false) {
                                 aria-checked="${isSelected ? 'true' : 'false'}"
                                 ${activeSession.hasChecked ? 'disabled' : ''}
                               >
+                                <span class="option-kbd-hint" aria-hidden="true">${idx + 1}</span>
                                 <span class="option-text">${escapeHtml(opt)}</span>
                               </button>
                             `;
@@ -1027,6 +1080,40 @@ export function bindExerciseViewEvents(rootElement, rerenderCallback) {
       activeSession.activePhase = 'practico';
       StorageService.saveExerciseSession(activeSession);
       rerenderCallback(true);
+    });
+  }
+
+  // Mini-reto de active recall en Fase Aprendo
+  const recallOptBtns = rootElement.querySelectorAll('[data-recall-opt]');
+  recallOptBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const isCorrect = btn.getAttribute('data-recall-is-correct') === 'true';
+      const feedbackBox = rootElement.querySelector('#recall-feedback-box');
+      if (feedbackBox) {
+        feedbackBox.hidden = false;
+        feedbackBox.className = `recall-feedback-alert ${isCorrect ? 'recall-success' : 'recall-retry'}`;
+        feedbackBox.innerHTML = isCorrect
+          ? '🎉 <strong>¡Excelente comprensión!</strong> Has captado la idea clave. ¡Ahora sí estás listo para practicar!'
+          : '💡 <strong>¡Casi!</strong> Revisa el ejemplo de Ari en el Paso 2 e inténtalo otra vez.';
+        SoundService.play(isCorrect ? 'correct' : 'hint');
+      }
+    });
+  });
+
+  // Despliegue de procedimiento paso a paso en retroalimentación de error
+  const toggleProcBtn = rootElement.querySelector('#btn-toggle-procedure');
+  if (toggleProcBtn) {
+    toggleProcBtn.addEventListener('click', () => {
+      const dropdown = rootElement.querySelector('#procedure-dropdown-box');
+      if (dropdown) {
+        const isHidden = dropdown.hidden;
+        dropdown.hidden = !isHidden;
+        toggleProcBtn.setAttribute('aria-expanded', String(isHidden));
+        toggleProcBtn.textContent = isHidden
+          ? '📖 Ocultar procedimiento ▲'
+          : '📖 Ver procedimiento paso a paso ▼';
+        SoundService.play('click');
+      }
     });
   }
 
@@ -1310,7 +1397,35 @@ export function bindExerciseViewEvents(rootElement, rerenderCallback) {
     });
   }
 
+  // Atajos de teclado: teclas 1, 2, 3, 4 para elegir opciones y Enter para comprobar/continuar
+  const handleKeyboardInput = (e) => {
+    if (!activeSession || activeSession.isFinished || activeSession.activePhase !== 'practico') return;
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+
+    if (['1', '2', '3', '4'].includes(e.key) && !activeSession.hasChecked) {
+      const idx = Number(e.key) - 1;
+      const targetOpt = rootElement.querySelector(`#option-btn-${idx}`);
+      if (targetOpt) {
+        targetOpt.click();
+      }
+    } else if (e.key === 'Enter') {
+      if (!activeSession.hasChecked) {
+        const checkBtn = rootElement.querySelector('#btn-check-answer');
+        if (checkBtn && !checkBtn.disabled) {
+          checkBtn.click();
+        }
+      } else {
+        const nextBtn = rootElement.querySelector('#btn-next-question');
+        if (nextBtn) {
+          nextBtn.click();
+        }
+      }
+    }
+  };
+  window.addEventListener('keydown', handleKeyboardInput);
+
   return () => {
     stopSessionTimer();
+    window.removeEventListener('keydown', handleKeyboardInput);
   };
 }

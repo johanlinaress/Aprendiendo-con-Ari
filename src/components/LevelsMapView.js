@@ -162,6 +162,17 @@ export function renderLevelsMapView(routeSubject = 'todas') {
                   </div>
                 </div>
 
+                ${
+                  !isUnlocked && lvl.requiredLevel
+                    ? `<div class="level-lock-criteria-box">
+                        <span class="criteria-icon">🔒</span>
+                        <span>Requisito: Supera el <strong>Nivel ${lvl.requiredLevel}</strong> con al menos <strong>70%</strong> para abrir este candado.</span>
+                      </div>`
+                    : `<div class="level-stars-criteria-hint">
+                        <span>⭐ Recompensas: 1★ (70%+) • 2★ (85%+) • 3★ (100% perfecto)</span>
+                      </div>`
+                }
+
                 <div class="level-card-actions">
                   <button
                     type="button"

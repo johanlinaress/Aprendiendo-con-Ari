@@ -172,6 +172,16 @@
     },
     {
       "category": "2. Rutas",
+      "description": "Barra de Breadcrumbs presente en #/materias con enlace de retorno a Inicio",
+      "details": "{\"hasBar\":true,\"items\":[\"🏠\\n                  Inicio\\n                \\n                ›\",\"📚\\n                  Materias\"],\"hasInicioLink\":true}"
+    },
+    {
+      "category": "3. Flujo Pedagógico",
+      "description": "Fase Aprendo (#/nivel/1) incluye mini-reto de Active Recall y botón CTA destacado con pulso",
+      "details": "{\"hasRecallSection\":true,\"hasRecallBtns\":true,\"hasPulseCta\":true}"
+    },
+    {
+      "category": "2. Rutas",
       "description": "Ruta #/matematicas muestra el encabezado «¡Vamos a aprender Matemáticas!» y filtra las 5 unidades",
       "details": ""
     },
@@ -498,7 +508,7 @@
     {
       "category": "7. Persistencia de progreso",
       "description": "Recargar el navegador recupera exactamente nombre, puntaje, 30/30 estrellas, 10 unidades desbloqueadas y las 9 medallas desde localStorage",
-      "details": "{\"playerName\":\"Valentina\",\"totalScore\":36530,\"totalStars\":30,\"unlockedCount\":10,\"achievementsCount\":9,\"navScoreText\":\"36530\",\"navStarsText\":\"30/30\"}"
+      "details": "{\"playerName\":\"Valentina\",\"totalScore\":36400,\"totalStars\":30,\"unlockedCount\":10,\"achievementsCount\":9,\"navScoreText\":\"36400\",\"navStarsText\":\"30/30\"}"
     },
     {
       "category": "3. Botones",

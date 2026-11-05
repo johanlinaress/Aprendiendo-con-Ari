@@ -71,7 +71,10 @@ export function renderPracticeView() {
     <section class="practice-view view-fade-anim" data-component="PracticeView">
       <div class="section-header-row">
         <div>
-          <span class="hero-pill">⚡ Entrenamiento Continuo</span>
+          <div class="header-badges-cluster">
+            <span class="hero-pill">⚡ Entrenamiento Continuo</span>
+            <span class="bonus-practice-pill">🎁 +50% Puntos Bonus en Práctica Libre</span>
+          </div>
           <h1 class="section-title">Modo Práctica Libre</h1>
           <p class="section-subtitle">Filtra por materia, repasa conceptos y acumula puntos adicionales junto a Ari.</p>
         </div>
@@ -139,6 +142,7 @@ export function renderPracticeView() {
                       ${practiceState.hasChecked ? 'disabled' : ''}
                     >
                       <span class="option-letter">${letter}</span>
+                      <span class="option-kbd-hint" aria-hidden="true">${idx + 1}</span>
                       <span class="option-text">${escapeHtml(opt)}</span>
                     </button>
                   `;
@@ -326,4 +330,30 @@ export function bindPracticeViewEvents(rootElement, rerenderCallback) {
       rerenderCallback();
     });
   }
+
+  // Atajos de teclado: teclas 1, 2, 3, 4 y Enter en Práctica Libre
+  const handleKeyboardInput = (e) => {
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+
+    if (['1', '2', '3', '4'].includes(e.key) && !practiceState.hasChecked) {
+      const idx = Number(e.key) - 1;
+      const targetOpt = rootElement.querySelector(`#practice-option-${idx}`);
+      if (targetOpt) {
+        targetOpt.click();
+      }
+    } else if (e.key === 'Enter') {
+      if (!practiceState.hasChecked) {
+        const checkBtn = rootElement.querySelector('#btn-practice-check');
+        if (checkBtn && !checkBtn.disabled) checkBtn.click();
+      } else {
+        const nextBtn = rootElement.querySelector('#btn-practice-next');
+        if (nextBtn) nextBtn.click();
+      }
+    }
+  };
+  window.addEventListener('keydown', handleKeyboardInput);
+
+  return () => {
+    window.removeEventListener('keydown', handleKeyboardInput);
+  };
 }
