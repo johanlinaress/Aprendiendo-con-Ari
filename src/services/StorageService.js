@@ -27,6 +27,11 @@ export function isAnswerMatch(userAnswer, correctAnswer) {
   return normUser.length > 0 && normUser === normCorrect;
 }
 
+/** Cantidad mínima de respuestas correctas para aprobar (ej. 5 preguntas al 70% → 4). */
+export function getRequiredCorrectAnswers(totalQuestions, minPassPercent = 70) {
+  return Math.ceil((Number(totalQuestions) * Number(minPassPercent)) / 100);
+}
+
 function createInitialLevelsState() {
   const levels = {};
   for (const level of LEVELS_DATA) {
@@ -52,6 +57,7 @@ export function getDefaultState() {
     selectedGrade: '3',
     startedAt: new Date().toISOString(),
     lastActivityLabel: 'Inicio de aventura',
+    lastLevelId: null,
     soundEnabled: true,
     musicEnabled: true,
     totalScore: 0,
@@ -186,6 +192,7 @@ class StorageManager {
       this.state.levels[id].inProgress = true;
     }
     this.state.lastActivityLabel = lvl.unitLabel || lvl.title;
+    this.state.lastLevelId = id;
     this.persist();
   }
 
@@ -239,6 +246,59 @@ class StorageManager {
       return unlockedSubject[unlockedSubject.length - 1].id;
     }
     return subjectLevels[0]?.id || 1;
+  }
+
+  /**
+   * Nivel recomendado para el botón «¡Comenzar!»:
+   * 1) el último nivel jugado si sigue pendiente, 2) el primer nivel desbloqueado
+   * sin completar, 3) el primer nivel.
+   */
+  getRecommendedLevelId() {
+    const lastId = Number(this.state.lastLevelId);
+    if (lastId && this.isLevelUnlocked(lastId) && !this.state.levels[lastId]?.completed) {
+      return lastId;
+    }
+    const pending = LEVELS_DATA.find((l) => this.isLevelUnlocked(l.id) && !this.state.levels[l.id]?.completed);
+    return pending ? pending.id : LEVELS_DATA[0].id;
+  }
+
+  getLevelState(levelId) {
+    return (
+      this.state.levels[Number(levelId)] || {
+        id: Number(levelId),
+        completed: false,
+        inProgress: false,
+        stars: 0,
+        bestScore: 0,
+        bestAccuracy: 0,
+        attempts: 0
+      }
+    );
+  }
+
+  getLevelStatus(levelId) {
+    const st = this.getLevelState(levelId);
+    if (st.completed) return 'completed';
+    if (!this.isLevelUnlocked(levelId)) return 'locked';
+    return st.inProgress ? 'in-progress' : 'available';
+  }
+
+  getCompletedCount() {
+    return Object.values(this.state.levels).filter((l) => l.completed).length;
+  }
+
+  getSubjectSummary(subject) {
+    const subjectLevels = LEVELS_DATA.filter((l) => l.subject === subject);
+    const completed = subjectLevels.filter((l) => this.state.levels[l.id]?.completed).length;
+    const stars = subjectLevels.reduce((acc, l) => acc + (Number(this.state.levels[l.id]?.stars) || 0), 0);
+    return {
+      total: subjectLevels.length,
+      completed,
+      stars,
+      maxStars: subjectLevels.length * 3,
+      percent: subjectLevels.length ? Math.round((completed / subjectLevels.length) * 100) : 0,
+      nextLevelId: this.getNextPlayableLevelForSubject(subject)
+    };
   }
 
   getTotalStars() {
