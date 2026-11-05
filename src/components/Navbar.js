@@ -140,9 +140,20 @@ export function bindNavbarEvents(rootElement = document) {
   const navbar = rootElement.querySelector('.app-navbar');
   if (!navbar) return;
 
+  const mobileMenuBtn = navbar.querySelector('#btn-mobile-menu');
+  const linksGroup = navbar.querySelector('#navbar-links-group');
+
+  const setOpen = (open) => {
+    if (!linksGroup || !mobileMenuBtn) return;
+    linksGroup.classList.toggle('mobile-open', open);
+    mobileMenuBtn.setAttribute('aria-expanded', String(open));
+    mobileMenuBtn.setAttribute('aria-label', open ? 'Cerrar menú de navegación' : 'Abrir menú de navegación');
+  };
+
   navbar.querySelectorAll('[data-nav]').forEach((btn) => {
     btn.addEventListener('click', () => {
       SoundService.play('click');
+      setOpen(false);
       Router.navigate(btn.getAttribute('data-nav'));
     });
   });
@@ -163,15 +174,7 @@ export function bindNavbarEvents(rootElement = document) {
     if (iconEl) iconEl.textContent = enabled ? '🔊' : '🔇';
   });
 
-  const mobileMenuBtn = navbar.querySelector('#btn-mobile-menu');
-  const linksGroup = navbar.querySelector('#navbar-links-group');
   if (mobileMenuBtn && linksGroup) {
-    const setOpen = (open) => {
-      linksGroup.classList.toggle('mobile-open', open);
-      mobileMenuBtn.setAttribute('aria-expanded', String(open));
-      mobileMenuBtn.setAttribute('aria-label', open ? 'Cerrar menú de navegación' : 'Abrir menú de navegación');
-    };
-
     mobileMenuBtn.addEventListener('click', () => {
       SoundService.play('click');
       setOpen(!linksGroup.classList.contains('mobile-open'));

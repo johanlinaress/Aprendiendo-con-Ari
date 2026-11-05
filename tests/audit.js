@@ -207,9 +207,12 @@ async function runAudit() {
       }
     });
 
-    await sleep(500);
-
     // Clear storage to start from a clean slate
+    for (let i = 0; i < 30; i++) {
+      const isReady = await cdp.eval(`Boolean(window.__ARI_APP__ && window.__ARI_APP__.StorageService)`);
+      if (isReady) break;
+      await sleep(100);
+    }
     await cdp.eval(`window.__ARI_APP__.StorageService.resetProgress(); window.location.hash = '#/inicio';`);
     await sleep(200);
 
