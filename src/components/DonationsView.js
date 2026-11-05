@@ -50,6 +50,7 @@ export function renderDonationsView() {
               <div class="donation-qr-box">
                 <img
                   src="${qrImageUrl}"
+                  onerror="if (!this.dataset.triedFallback) { this.dataset.triedFallback = '1'; this.src = './src/assets/nequi-qr.jpg'; }"
                   alt="Código QR Bre-B Nequi de Johan Linares"
                   class="donation-qr-image"
                   id="nequi-qr-img"
