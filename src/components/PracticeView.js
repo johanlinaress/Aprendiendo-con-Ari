@@ -1,5 +1,5 @@
-import { CATEGORIES, LEVELS_DATA } from '../data/levelsData.js';
-import { StorageService } from '../services/StorageService.js';
+import { CATEGORIES, LEVELS_DATA, getQuestionsForLevel } from '../data/levelsData.js';
+import { StorageService, isAnswerMatch } from '../services/StorageService.js';
 import { SoundService } from '../services/SoundService.js';
 import { Router } from '../router/Router.js';
 import { renderAriMascot, bindAriMascotEvents } from './AriMascot.js';
@@ -7,6 +7,7 @@ import { escapeHtml } from '../utils/escapeHtml.js';
 
 let practiceState = {
   selectedCategory: 'todas',
+  grade: null,
   questionIndex: 0,
   selectedOption: null,
   hasChecked: false,
@@ -15,11 +16,12 @@ let practiceState = {
   usedHint: false
 };
 
-function getQuestionsByCategory(categoryId) {
+function getQuestionsByCategory(categoryId, grade = '3') {
   const pool = [];
   for (const lvl of LEVELS_DATA) {
     if (categoryId === 'todas' || lvl.category === categoryId) {
-      for (const q of lvl.questions) {
+      const levelQuestions = getQuestionsForLevel(lvl, grade);
+      for (const q of levelQuestions) {
         pool.push({
           ...q,
           levelId: lvl.id,
@@ -35,7 +37,19 @@ function getQuestionsByCategory(categoryId) {
 
 export function renderPracticeView() {
   const state = StorageService.getState();
-  const pool = getQuestionsByCategory(practiceState.selectedCategory);
+  if (practiceState.grade !== state.selectedGrade) {
+    practiceState = {
+      ...practiceState,
+      grade: state.selectedGrade,
+      questionIndex: 0,
+      selectedOption: null,
+      hasChecked: false,
+      isCurrentCorrect: false,
+      lastPointsEarned: 0,
+      usedHint: false
+    };
+  }
+  const pool = getQuestionsByCategory(practiceState.selectedCategory, state.selectedGrade);
   if (practiceState.questionIndex >= pool.length) {
     practiceState.questionIndex = 0;
   }
@@ -102,12 +116,12 @@ export function renderPracticeView() {
             <div class="options-grid" role="radiogroup" aria-labelledby="practice-prompt">
               ${currentQuestion.options
                 .map((opt, idx) => {
-                  const isSelected = practiceState.selectedOption === opt;
+                  const isSelected = isAnswerMatch(practiceState.selectedOption, opt);
                   let stateClass = '';
                   if (practiceState.hasChecked) {
-                    if (opt === currentQuestion.correctAnswer) {
+                    if (isAnswerMatch(opt, currentQuestion.correctAnswer)) {
                       stateClass = 'option-correct pulse-correct-anim';
-                    } else if (isSelected && opt !== currentQuestion.correctAnswer) {
+                    } else if (isSelected && !isAnswerMatch(opt, currentQuestion.correctAnswer)) {
                       stateClass = 'option-wrong shake-anim';
                     }
                   } else if (isSelected) {
@@ -257,9 +271,10 @@ export function bindPracticeViewEvents(rootElement, rerenderCallback) {
   if (checkBtn) {
     checkBtn.addEventListener('click', () => {
       if (practiceState.hasChecked || practiceState.selectedOption === null) return;
-      const pool = getQuestionsByCategory(practiceState.selectedCategory);
+      const state = StorageService.getState();
+      const pool = getQuestionsByCategory(practiceState.selectedCategory, state.selectedGrade);
       const currentQuestion = pool[practiceState.questionIndex] || pool[0];
-      const isCorrect = practiceState.selectedOption === currentQuestion.correctAnswer;
+      const isCorrect = isAnswerMatch(practiceState.selectedOption, currentQuestion.correctAnswer);
 
       const res = StorageService.recordAnswer({
         isCorrect,
@@ -279,7 +294,8 @@ export function bindPracticeViewEvents(rootElement, rerenderCallback) {
   if (nextBtn) {
     nextBtn.addEventListener('click', () => {
       SoundService.play('click');
-      const pool = getQuestionsByCategory(practiceState.selectedCategory);
+      const state = StorageService.getState();
+      const pool = getQuestionsByCategory(practiceState.selectedCategory, state.selectedGrade);
       practiceState.questionIndex = (practiceState.questionIndex + 1) % pool.length;
       practiceState.selectedOption = null;
       practiceState.hasChecked = false;

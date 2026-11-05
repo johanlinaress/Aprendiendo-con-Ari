@@ -17,6 +17,32 @@ import { renderLevelCompleteModal, bindLevelCompleteEvents } from './LevelComple
 import { escapeHtml } from '../utils/escapeHtml.js';
 
 let activeSession = null;
+let sessionTimerId = null;
+
+function stopSessionTimer() {
+  if (sessionTimerId !== null) {
+    clearInterval(sessionTimerId);
+    sessionTimerId = null;
+  }
+}
+
+function syncSessionTimer(rootElement) {
+  stopSessionTimer();
+  if (!activeSession || !activeSession.timerEnabled || activeSession.isFinished || activeSession.activePhase !== 'practico') {
+    return;
+  }
+  sessionTimerId = setInterval(() => {
+    if (!activeSession || !activeSession.timerEnabled || activeSession.isFinished) {
+      stopSessionTimer();
+      return;
+    }
+    activeSession.timerSeconds += 1;
+    const timerBtnEl = rootElement.querySelector('#btn-toggle-timer');
+    if (timerBtnEl) {
+      timerBtnEl.textContent = `⏱️ ${activeSession.timerSeconds}s`;
+    }
+  }, 1000);
+}
 
 function highlightKeywordsHtml(rawText, keywords = []) {
   let html = escapeHtml(rawText);
@@ -422,13 +448,15 @@ export function renderExerciseView(levelId, preserveSession = false) {
   }
 
   if (!StorageService.isLevelUnlocked(id)) {
-    const state = StorageService.getState();
-    const highestUnlocked = Math.max(...state.unlockedLevels, 1);
+    const fallbackLevelId =
+      level.requiredLevel && StorageService.isLevelUnlocked(level.requiredLevel)
+        ? level.requiredLevel
+        : StorageService.getNextPlayableLevelForSubject(level.subject);
     return `
       <section class="exercise-guard-view view-fade-anim" data-component="ExerciseView" data-status="locked">
         <div class="guard-card">
           <div class="guard-icon">🔒</div>
-          <h2>Nivel ${level.id} Bloqueado: ${level.title}</h2>
+          <h2>Nivel ${level.id} Bloqueado: ${escapeHtml(level.title)}</h2>
           <p>
             Para jugar esta unidad, primero debes superar el <strong>Nivel ${level.requiredLevel}</strong> alcanzando al menos un <strong>70%</strong> de respuestas correctas.
           </p>
@@ -441,8 +469,8 @@ export function renderExerciseView(levelId, preserveSession = false) {
             })}
           </div>
           <div class="guard-actions">
-            <button type="button" class="btn btn-primary btn-lg" id="btn-guard-play-available" data-target-level="${highestUnlocked}">
-              ▶️ Ir al Nivel ${highestUnlocked} Disponible
+            <button type="button" class="btn btn-primary btn-lg" id="btn-guard-play-available" data-target-level="${fallbackLevelId}">
+              ▶️ Ir al Nivel ${fallbackLevelId} Disponible
             </button>
             <button type="button" class="btn btn-outline btn-lg" id="btn-guard-back-map">
               🗺️ Volver al Mapa
@@ -892,6 +920,8 @@ export function bindExerciseViewEvents(rootElement, rerenderCallback) {
     });
   }
 
+  syncSessionTimer(rootElement);
+
   // Pestañas de fase: 1. Aprendo | Lectura Expositiva | 2 y 3. Practico y Demuestro
   const phaseTabs = rootElement.querySelectorAll('[data-phase-tab]');
   phaseTabs.forEach((tab) => {
@@ -1198,4 +1228,8 @@ export function bindExerciseViewEvents(rootElement, rerenderCallback) {
       }
     });
   }
+
+  return () => {
+    stopSessionTimer();
+  };
 }
