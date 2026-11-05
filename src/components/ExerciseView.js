@@ -395,6 +395,7 @@ function renderInteractiveModalityHelper(currentQuestion) {
         <div
           class="drop-target-zone ${activeSession.selectedOption ? 'has-dropped-item' : ''}"
           id="drop-target-zone"
+          role="region"
           aria-label="Zona para colocar la respuesta"
         >
           <span class="drop-target-value" id="drop-target-value">${escapeHtml(slotValue)}</span>

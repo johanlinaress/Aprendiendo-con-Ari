@@ -116,7 +116,7 @@ export function renderLevelsMapView(routeSubject = 'todas') {
                   <div class="level-number-badge" style="background: ${isUnlocked ? '#3b0764' : '#475569'}">
                     Nivel ${lvl.id} • ${subjectLabel}
                   </div>
-                  <div class="level-stars-group" aria-label="${lvlState.stars} de 3 estrellas">
+                  <div class="level-stars-group" role="img" aria-label="${lvlState.stars} de 3 estrellas">
                     ${renderStarsHtml(lvlState.stars, 'level-star')}
                   </div>
                 </div>

@@ -78,7 +78,7 @@ function renderUnitsPreviewSection(state) {
                   <p class="world-card-desc">${escapeHtml(lvl.subtitle)}</p>
                 </div>
                 <div class="world-card-footer">
-                  <div class="world-stars" aria-label="${lvlProgress.stars} de 3 estrellas">
+                  <div class="world-stars" role="img" aria-label="${lvlProgress.stars} de 3 estrellas">
                     ${renderStarsHtml(lvlProgress.stars, 'star-item')}
                   </div>
                   <button
@@ -348,7 +348,7 @@ export function renderHomeView(mode = 'inicio') {
         </div>
       </section>
 
-      <div class="home-stats-grid" aria-label="Resumen rápido de progreso">
+      <div class="home-stats-grid" role="region" aria-label="Resumen rápido de progreso">
         <article class="summary-stat-card">
           <div class="summary-stat-icon" aria-hidden="true">⭐</div>
           <div class="summary-stat-info">

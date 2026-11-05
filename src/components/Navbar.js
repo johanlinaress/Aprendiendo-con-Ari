@@ -30,7 +30,7 @@ export function renderNavbar(currentRoute) {
             class="player-profile-pill"
             id="btn-brand-home"
             data-nav="/inicio"
-            aria-label="Ir al inicio de Aprendiendo con Ari"
+            aria-label="Hola, ${safeName} • Aprendiendo con Ari — Ir al inicio"
           >
             <span class="profile-avatar-ring">${renderPlayerAvatarSvg()}</span>
             <span class="profile-text-col">
@@ -44,7 +44,7 @@ export function renderNavbar(currentRoute) {
             id="btn-change-grade"
             data-nav="/grado"
             title="Cambiar grado o perfil (${state.selectedGrade}° Grado)"
-            aria-label="Cambiar grado escolar (actual: ${state.selectedGrade}° Grado)"
+            aria-label="${state.selectedGrade}° Grado — Cambiar grado escolar"
           >
             🎓 <span id="nav-grade-label">${state.selectedGrade}° Grado</span>
           </button>
