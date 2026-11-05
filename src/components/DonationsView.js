@@ -16,9 +16,10 @@ const PAYPAL_TRANSFER_URL = 'https://www.paypal.com/myaccount/transfer/homepage'
  */
 export function renderDonationsView(method = 'hub') {
   const qrImageUrl = resolveSoundUrl('assets/nequi-qr.jpg');
+  const qrSquareUrl = resolveSoundUrl('assets/nequi-qr-square.jpg');
 
   if (method === 'nequi') {
-    return renderNequiDedicatedView(qrImageUrl);
+    return renderNequiDedicatedView(qrImageUrl, qrSquareUrl);
   }
   if (method === 'arq') {
     return renderArqDedicatedView();
@@ -190,7 +191,7 @@ function renderDonationsHubView(qrImageUrl) {
 /**
  * PÁGINA DEDICADA 1: NEQUI / BRE-B (Con QR Ampliado y Pasos Claros)
  */
-function renderNequiDedicatedView(qrImageUrl) {
+function renderNequiDedicatedView(qrImageUrl, qrSquareUrl) {
   return `
     <section class="donations-view view-fade-anim donations-dedicated-view" data-component="DonationsView" data-view="nequi">
       <div class="stage-top-bar donations-subnav-bar">
@@ -217,6 +218,25 @@ function renderNequiDedicatedView(qrImageUrl) {
             Escanea el código QR desde tu app <strong>Nequi</strong> o mediante <strong>Bre-B</strong> de cualquier entidad financiera en Colombia (Bancolombia, Daviplata, BBVA, etc.).
           </p>
 
+          <div class="nequi-qr-view-tabs" role="tablist" aria-label="Modo de visualización del código QR">
+            <button
+              type="button"
+              class="nequi-view-tab-btn active"
+              id="btn-view-voucher"
+              data-qr-target="${qrImageUrl}"
+            >
+              📄 Comprobante Bre-B Oficial
+            </button>
+            <button
+              type="button"
+              class="nequi-view-tab-btn"
+              id="btn-view-square"
+              data-qr-target="${qrSquareUrl}"
+            >
+              🔍 Solo Código QR Gigante
+            </button>
+          </div>
+
           <div class="nequi-qr-showcase">
             <div class="nequi-big-qr-stage">
               <img
@@ -233,6 +253,7 @@ function renderNequiDedicatedView(qrImageUrl) {
                 href="${qrImageUrl}"
                 download="QR-Nequi-Johan-Linares.jpg"
                 class="btn-download-qr"
+                id="btn-download-active-qr"
                 title="Descargar imagen del código QR"
               >
                 📥 Descargar Imagen QR para tu Celular
@@ -504,6 +525,25 @@ export function bindDonationsViewEvents(rootElement = document, rerender = null,
     btn.addEventListener('click', () => {
       SoundService.play('click');
       Router.navigate('/donaciones');
+    });
+  });
+
+  // Selector de visualización de QR en vista Nequi (Comprobante vs Solo QR gigante)
+  const qrTabBtns = rootElement.querySelectorAll('.nequi-view-tab-btn');
+  const qrImgEl = rootElement.querySelector('#nequi-dedicated-qr-img');
+  const qrDownloadEl = rootElement.querySelector('#btn-download-active-qr');
+  qrTabBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetUrl = btn.getAttribute('data-qr-target');
+      if (!targetUrl || !qrImgEl) return;
+      SoundService.play('click');
+      qrTabBtns.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      qrImgEl.src = targetUrl;
+      if (qrDownloadEl) {
+        qrDownloadEl.href = targetUrl;
+        qrDownloadEl.download = btn.id === 'btn-view-square' ? 'QR-BreB-Nequi-Puro.jpg' : 'QR-Nequi-Johan-Linares.jpg';
+      }
     });
   });
 

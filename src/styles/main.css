@@ -3825,13 +3825,48 @@ select:focus-visible,
   margin-bottom: 1.75rem;
 }
 
+.nequi-qr-view-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.nequi-view-tab-btn {
+  background: #f8fafc;
+  border: 2px solid #cbd5e1;
+  padding: 0.55rem 1.15rem;
+  border-radius: var(--radius-full);
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.nequi-view-tab-btn:hover {
+  background: #fdf2f8;
+  border-color: #f472b6;
+  color: #be185d;
+  transform: translateY(-1px);
+}
+
+.nequi-view-tab-btn.active {
+  background: #fdf2f8;
+  border-color: #ff0077;
+  color: #be185d;
+  box-shadow: 0 4px 12px rgba(255, 0, 119, 0.2);
+}
+
 .nequi-big-qr-stage {
   background: #ffffff;
   padding: 1.5rem;
-  border: 3px solid #e2e8f0;
+  border: 3px solid #fbcfe8;
   border-radius: 24px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-  max-width: 360px;
+  box-shadow: 0 16px 36px rgba(190, 24, 93, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+  max-width: 440px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -3845,10 +3880,12 @@ select:focus-visible,
 
 .nequi-big-qr-img {
   width: 100%;
-  max-width: 320px;
+  max-width: 380px;
   height: auto;
-  border-radius: 12px;
+  border-radius: 14px;
   display: block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 .nequi-qr-actions {
