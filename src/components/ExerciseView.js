@@ -114,7 +114,7 @@ function renderPhaseNavigationBar(level) {
         data-phase-tab="aprendo"
         aria-selected="${currentPhase === 'aprendo' ? 'true' : 'false'}"
       >
-        📘 Nivel 1: Aprendo (Explicación)
+        📘 1. Aprendo
       </button>
 
       ${
@@ -127,7 +127,7 @@ function renderPhaseNavigationBar(level) {
               data-phase-tab="lectura"
               aria-selected="${currentPhase === 'lectura' ? 'true' : 'false'}"
             >
-              📖 Lectura Expositiva Interactiva
+              📖 2. Lectura Interactiva
             </button>`
           : ''
       }
@@ -140,7 +140,7 @@ function renderPhaseNavigationBar(level) {
         data-phase-tab="practico"
         aria-selected="${currentPhase === 'practico' ? 'true' : 'false'}"
       >
-        ✏️ Nivel 2 y 3: Practico y Demuestro (${activeSession.questionIndex + 1}/${activeSession.questions.length})
+        ✏️ ${isExpositiveUnit ? '3. Practico y Demuestro' : '2. Practico y Demuestro'} (${activeSession.questionIndex + 1}/${activeSession.questions.length})
       </button>
     </div>
   `;

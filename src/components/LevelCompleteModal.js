@@ -160,19 +160,21 @@ export function renderLevelCompleteModal({
           ${
             canPlayNext
               ? `<button type="button" class="btn-3d-purple btn-lg" id="btn-next-level" data-next-level="${nextLevel.id}">
-                  Continuar (Nivel ${nextLevel.id}) ➜
+                  ▶️ Continuar al Nivel ${nextLevel.id} ➜
                 </button>`
               : ''
           }
-          <button type="button" class="btn ${canPlayNext ? 'btn-secondary' : 'btn-primary'} btn-lg" id="btn-retry-level">
-            🔄 Repetir Actividad
-          </button>
-          <button type="button" class="btn btn-outline btn-lg" id="btn-read-again">
-            📘 ${level.isInteractiveExpositiveUnit ? 'Volver a leer' : 'Repasar Explicación'}
-          </button>
-          <button type="button" class="btn btn-outline btn-lg" id="btn-back-to-map">
-            🗺️ Volver al Mapa
-          </button>
+          <div class="complete-secondary-actions">
+            <button type="button" class="btn ${canPlayNext ? 'btn-secondary' : 'btn-primary'}" id="btn-retry-level">
+              🔄 Repetir
+            </button>
+            <button type="button" class="btn btn-outline" id="btn-read-again">
+              📘 ${level.isInteractiveExpositiveUnit ? 'Volver a leer' : 'Repasar tema'}
+            </button>
+            <button type="button" class="btn btn-outline" id="btn-back-to-map">
+              🗺️ Mapa de Niveles
+            </button>
+          </div>
         </div>
       </div>
     </section>
