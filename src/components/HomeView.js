@@ -214,7 +214,12 @@ export function renderHomeView(mode = 'inicio') {
   const mathNextId = StorageService.getNextPlayableLevelForSubject('matematicas');
   const espNextId = StorageService.getNextPlayableLevelForSubject('espanol');
   const recommendedId = StorageService.getRecommendedLevelId();
-  const recommendedLevel = LEVELS_DATA.find((l) => l.id === recommendedId);
+  const recommendedLevel = LEVELS_DATA.find((l) => l.id === recommendedId) || LEVELS_DATA[0];
+  const activeHeroSubject = recommendedLevel.subject || 'matematicas';
+  const isMathActive = activeHeroSubject === 'matematicas';
+  const isEspActive = activeHeroSubject === 'espanol';
+  const mathNextLevel = LEVELS_DATA.find((l) => l.id === mathNextId);
+  const espNextLevel = LEVELS_DATA.find((l) => l.id === espNextId);
 
   if (mode === 'materias') {
     return `
@@ -252,67 +257,79 @@ export function renderHomeView(mode = 'inicio') {
               </h1>
               <div class="golden-ribbon-tag">¡Explora, aprende y diviértete!</div>
               <p class="hero-welcome-line">
-                ¡Bienvenido/a, <strong id="hero-player-name">${safeName}</strong>
-                (<span id="hero-grade-badge">${state.selectedGrade}° Grado</span>)!
+                ¡Bienvenido/a, <strong id="hero-player-name">${safeName}</strong>!
+                <span class="sr-only" id="hero-grade-badge">${state.selectedGrade}° Grado</span>
               </p>
             </div>
 
-            <div class="subjects-showcase-row" aria-label="Selecciona tu materia">
+            <div class="subjects-showcase-row" role="group" aria-label="Selecciona tu materia para comenzar">
               <button
                 type="button"
-                class="subject-3d-card subject-math-card"
+                class="subject-3d-card subject-math-card ${isMathActive ? 'subject-card-active' : ''}"
                 id="btn-subject-matematicas"
                 data-subject-level="${mathNextId}"
+                aria-pressed="${isMathActive ? 'true' : 'false'}"
               >
+                <span class="subject-active-pill">
+                  <span class="subject-radio-dot" aria-hidden="true"></span>
+                  ${isMathActive ? 'Materia seleccionada' : 'Toca para jugar'}
+                </span>
                 <div class="subject-board-inner">${renderMathCardGraphicSvg()}</div>
                 <span class="subject-ribbon subject-ribbon-green">Matemáticas</span>
+                <small class="subject-next-unit-hint">Siguiente: ${escapeHtml(mathNextLevel?.title || 'Unidad 1: Sumas')}</small>
               </button>
 
               <button
                 type="button"
-                class="subject-3d-card subject-spanish-card"
+                class="subject-3d-card subject-spanish-card ${isEspActive ? 'subject-card-active' : ''}"
                 id="btn-subject-espanol"
                 data-subject-level="${espNextId}"
+                aria-pressed="${isEspActive ? 'true' : 'false'}"
               >
+                <span class="subject-active-pill">
+                  <span class="subject-radio-dot" aria-hidden="true"></span>
+                  ${isEspActive ? 'Materia seleccionada' : 'Toca para jugar'}
+                </span>
                 <div class="subject-board-inner">${renderSpanishCardGraphicSvg()}</div>
                 <span class="subject-ribbon subject-ribbon-purple">Español</span>
+                <small class="subject-next-unit-hint">Siguiente: ${escapeHtml(espNextLevel?.title || 'Unidad 1: Los Verbos')}</small>
               </button>
             </div>
 
             <div class="hero-cta-group">
               <button type="button" class="btn-3d-orange" id="btn-continue-level" data-level-id="${recommendedId}">
-                <span class="play-triangle" aria-hidden="true">▶</span> ¡Comenzar!
-                <small class="cta-subtext">(${escapeHtml(recommendedLevel?.title || 'Nivel 1')})</small>
+                <span class="play-triangle" aria-hidden="true">▶</span> ¡Comenzar ${isMathActive ? 'Matemáticas' : 'Español'}!
+                <small class="cta-subtext">(${escapeHtml(recommendedLevel.title)})</small>
               </button>
               <div class="hero-secondary-shortcuts" role="group" aria-label="Accesos rápidos">
-                <button type="button" class="btn-pill-glass" id="btn-start-adventure">🗺️ Mapa</button>
-                <button type="button" class="btn-pill-glass" id="btn-go-practice">⚡ Práctica</button>
-                <button type="button" class="btn-pill-glass" id="btn-go-progress">📊 Progreso</button>
+                <button type="button" class="btn-pill-glass" id="btn-start-adventure">🗺️ Explorar Mapa de Unidades</button>
+                <button type="button" class="btn-pill-glass sr-only-shortcut" id="btn-go-practice">⚡ Práctica Libre</button>
+                <button type="button" class="btn-pill-glass sr-only-shortcut" id="btn-go-progress">📊 Mi Progreso</button>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Barra de Perfil Independiente (Separada de la portada para evitar saturación visual) -->
-      <section class="profile-customizer-strip" aria-label="Configuración rápida de estudiante y grado">
+      <!-- Barra de Perfil Independiente (Nombre del estudiante con botón contemporáneo «✓ Listo») -->
+      <section class="profile-customizer-strip" aria-label="Configuración rápida de perfil">
         <form class="player-name-form" id="form-player-name" aria-label="Personalizar nombre de estudiante">
-          <label for="input-player-name" class="grade-selector-label">👤 Estudiante:</label>
+          <label for="input-player-name" class="grade-selector-label">👤 Tu nombre o apodo:</label>
           <input
             type="text"
             id="input-player-name"
             class="input-player-name"
             maxlength="28"
             value="${safeName}"
-            placeholder="Tu nombre..."
+            placeholder="Escribe tu nombre..."
             autocomplete="off"
           />
-          <button type="submit" class="btn btn-secondary btn-sm" id="btn-save-name">💾 Guardar</button>
+          <button type="submit" class="btn btn-secondary btn-sm" id="btn-save-name">✓ Listo</button>
           <span class="name-feedback" id="name-saved-feedback" aria-live="polite"></span>
         </form>
 
-        <div class="inline-grade-selector" role="group" aria-label="Seleccionar grado escolar">
-          <span class="grade-selector-label">🎓 Grado escolar:</span>
+        <div class="inline-grade-selector" role="group" aria-label="Cambiar nivel de actividades">
+          <span class="grade-selector-label">🎯 Nivel de retos:</span>
           ${['3', '4']
             .map(
               (g) => `
@@ -323,7 +340,7 @@ export function renderHomeView(mode = 'inicio') {
                   data-select-grade="${g}"
                   aria-pressed="${state.selectedGrade === g ? 'true' : 'false'}"
                 >
-                  ${g === '3' ? '👦' : '👧'} ${g}° Grado
+                  ${g === '3' ? '👦' : '👧'} ${g}° Primaria
                 </button>
               `
             )
