@@ -296,6 +296,11 @@
       "details": "enabled=true, played=true"
     },
     {
+      "category": "8. Sonidos",
+      "description": "Archivos de sonido de la carpeta sounds/ (acierto, nivel completado, música de inicio y música de actividad) están integrados y accesibles",
+      "details": "soundsMapped=true, filesOnDisk=true"
+    },
+    {
       "category": "4. Ejercicios",
       "description": "Las 10 unidades (50 preguntas base + bancos de 4° grado) incluyen las 6 modalidades interactivas y respuestas verificadas",
       "details": "Unidades=10, Modalidades=multiple_choice,fill_blank,drag_drop,true_false,ordering,matching"

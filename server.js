@@ -60,6 +60,16 @@ const server = http.createServer((req, res) => {
       const ext = path.extname(safePath).toLowerCase();
       const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
+      if (req.method === 'HEAD') {
+        res.writeHead(200, {
+          'Content-Type': contentType,
+          'Content-Length': stats.size,
+          'Cache-Control': 'no-cache'
+        });
+        res.end();
+        return;
+      }
+
       fs.readFile(safePath, (readErr, content) => {
         if (readErr) {
           res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });

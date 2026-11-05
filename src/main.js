@@ -137,7 +137,10 @@ function bootstrap() {
     EXPOSITIVE_READINGS_DATA
   };
 
-  Router.onRouteChange((route) => renderApp(route));
+  Router.onRouteChange((route) => {
+    SoundService.updateRouteMusic(route.name);
+    renderApp(route);
+  });
   Router.init();
 }
 

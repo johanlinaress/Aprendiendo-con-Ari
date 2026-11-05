@@ -599,6 +599,32 @@ async function runAudit() {
       `enabled=${unmutedState}, played=${lastSoundWhenUnmuted?.played}`
     );
 
+    // Verify audio files from sounds/ folder are available and mapped in SoundService
+    const soundsMappedCheck = await cdp.eval(`
+      (() => {
+        const soundService = window.__ARI_APP__.SoundService;
+        const sources = soundService?.audioSources;
+        const hasCorrect = Boolean(sources?.correct?.length);
+        const hasLevelComplete = Boolean(sources?.levelComplete?.length);
+        const hasHomeMusic = Boolean(sources?.homeMusic?.length);
+        const hasActivityMusic = Boolean(sources?.activityMusic?.length);
+        return hasCorrect && hasLevelComplete && hasHomeMusic && hasActivityMusic;
+      })()
+    `);
+    const soundFilesOnDisk = [
+      'sounds/collect-points.mp3',
+      'sounds/level-passed.mp3',
+      'sounds/home-music.mp3',
+      'sounds/activity-music.mp3'
+    ].every((f) => fs.existsSync(path.join(__dirname, '..', f)));
+
+    assertCheck(
+      '8. Sonidos',
+      'Archivos de sonido de la carpeta sounds/ (acierto, nivel completado, música de inicio y música de actividad) están integrados y accesibles',
+      soundsMappedCheck === true && soundFilesOnDisk === true,
+      `soundsMapped=${soundsMappedCheck}, filesOnDisk=${soundFilesOnDisk}`
+    );
+
     // =========================================================================
     // 4. COMPROBACIÓN DEL BANCO DE EJERCICIOS (10 UNIDADES Y 6 MODALIDADES)
     // =========================================================================
