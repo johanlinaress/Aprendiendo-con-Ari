@@ -59,7 +59,7 @@ const VIEWS = {
 let activeCleanup = null;
 
 function ensureShell(appRoot) {
-  let shell = appRoot.querySelector('.app-shell');
+  let shell = appRoot.querySelector('.app-shell:not([data-ssr-shell])');
   if (shell) return shell;
 
   appRoot.innerHTML = `

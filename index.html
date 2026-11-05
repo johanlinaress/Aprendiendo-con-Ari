@@ -7,6 +7,7 @@
       name="description"
       content="Aprendiendo con Ari: plataforma educativa interactiva con niveles, ejercicios de matemáticas, lectura, lógica, ciencias y geometría."
     />
+    <meta name="theme-color" content="#4c1d95" />
     <title>Aprendiendo con Ari — Aventura Educativa Interactiva</title>
     <link
       rel="icon"
@@ -16,13 +17,71 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800;900&display=swap"
-      rel="stylesheet"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800;900&display=swap"
+      />
+    </noscript>
     <link rel="stylesheet" href="./src/styles/main.css" />
+    <link rel="modulepreload" href="./src/main.js" />
+    <link rel="modulepreload" href="./src/router/Router.js" />
+    <link rel="modulepreload" href="./src/services/StorageService.js" />
+    <link rel="modulepreload" href="./src/services/SoundService.js" />
+    <link rel="modulepreload" href="./src/data/levelsData.js" />
+    <link rel="modulepreload" href="./src/components/Navbar.js" />
+    <link rel="modulepreload" href="./src/components/HomeView.js" />
+    <link rel="modulepreload" href="./src/components/AriMascot.js" />
+    <link rel="modulepreload" href="./src/components/Illustrations.js" />
+    <link rel="modulepreload" href="./src/utils/levelStatus.js" />
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div class="app-shell" data-ssr-shell="true">
+        <header class="app-navbar">
+          <div class="navbar-container">
+            <div class="navbar-left-cluster">
+              <div class="player-profile-pill">
+                <span class="profile-text-col">
+                  <strong>Explorador/a</strong>
+                  <small>3° Grado</small>
+                </span>
+              </div>
+            </div>
+          </div>
+        </header>
+        <main class="app-main-container" id="main-content" tabindex="-1">
+          <section class="home-view">
+            <div class="hero-stage-card">
+              <div class="hero-stage-grid">
+                <div class="hero-owl-column">
+                  <div class="ari-mascot-card">
+                    <div class="ari-speech-box">
+                      <div class="ari-speech-bubble">¡Hola, Explorador/a! ¿Qué quieres aprender hoy?</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hero-logo-and-subjects">
+                  <div class="cartoon-logo-box">
+                    <h1 class="title-3d-stack">
+                      <span class="title-3d-gold">Aprendiendo</span>
+                      <span class="title-3d-purple">con Ari <span class="title-star" aria-hidden="true">⭐</span></span>
+                    </h1>
+                    <div class="golden-ribbon-tag">¡Explora, aprende y diviértete!</div>
+                    <p class="hero-welcome-line">¡Bienvenido/a, <strong>Explorador/a</strong>!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>
