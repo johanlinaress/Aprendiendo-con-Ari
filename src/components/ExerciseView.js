@@ -168,7 +168,12 @@ function renderLessonPhaseView(level, state) {
     exampleVisual: level.title
   };
 
-  const summaryText = state.selectedGrade === '4' ? lesson.summary4 || lesson.summary3 : lesson.summary3;
+  const isGrade4 = String(state.selectedGrade) === '4';
+  const summaryText = isGrade4 ? lesson.summary4 || lesson.summary3 : lesson.summary3;
+  const exampleVisual = isGrade4
+    ? lesson.exampleVisual4 || lesson.exampleVisual
+    : lesson.exampleVisual3 || lesson.exampleVisual;
+  const stepsList = isGrade4 ? lesson.steps4 || lesson.steps : lesson.steps3 || lesson.steps;
 
   return `
     <div class="lesson-aprendo-card view-fade-anim" id="lesson-aprendo-panel">
@@ -188,12 +193,12 @@ function renderLessonPhaseView(level, state) {
           <p class="lesson-summary-text" id="lesson-summary-body">${escapeHtml(summaryText)}</p>
 
           <div class="lesson-example-highlight">
-            <span class="lesson-example-tag">✨ Ejemplo de Ari:</span>
-            <strong class="lesson-example-visual">${escapeHtml(lesson.exampleVisual)}</strong>
+            <span class="lesson-example-tag">✨ Ejemplo de Ari (${state.selectedGrade}° Grado):</span>
+            <strong class="lesson-example-visual" id="lesson-example-visual">${escapeHtml(exampleVisual)}</strong>
           </div>
 
-          <ul class="lesson-steps-list">
-            ${(lesson.steps || []).map((st) => `<li>${escapeHtml(st)}</li>`).join('')}
+          <ul class="lesson-steps-list" id="lesson-steps-list">
+            ${(stepsList || []).map((st) => `<li>${escapeHtml(st)}</li>`).join('')}
           </ul>
 
           <div class="lesson-actions-row">

@@ -365,6 +365,20 @@ async function runAudit() {
     );
 
     // Verify 4th grade differentiated questions are served when grade === '4' across ALL 10 units with 0 duplicate prompts
+    await cdp.eval(`window.location.hash = '#/nivel/1';`);
+    await sleep(60);
+    const grade4LessonCheck = await cdp.eval(`
+      (() => {
+        const visual = document.querySelector('#lesson-example-visual')?.textContent.trim() || '';
+        return visual.includes('1.450') || visual.includes('3.750');
+      })()
+    `);
+    assertCheck(
+      '4. Ejercicios',
+      'Las lecciones de 4° Grado muestran ejemplos y pasos adaptados con cifras mayores y propiedades (ej. 1.450 + 2.300 = 3.750)',
+      grade4LessonCheck === true
+    );
+
     await cdp.eval(`window.location.hash = '#/nivel/2';`);
     await sleep(60);
     const grade4Check = await cdp.eval(`

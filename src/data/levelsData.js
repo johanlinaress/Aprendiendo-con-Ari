@@ -209,6 +209,18 @@ export const LEVELS_DATA = [
         'Sumar es juntar o reunir dos o más cantidades para obtener un total. Los números que sumamos se llaman SUMANDOS y el resultado se llama SUMA o TOTAL. Siempre empezamos sumando las unidades, luego las decenas y finalmente las centenas.',
       summary4:
         'En cuarto grado sumamos cantidades de cuatro o más cifras y aplicamos las propiedades de la adición: la propiedad CONMUTATIVA (el orden de los sumandos no cambia el total) y la propiedad ASOCIATIVA (podemos agrupar sumandos de distintas formas).',
+      steps3: [
+        '1️⃣ Alinea los números por unidades (U), decenas (D) y centenas (C).',
+        '2️⃣ Suma columna por columna de derecha a izquierda. Si una columna suma 10 o más, lleva una decena a la siguiente columna.',
+        '3️⃣ Ejemplo de Ari: 245 + 132 → Unidades: 5 + 2 = 7 | Decenas: 4 + 3 = 7 | Centenas: 2 + 1 = 3 → Total = 377.'
+      ],
+      steps4: [
+        '1️⃣ Sumamos cantidades de cuatro cifras alineando Unidades, Decenas, Centenas y Unidades de Mil (UM).',
+        '2️⃣ Propiedad Conmutativa: 1.450 + 2.300 = 2.300 + 1.450 (el orden no altera el total: 3.750).',
+        '3️⃣ Propiedad Asociativa: (1.200 + 800) + 450 = 2.000 + 450 = 2.450 libros.'
+      ],
+      exampleVisual3: '245 + 132 = 377',
+      exampleVisual4: '1.450 + 2.300 = 2.300 + 1.450 = 3.750  |  (1.200 + 800) + 450 = 2.450',
       steps: [
         '1️⃣ Alinea los números por unidades (U), decenas (D), centenas (C) y unidades de mil (UM).',
         '2️⃣ Suma columna por columna de derecha a izquierda. Si una columna suma 10 o más, lleva una decena a la siguiente columna.',
@@ -364,6 +376,18 @@ export const LEVELS_DATA = [
         'Restar es quitar una cantidad de otra o encontrar la diferencia entre dos números. El número mayor del que quitamos se llama MINUENDO, la cantidad que quitamos se llama SUSTRAENDO y el resultado es la DIFERENCIA.',
       summary4:
         'En 4° grado resolvemos restas con ceros intermedios desagrupando centenas y unidades de mil, y comprobamos la resta usando su operación inversa: DIFERENCIA + SUSTRAENDO = MINUENDO.',
+      steps3: [
+        '1️⃣ Coloca el minuendo arriba y el sustraendo debajo alineando unidades, decenas y centenas.',
+        '2️⃣ Si la cifra de arriba es menor que la de abajo, pide prestada 1 decena a la columna de la izquierda.',
+        '3️⃣ Ejemplo de Ari: 350 caramelos - 125 caramelos = 225 caramelos.'
+      ],
+      steps4: [
+        '1️⃣ Desagrupación con ceros intermedios: 2.000 - 650 = 1.350 pidiendo prestado a la unidad de mil.',
+        '2️⃣ Comprobación inversa: Suma la DIFERENCIA más el SUSTRAENDO para verificar el MINUENDO (1.350 + 650 = 2.000).',
+        '3️⃣ Problemas de dos pasos: 3.450 cuadernos producidos menos 1.225 repartidos = 2.225 en bodega.'
+      ],
+      exampleVisual3: '350 - 125 = 225',
+      exampleVisual4: '4.500 - 1.250 = 3.250  |  Comprobación: 3.250 + 1.250 = 4.500',
       steps: [
         '1️⃣ Coloca el minuendo arriba y el sustraendo debajo alineando unidades, decenas y centenas.',
         '2️⃣ Si la cifra de arriba es menor que la de abajo, pide prestada 1 decena a la columna de la izquierda.',
@@ -520,6 +544,18 @@ export const LEVELS_DATA = [
         'Multiplicar es una forma rápida de sumar el mismo número varias veces. Por ejemplo, 4 grupos con 3 elementos cada uno es 3 + 3 + 3 + 3 = 12, que se escribe 4 × 3 = 12.',
       summary4:
         'En 4° grado dominamos las tablas del 1 al 12, multiplicamos números de dos y tres cifras y aplicamos la propiedad distributiva (por ejemplo: 15 × 6 = (10 × 6) + (5 × 6) = 60 + 30 = 90).',
+      steps3: [
+        '1️⃣ Los números que se multiplican se llaman FACTORES y el resultado se llama PRODUCTO.',
+        '2️⃣ Observa los grupos iguales: 4 cajas con 3 estrellas = 4 × 3 = 12 estrellas.',
+        '3️⃣ Puedes activar el reloj opcional si quieres practicar tu agilidad mental sin ninguna penalización.'
+      ],
+      steps4: [
+        '1️⃣ Propiedad Distributiva: Multiplicar 14 × 6 = (10 × 6) + (4 × 6) = 60 + 24 = 84.',
+        '2️⃣ Tablas extendidas hasta el 12: Domina 12 × 9 = 108 y 125 × 4 = 500.',
+        '3️⃣ Multiplicación por dos cifras: 15 × 12 = 180 y situaciones escolares (8 salones × 25 pupitres = 200).'
+      ],
+      exampleVisual3: '4 grupos × 3 = 12  |  7 × 8 = 56',
+      exampleVisual4: '14 × 6 = (10×6) + (4×6) = 84  |  12 × 9 = 108  |  15 × 12 = 180',
       steps: [
         '1️⃣ Los números que se multiplican se llaman FACTORES y el resultado se llama PRODUCTO.',
         '2️⃣ Observa los grupos iguales: 4 cajas con 3 estrellas = 4 × 3 = 12 estrellas.',
@@ -675,6 +711,18 @@ export const LEVELS_DATA = [
         'Dividir consiste en repartir una cantidad en grupos iguales. Por ejemplo, si Ari reparte 12 estrellas entre 3 amigos, cada uno recibe 4 estrellas porque 12 ÷ 3 = 4.',
       summary4:
         'En 4° grado identificamos el DIVIDENDO, el DIVISOR, el COCIENTE y el RESIDUO. Cuando una división no es exacta, sobra un residuo menor que el divisor (por ejemplo: 17 ÷ 5 = 3 y sobra 2, porque 5 × 3 + 2 = 17).',
+      steps3: [
+        '1️⃣ Pregúntate: ¿qué número multiplicado por el divisor se acerca o iguala al dividendo?',
+        '2️⃣ División exacta: 48 ÷ 6 = 8 (porque 6 × 8 = 48 y el residuo es 0).',
+        '3️⃣ División con residuo: 17 ÷ 5 = 3 y sobra 2 (porque 5 × 3 = 15 y 17 - 15 = 2).'
+      ],
+      steps4: [
+        '1️⃣ División exacta mayor: 96 estudiantes en 8 grupos = 12 por equipo (8 × 12 = 96).',
+        '2️⃣ Comprobación y residuo: En 29 ÷ 6 = 4 y sobra 5 (porque 6 × 4 + 5 = 29 y 5 < 6).',
+        '3️⃣ Fórmula de comprobación: Dividendo = (Divisor × Cociente) + Residuo.'
+      ],
+      exampleVisual3: '12 ÷ 3 = 4  |  17 ÷ 5 = 3 (residuo 2)',
+      exampleVisual4: '96 ÷ 8 = 12  |  (6 × 7) + 3 = 45  |  144 ÷ 12 = 12',
       steps: [
         '1️⃣ Pregúntate: ¿qué número multiplicado por el divisor se acerca o iguala al dividendo?',
         '2️⃣ División exacta: 48 ÷ 6 = 8 (porque 6 × 8 = 48 y el residuo es 0).',
@@ -829,7 +877,19 @@ export const LEVELS_DATA = [
       summary3:
         'Para resolver un problema matemático, primero leemos con atención qué nos preguntan: si juntamos cantidades usamos SUMA (+), si quitamos o comparamos usamos RESTA (-), si repetimos grupos iguales usamos MULTIPLICACIÓN (×) y si repartimos en partes iguales usamos DIVISIÓN (÷).',
       summary4:
-        'En 4° grado muchos desafíos combinan dos operaciones seguidas. Identifica los datos, resuelve el primer paso y usa ese resultado para encontrar la respuesta final.',
+        'En 4° grado muchos desafíos combinan dos operaciones seguidas con jerarquía y paréntesis. Identifica los datos, resuelve el primer paso entre paréntesis y usa ese resultado para encontrar la respuesta final.',
+      steps3: [
+        '1️⃣ Juntar o agregar colecciones ➔ SUMA (+).',
+        '2️⃣ Quitar, gastar o hallar cuánto falta ➔ RESTA (-).',
+        '3️⃣ Varios grupos con la misma cantidad ➔ MULTIPLICACIÓN (×) | Repartir en partes iguales ➔ DIVISIÓN (÷).'
+      ],
+      steps4: [
+        '1️⃣ Paréntesis y orden: Resuelve primero la operación dentro del paréntesis.',
+        '2️⃣ Problema de dos pasos: (6 cajas × 25 libros) + 50 donados = 150 + 50 = 200 libros.',
+        '3️⃣ Operaciones combinadas: (140 - 20) ÷ 6 = 120 ÷ 6 = 20 galletas por caja.'
+      ],
+      exampleVisual3: '➕  ➖  ✖️  ➗',
+      exampleVisual4: '(6 × 25) + 50 = 200 libros  |  (140 - 20) ÷ 6 = 20 galletas',
       steps: [
         '1️⃣ Juntar o agregar colecciones ➔ SUMA (+).',
         '2️⃣ Quitar, gastar o hallar cuánto falta ➔ RESTA (-).',
@@ -1020,6 +1080,18 @@ export const LEVELS_DATA = [
         'Los VERBOS son las palabras que indican acciones (correr, leer, jugar, volar) o estados. Según el momento en que ocurre la acción, el verbo puede estar en PASADO (ayer), PRESENTE (hoy) o FUTURO (mañana).',
       summary4:
         'En 4° grado además del tiempo verbal identificamos la PERSONA GRAMATICAL (primera: yo/nosotros, segunda: tú/ustedes, tercera: él/ella/ellos) y el NÚMERO (singular cuando es uno solo y plural cuando son varios).',
+      steps3: [
+        '1️⃣ Pregúntate: ¿qué acción hace el personaje? (Ej.: «María juega en el parque» ➔ acción: juega).',
+        '2️⃣ Ayer (Pasado): cantó, corrió | Hoy (Presente): canta, corre | Mañana (Futuro): cantará, correrá.',
+        '3️⃣ Observa la terminación del verbo para saber si la acción ya ocurrió o sucederá después.'
+      ],
+      steps4: [
+        '1️⃣ Persona y número: «Nosotros estudiamos» (1ª persona del plural) vs «Ella estudia» (3ª persona del singular).',
+        '2️⃣ Concordancia: Un sujeto plural exige un verbo en plural («Las águilas reales vuelan»).',
+        '3️⃣ Tiempos conjugados: Ayer investigaron (pasado), hoy investigan (presente), mañana investigarán (futuro).'
+      ],
+      exampleVisual3: 'María [ juega ] en el parque.',
+      exampleVisual4: 'Nosotros [ estudiamos ] ciencias  |  Las águilas [ vuelan ] sobre la montaña',
       steps: [
         '1️⃣ Pregúntate: ¿qué acción hace el personaje? (Ej.: «María juega en el parque» ➔ acción: juega).',
         '2️⃣ Ayer (Pasado): cantó, corrió | Hoy (Presente): canta, corre | Mañana (Futuro): cantará, correrá.',
@@ -1219,6 +1291,18 @@ export const LEVELS_DATA = [
         'El SUJETO es la persona, animal o cosa de quien se habla en la oración o quien realiza la acción. Para encontrarlo, le preguntamos al verbo: ¿QUIÉN? o ¿QUIÉNES? Por ejemplo, en «El perro corre por el jardín», ¿quién corre? ➔ «El perro».',
       summary4:
         'En 4° grado distinguimos el NÚCLEO DEL SUJETO (el sustantivo o pronombre principal), el sujeto SIMPLE (un solo núcleo, ej. «Juan») y COMPUESTO (dos o más núcleos, ej. «Juan y Ana»), así como el sujeto EXPRESO (aparece escrito) y TÁCITO (se sobreentiende por el verbo).',
+      steps3: [
+        '1️⃣ Ubica primero el verbo de la oración (ej. «corre» o «juegan»).',
+        '2️⃣ Pregunta ¿Quién corre? o ¿Quiénes juegan? La respuesta es el SUJETO.',
+        '3️⃣ Ejemplo: «Los niños juegan fútbol» ➔ ¿Quiénes juegan? ➔ Sujeto: «Los niños».'
+      ],
+      steps4: [
+        '1️⃣ Núcleo del sujeto: Sustantivo principal (ej. «telescopio» en «[El telescopio espacial] capturó imágenes»).',
+        '2️⃣ Sujeto compuesto: Dos núcleos realizando la acción (ej. «[Ari y Juanito] leen un libro»).',
+        '3️⃣ Sujeto tácito: Sobreentendido por el verbo (ej. «(Nosotros) Ganamos tres estrellas»).'
+      ],
+      exampleVisual3: '[ El perro ] corre por el jardín.',
+      exampleVisual4: '[ Ari y Juanito ] (Compuesto)  |  (Nosotros) Ganamos tres estrellas (Tácito)',
       steps: [
         '1️⃣ Ubica primero el verbo de la oración (ej. «corre» o «juegan»).',
         '2️⃣ Pregunta ¿Quién corre? o ¿Quiénes juegan? La respuesta es el SUJETO.',
@@ -1409,6 +1493,18 @@ export const LEVELS_DATA = [
         'El PREDICADO es todo lo que se dice del sujeto en una oración, es decir, la acción que realiza. Siempre incluye al verbo. Por ejemplo, en «La niña canta una canción», el sujeto es «La niña» y el predicado es «canta una canción».',
       summary4:
         'En 4° grado identificamos el NÚCLEO DEL PREDICADO, que siempre es el verbo conjugado. En «La niña canta una canción», el predicado verbal es «canta una canción» y su núcleo es «canta».',
+      steps3: [
+        '1️⃣ Separa primero el sujeto de la oración (¿Quién realiza la acción?).',
+        '2️⃣ Todo el resto de la oración, empezando por el verbo, forma el PREDICADO.',
+        '3️⃣ Ejemplo: Sujeto: «La niña» | Predicado: «canta una canción» (Núcleo: «canta»).'
+      ],
+      steps4: [
+        '1️⃣ Núcleo del predicado: El verbo conjugado de la oración (ej. «construyeron» en «Los científicos [construyeron un satélite]»).',
+        '2️⃣ Complemento circunstancial: Información sobre dónde, cómo o cuándo ocurre la acción («en el océano»).',
+        '3️⃣ Predicado compuesto: Dos acciones realizadas por el mismo sujeto (ej. «Ari [lee el problema y explica la pista]»).'
+      ],
+      exampleVisual3: 'La niña [ canta una canción ].',
+      exampleVisual4: 'Los científicos [ construyeron un satélite ] (Núcleo: construyeron)',
       steps: [
         '1️⃣ Separa primero el sujeto de la oración (¿Quién realiza la acción?).',
         '2️⃣ Todo el resto de la oración, empezando por el verbo, forma el PREDICADO.',
@@ -1609,6 +1705,18 @@ export const LEVELS_DATA = [
         'Comprender lo que leemos significa imaginar la historia, reconocer a los PERSONAJES, descubrir la IDEA PRINCIPAL (de qué trata el texto) y recordar en qué ORDEN sucedieron los hechos (inicio, nudo y desenlace).',
       summary4:
         'En 4° grado también hacemos INFERENCIAS: descubrimos pistas dentro del texto para deducir información que el autor sugiere (por ejemplo, si un personaje lleva paraguas y botas de agua, inferimos que está lloviendo).',
+      steps3: [
+        '1️⃣ Lee el texto con calma o presiona «🔊 Escuchar» para seguir la lectura en voz alta.',
+        '2️⃣ Identifica quiénes participan (personajes) y dónde ocurre la historia.',
+        '3️⃣ Fíjate en el orden de los acontecimientos: qué pasó primero, qué pasó después y cómo terminó.'
+      ],
+      steps4: [
+        '1️⃣ Inferencia lectora: Relaciona las pistas con lo que sabes (ej. reloj solar sin sol no marca la hora).',
+        '2️⃣ Propósito y causas: Descubre por qué los personajes actúan (ej. guiar al barco pesquero).',
+        '3️⃣ Causa y efecto: Identifica cómo un hecho produce otro (ej. polinización de abejas ➔ frutos y semillas).'
+      ],
+      exampleVisual3: 'Inicio ➔ Desarrollo ➔ Final',
+      exampleVisual4: 'Pistas: Nubes grises + Botas + Paraguas ➔ Inferencia: Lluvia inminente',
       steps: [
         '1️⃣ Lee el texto con calma o presiona «🔊 Escuchar» para seguir la lectura en voz alta.',
         '2️⃣ Identifica quiénes participan (personajes) y dónde ocurre la historia.',
@@ -1838,6 +1946,18 @@ export const LEVELS_DATA = [
         'Un TEXTO EXPOSITIVO es una lectura que nos explica información real y verdadera sobre temas de la ciencia, el universo, los animales, el cuerpo humano o la naturaleza.',
       summary4:
         'En 4° grado analizamos la estructura de los textos expositivos: TÍTULO (indica el tema), INTRODUCCIÓN (presenta de qué trata), DESARROLLO (explica datos y conceptos clave) y CONCLUSIÓN.',
+      steps3: [
+        '1️⃣ Explora la portada ilustrada y presiona «📖 Comenzar a leer» para recorrer los fragmentos interactivos.',
+        '2️⃣ Toca las palabras resaltadas para ver su significado y responde la pregunta de exploración.',
+        '3️⃣ Al finalizar la lectura, demuestra tu comprensión en las 5 actividades.'
+      ],
+      steps4: [
+        '1️⃣ Estructura: Introducción (presenta el tema), Desarrollo (explica datos) y Conclusión (resume ideas).',
+        '2️⃣ Rigor científico: Información verídica y objetiva (ej. 4 planetas rocosos y 4 gigantes gaseosos).',
+        '3️⃣ Comprensión de conceptos: Procesos naturales como la fotosíntesis (liberación de oxígeno) o cadenas tróficas.'
+      ],
+      exampleVisual3: '☀️🪐 El Sistema Solar • 🌊 Ciclo del Agua • 🐝 Animales',
+      exampleVisual4: 'Introducción ➔ Desarrollo con datos ➔ Conclusión objetiva | Fotosíntesis y Ecosistemas',
       steps: [
         '1️⃣ Explora la portada ilustrada y presiona «📖 Comenzar a leer» para recorrer los fragmentos interactivos.',
         '2️⃣ Toca las palabras resaltadas para ver su significado y responde la pregunta de exploración.',
