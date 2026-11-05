@@ -64,9 +64,28 @@ const server = http.createServer((req, res) => {
         res.writeHead(200, {
           'Content-Type': contentType,
           'Content-Length': stats.size,
+          'Accept-Ranges': 'bytes',
           'Cache-Control': 'no-cache'
         });
         res.end();
+        return;
+      }
+
+      // Soporte de solicitudes parciales (HTTP 206 Partial Content) para reproducción fluida de audio en navegadores
+      if (req.headers.range) {
+        const range = req.headers.range;
+        const parts = range.replace(/bytes=/, '').split('-');
+        const start = parseInt(parts[0], 10);
+        const end = parts[1] ? parseInt(parts[1], 10) : stats.size - 1;
+        const chunksize = end - start + 1;
+        const stream = fs.createReadStream(safePath, { start, end });
+        res.writeHead(206, {
+          'Content-Range': `bytes ${start}-${end}/${stats.size}`,
+          'Accept-Ranges': 'bytes',
+          'Content-Length': chunksize,
+          'Content-Type': contentType
+        });
+        stream.pipe(res);
         return;
       }
 
@@ -78,6 +97,8 @@ const server = http.createServer((req, res) => {
         }
         res.writeHead(200, {
           'Content-Type': contentType,
+          'Content-Length': stats.size,
+          'Accept-Ranges': 'bytes',
           'Cache-Control': 'no-cache'
         });
         res.end(content);

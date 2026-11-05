@@ -94,7 +94,7 @@ export function renderNavbar(currentRoute) {
               aria-pressed="${state.musicEnabled ? 'true' : 'false'}"
               title="${state.musicEnabled ? 'Silenciar música' : 'Activar música'}"
             >
-              <span aria-hidden="true">🎵</span>
+              <span class="music-icon" aria-hidden="true">${state.musicEnabled ? '🎵' : '🔇'}</span>
               <span class="sr-only">Música</span>
             </button>
             <button
@@ -149,6 +149,8 @@ export function bindNavbarEvents(rootElement = document) {
   musicBtn?.addEventListener('click', () => {
     const enabled = StorageService.toggleMusic();
     syncAudioButton(musicBtn, enabled, 'Silenciar música', 'Activar música');
+    const musicIcon = musicBtn.querySelector('.music-icon');
+    if (musicIcon) musicIcon.textContent = enabled ? '🎵' : '🔇';
   });
 
   const soundBtn = navbar.querySelector('#btn-sound-toggle');

@@ -1,3 +1,22 @@
+/**
+ * Resuelve URLs de recursos de audio asegurando rutas absolutas válidas
+ * tanto en servidor local (localhost:4173) como en GitHub Pages (repo subpath).
+ */
+export function resolveSoundUrl(relativePath) {
+  if (typeof window === 'undefined') return relativePath;
+  const clean = String(relativePath || '').replace(/^\.?\//, '');
+  const path = window.location.pathname;
+  let baseDir = path;
+  if (!baseDir.endsWith('/')) {
+    if (baseDir.includes('.')) {
+      baseDir = baseDir.substring(0, baseDir.lastIndexOf('/') + 1);
+    } else {
+      baseDir = baseDir + '/';
+    }
+  }
+  return new URL(clean, `${window.location.origin}${baseDir}`).href;
+}
+
 class SoundManager {
   constructor() {
     this.enabled = true;
@@ -16,42 +35,48 @@ class SoundManager {
     // Rutas de archivos de audio reales (carpeta sounds/)
     this.audioSources = {
       correct: [
-        './sounds/collect-points.mp3',
-        './sounds/sonido al selecionar una respuesta correcta/liecio-collect-points-190037.mp3'
+        'sounds/collect-points.mp3',
+        'sounds/sonido al selecionar una respuesta correcta/liecio-collect-points-190037.mp3'
       ],
       levelComplete: [
-        './sounds/level-passed.mp3',
-        './sounds/sonido al pasar nivel/universfield-level-passed-143039.mp3'
+        'sounds/level-passed.mp3',
+        'sounds/sonido al pasar nivel/universfield-level-passed-143039.mp3'
       ],
       homeMusic: [
-        './sounds/home-music.mp3',
-        './sounds/sonidos de fondo de inicio, etc/mihailandrei-praia-de-domingo-477785.mp3'
+        'sounds/home-music.mp3',
+        'sounds/sonidos de fondo de inicio, etc/mihailandrei-praia-de-domingo-477785.mp3'
       ],
       activityMusic: [
-        './sounds/activity-music.mp3',
-        './sounds/sonido al realizar cualquier prueba-actividad/ejah_music-wake-up-clair-de-lune-468898.mp3'
+        'sounds/activity-music.mp3',
+        'sounds/sonido al realizar cualquier prueba-actividad/ejah_music-wake-up-clair-de-lune-468898.mp3'
       ]
     };
 
     this.initUserGestureHandler();
   }
 
+  /**
+   * Registra detectores de interacción de usuario para desbloquear tanto
+   * el AudioContext (Web Audio API) como los elementos HTML <audio> (Autoplay Policy).
+   */
   initUserGestureHandler() {
     if (typeof window === 'undefined') return;
+
     const unlock = () => {
       this.hasUserInteracted = true;
       this.initContext();
-      if (this.musicEnabled) {
+      if (this.audioCtx && this.audioCtx.state === 'suspended') {
+        this.audioCtx.resume().catch(() => {});
+      }
+      if (this.musicEnabled && (!this.activeMusicAudio || this.activeMusicAudio.paused)) {
         this.syncMusicPlayback();
       }
-      window.removeEventListener('pointerdown', unlock, true);
-      window.removeEventListener('keydown', unlock, true);
-      window.removeEventListener('click', unlock, true);
     };
 
-    window.addEventListener('pointerdown', unlock, true);
-    window.addEventListener('keydown', unlock, true);
-    window.addEventListener('click', unlock, true);
+    const gestureEvents = ['pointerdown', 'touchstart', 'touchend', 'mousedown', 'click', 'keydown'];
+    for (const ev of gestureEvents) {
+      window.addEventListener(ev, unlock, { passive: true, capture: true });
+    }
   }
 
   initContext() {
@@ -100,29 +125,35 @@ class SoundManager {
   /**
    * Obtiene o instancia un elemento de audio HTML para un efecto o pista musical.
    */
-  getOrCreateAudio(key, isLoop = false, volume = 0.7) {
+  getOrCreateAudio(key, isLoop = false, volume = 0.85) {
     if (typeof window === 'undefined' || typeof window.Audio === 'undefined') {
       return null;
     }
 
     if (this.audioCache.has(key)) {
-      return this.audioCache.get(key);
+      const cached = this.audioCache.get(key);
+      cached.loop = Boolean(isLoop);
+      cached.volume = volume;
+      return cached;
     }
 
     const paths = this.audioSources[key];
     if (!paths || paths.length === 0) return null;
 
     try {
-      const audio = new Audio(paths[0]);
+      const primaryUrl = resolveSoundUrl(paths[0]);
+      const audio = new Audio(primaryUrl);
       audio.loop = Boolean(isLoop);
       audio.volume = volume;
       audio.preload = 'auto';
 
-      // Fallback si la primera ruta falla
       audio.addEventListener('error', () => {
-        if (paths[1] && audio.src !== paths[1]) {
-          audio.src = encodeURI(paths[1]);
-          audio.load();
+        if (paths[1]) {
+          const fallbackUrl = resolveSoundUrl(paths[1]);
+          if (audio.src !== fallbackUrl) {
+            audio.src = fallbackUrl;
+            audio.load();
+          }
         }
       });
 
@@ -135,19 +166,24 @@ class SoundManager {
 
   /**
    * Reproduce un archivo de audio real con volumen especificado.
+   * Utiliza clonación ligera si el archivo ya está en reproducción para evitar cortes.
    */
-  playAudioFile(key, volume = 0.7) {
+  playAudioFile(key, volume = 0.85) {
     if (!this.enabled) return false;
-    const audio = this.getOrCreateAudio(key, false, volume);
-    if (!audio) return false;
+    const baseAudio = this.getOrCreateAudio(key, false, volume);
+    if (!baseAudio) return false;
 
     try {
-      audio.currentTime = 0;
-      audio.volume = volume;
-      const promise = audio.play();
+      let soundToPlay = baseAudio;
+      if (!baseAudio.paused && baseAudio.currentTime > 0) {
+        soundToPlay = baseAudio.cloneNode(true);
+      }
+      soundToPlay.currentTime = 0;
+      soundToPlay.volume = volume;
+      const promise = soundToPlay.play();
       if (promise && typeof promise.catch === 'function') {
         promise.catch(() => {
-          // Ignorado si autoplay aún no fue autorizado por el navegador
+          // Ignorado si la política de autoplay aún está pendiente
         });
       }
       return true;
@@ -159,7 +195,7 @@ class SoundManager {
   /**
    * Actualiza la música de fondo según la ruta activa:
    * - En actividades/ejercicios ('nivel', 'practica'): música de concentración de actividad.
-   * - En inicio y navegación ('inicio', 'materias', 'grado', 'niveles', 'progreso'): música relajante de inicio.
+   * - En inicio y navegación ('inicio', 'materias', 'grado', 'niveles', 'progreso'): música alegre de inicio.
    */
   updateRouteMusic(routeName) {
     this.currentRouteName = routeName || 'inicio';
@@ -175,11 +211,12 @@ class SoundManager {
     const isActivityRoute = this.currentRouteName === 'nivel' || this.currentRouteName === 'practica';
     const targetKey = isActivityRoute ? 'activityMusic' : 'homeMusic';
 
+    // Si la pista actual ya está sonando, no reiniciar
     if (this.currentMusicKey === targetKey && this.activeMusicAudio && !this.activeMusicAudio.paused) {
       return;
     }
 
-    // Si ya había una pista sonando diferente, detenerla suavemente
+    // Si había una pista diferente sonando, pausarla
     if (this.activeMusicAudio && this.currentMusicKey !== targetKey) {
       try {
         this.activeMusicAudio.pause();
@@ -188,18 +225,18 @@ class SoundManager {
     }
 
     this.currentMusicKey = targetKey;
-    const audio = this.getOrCreateAudio(targetKey, true, 0.22);
+    const audio = this.getOrCreateAudio(targetKey, true, 0.40);
     if (!audio) return;
 
     this.activeMusicAudio = audio;
-    audio.volume = 0.22;
+    audio.volume = 0.40;
     audio.loop = true;
 
     try {
       const promise = audio.play();
       if (promise && typeof promise.catch === 'function') {
         promise.catch(() => {
-          // Si el navegador requiere interacción previa, se activará en el primer clic
+          // Si el navegador bloqueó autoplay, sonará inmediatamente tras el primer clic
         });
       }
     } catch (e) {}
@@ -214,31 +251,38 @@ class SoundManager {
     this.currentMusicKey = null;
   }
 
-  playTone(freq, type = 'sine', duration = 0.14, delay = 0, gainValue = 0.12) {
+  playTone(freq, type = 'sine', duration = 0.14, delay = 0, gainValue = 0.25) {
     const ctx = this.initContext();
     if (!ctx) return false;
 
-    try {
-      const now = ctx.currentTime + delay;
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
+    const executeTone = () => {
+      try {
+        const now = ctx.currentTime + delay;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
 
-      osc.type = type;
-      osc.frequency.setValueAtTime(freq, now);
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, now);
 
-      gain.gain.setValueAtTime(0.001, now);
-      gain.gain.exponentialRampToValueAtTime(gainValue, now + 0.015);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.exponentialRampToValueAtTime(gainValue, now + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
 
-      osc.connect(gain);
-      gain.connect(ctx.destination);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
 
-      osc.start(now);
-      osc.stop(now + duration + 0.02);
+        osc.start(now);
+        osc.stop(now + duration + 0.02);
+      } catch (e) {}
+    };
+
+    if (ctx.state === 'suspended') {
+      ctx.resume().then(executeTone).catch(() => {});
       return true;
-    } catch (e) {
-      return false;
     }
+
+    executeTone();
+    return true;
   }
 
   play(soundName) {
@@ -258,57 +302,62 @@ class SoundManager {
       return false;
     }
 
+    // Despierta el contexto de audio si está suspendido
+    if (this.audioCtx && this.audioCtx.state === 'suspended') {
+      this.audioCtx.resume().catch(() => {});
+    }
+
     switch (soundName) {
       case 'click':
-        this.playTone(540, 'sine', 0.07, 0, 0.09);
+        this.playTone(560, 'sine', 0.08, 0, 0.28);
         break;
 
       case 'correct':
         // Sonido real de la carpeta: sonido al selecionar una respuesta correcta
-        this.playAudioFile('correct', 0.65);
-        this.playTone(523.25, 'triangle', 0.12, 0, 0.14);
-        this.playTone(659.25, 'triangle', 0.12, 0.09, 0.14);
-        this.playTone(783.99, 'triangle', 0.22, 0.18, 0.16);
+        this.playAudioFile('correct', 0.90);
+        this.playTone(523.25, 'triangle', 0.12, 0, 0.22);
+        this.playTone(659.25, 'triangle', 0.12, 0.09, 0.22);
+        this.playTone(783.99, 'triangle', 0.22, 0.18, 0.26);
         break;
 
       case 'wrong':
-        this.playTone(311.13, 'sawtooth', 0.14, 0, 0.09);
-        this.playTone(246.94, 'sawtooth', 0.22, 0.12, 0.09);
+        this.playTone(311.13, 'sawtooth', 0.16, 0, 0.22);
+        this.playTone(246.94, 'sawtooth', 0.25, 0.12, 0.22);
         break;
 
       case 'hint':
-        this.playTone(880, 'sine', 0.1, 0, 0.1);
-        this.playTone(1174.66, 'sine', 0.16, 0.08, 0.1);
+        this.playTone(880, 'sine', 0.12, 0, 0.22);
+        this.playTone(1174.66, 'sine', 0.18, 0.08, 0.22);
         break;
 
       case 'levelComplete':
         // Sonido real de la carpeta: sonido al pasar nivel
-        this.playAudioFile('levelComplete', 0.75);
-        this.playTone(523.25, 'triangle', 0.12, 0, 0.15);
-        this.playTone(659.25, 'triangle', 0.12, 0.1, 0.15);
-        this.playTone(783.99, 'triangle', 0.12, 0.2, 0.15);
-        this.playTone(1046.5, 'triangle', 0.3, 0.3, 0.18);
+        this.playAudioFile('levelComplete', 0.95);
+        this.playTone(523.25, 'triangle', 0.14, 0, 0.24);
+        this.playTone(659.25, 'triangle', 0.14, 0.1, 0.24);
+        this.playTone(783.99, 'triangle', 0.14, 0.2, 0.24);
+        this.playTone(1046.5, 'triangle', 0.35, 0.3, 0.28);
         break;
 
       case 'locked':
-        this.playTone(196, 'sine', 0.14, 0, 0.1);
+        this.playTone(196, 'sine', 0.16, 0, 0.22);
         break;
 
       case 'ariSpeak':
       case 'listen':
-        this.playTone(640, 'sine', 0.09, 0, 0.1);
-        this.playTone(760, 'sine', 0.12, 0.08, 0.1);
+        this.playTone(640, 'sine', 0.1, 0, 0.22);
+        this.playTone(760, 'sine', 0.14, 0.08, 0.22);
         break;
 
       case 'music':
         this.syncMusicPlayback();
-        this.playTone(440, 'triangle', 0.1, 0, 0.1);
-        this.playTone(554.37, 'triangle', 0.1, 0.08, 0.1);
-        this.playTone(659.25, 'triangle', 0.16, 0.16, 0.1);
+        this.playTone(440, 'triangle', 0.1, 0, 0.15);
+        this.playTone(554.37, 'triangle', 0.1, 0.08, 0.15);
+        this.playTone(659.25, 'triangle', 0.16, 0.16, 0.15);
         break;
 
       default:
-        this.playTone(440, 'sine', 0.08, 0, 0.08);
+        this.playTone(440, 'sine', 0.08, 0, 0.2);
         break;
     }
 
@@ -329,7 +378,7 @@ class SoundManager {
         return true;
       }
     } catch (e) {
-      // Fallback already played listen tone
+      // Fallback ya ejecutó tono listen
     }
     return true;
   }
