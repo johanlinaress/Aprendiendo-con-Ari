@@ -32,28 +32,6 @@ export function renderProgressView(focus = 'resumen') {
           </p>
         </div>
         <div class="progress-header-actions">
-          <div class="category-tabs progress-subtabs" role="tablist" aria-label="Secciones de progreso">
-            <button
-              type="button"
-              role="tab"
-              id="btn-prog-tab-resumen"
-              class="category-tab-btn ${activeTab === 'resumen' ? 'active' : ''}"
-              data-progress-tab="/progreso"
-              aria-selected="${activeTab === 'resumen' ? 'true' : 'false'}"
-            >
-              📊 Resumen General
-            </button>
-            <button
-              type="button"
-              role="tab"
-              id="btn-prog-tab-logros"
-              class="category-tab-btn ${activeTab === 'logros' ? 'active' : ''}"
-              data-progress-tab="/logros"
-              aria-selected="${activeTab === 'logros' ? 'true' : 'false'}"
-            >
-              🏆 Medallas (${state.achievements.length}/${ACHIEVEMENTS_DATA.length})
-            </button>
-          </div>
           <button type="button" class="btn btn-primary" id="btn-progress-to-map">
             🗺️ Ir al Mapa
           </button>
@@ -61,6 +39,29 @@ export function renderProgressView(focus = 'resumen') {
             🗑️ Reiniciar Progreso
           </button>
         </div>
+      </div>
+
+      <div class="category-tabs progress-subtabs-bar" role="tablist" aria-label="Secciones de progreso">
+        <button
+          type="button"
+          role="tab"
+          id="btn-prog-tab-resumen"
+          class="category-tab-btn ${activeTab === 'resumen' ? 'active' : ''}"
+          data-progress-tab="/progreso"
+          aria-selected="${activeTab === 'resumen' ? 'true' : 'false'}"
+        >
+          📊 Resumen General
+        </button>
+        <button
+          type="button"
+          role="tab"
+          id="btn-prog-tab-logros"
+          class="category-tab-btn ${activeTab === 'logros' ? 'active' : ''}"
+          data-progress-tab="/logros"
+          aria-selected="${activeTab === 'logros' ? 'true' : 'false'}"
+        >
+          🏆 Medallas (${state.achievements.length}/${ACHIEVEMENTS_DATA.length})
+        </button>
       </div>
 
       <div class="progress-overview-grid">

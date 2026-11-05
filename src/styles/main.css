@@ -2650,8 +2650,9 @@ body {
   flex-wrap: wrap;
 }
 
-.progress-subtabs {
-  margin-bottom: 0;
+.progress-subtabs,
+.progress-subtabs-bar {
+  margin-bottom: 1.15rem;
 }
 
 .subsection-title {
