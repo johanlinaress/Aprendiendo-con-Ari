@@ -35,7 +35,7 @@ export function renderNavbar(currentRoute) {
             <span class="profile-avatar-ring">${renderPlayerAvatarSvg()}</span>
             <span class="profile-text-col">
               <strong id="nav-player-greeting">Hola, ${safeName}</strong>
-              <small>Aprendiendo con Ari</small>
+              <small id="nav-grade-label">${state.selectedGrade}° Grado</small>
             </span>
           </button>
           <button
@@ -43,10 +43,10 @@ export function renderNavbar(currentRoute) {
             class="btn-grade-switch"
             id="btn-change-grade"
             data-nav="/grado"
-            title="Cambiar grado escolar"
+            title="Cambiar grado o perfil (${state.selectedGrade}° Grado)"
             aria-label="Cambiar grado escolar (actual: ${state.selectedGrade}° Grado)"
           >
-            🎓 <span id="nav-grade-label">${state.selectedGrade}° Grado</span>
+            🎓 ${state.selectedGrade}°
           </button>
         </div>
 
