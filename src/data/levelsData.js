@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Banco Curricular, Preguntas y Contenidos Pedagógicos para Aprendiendo con Ari.
+ * @author Johan Linares (Johan Sttive Linares Barragán)
+ * @copyright 2026 Johan Linares. Todos los derechos reservados.
+ * @license Propiedad Intelectual Protegida. Prohibida su copia o plagio.
+ */
+
 export const GRADES_DATA = [
   {
     id: '3',

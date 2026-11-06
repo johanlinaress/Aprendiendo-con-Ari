@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Vista Principal y Catálogo de Materias de Aprendiendo con Ari.
+ * @author Johan Linares (Johan Sttive Linares Barragán)
+ * @copyright 2026 Johan Linares. Todos los derechos reservados.
+ * @license Propiedad Intelectual Protegida. Prohibida su copia o plagio.
+ */
+
 import { LEVELS_DATA, SUBJECTS_DATA } from '../data/levelsData.js';
 import { StorageService } from '../services/StorageService.js';
 import { SoundService } from '../services/SoundService.js';
@@ -256,6 +263,7 @@ export function renderHomeView(mode = 'inicio') {
                 <span class="title-3d-purple">con Ari <span class="title-star" aria-hidden="true">⭐</span></span>
               </h1>
               <div class="golden-ribbon-tag">¡Explora, aprende y diviértete!</div>
+              <div class="hero-author-badge" title="Creado y diseñado por Johan Linares">✨ Obra original de Johan Linares</div>
               <p class="hero-welcome-line">
                 ¡Bienvenido/a, <strong id="hero-player-name">${safeName}</strong>!
                 <span class="sr-only" id="hero-grade-badge">${state.selectedGrade}° Grado</span>

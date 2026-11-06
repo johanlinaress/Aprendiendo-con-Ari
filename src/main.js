@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Punto de entrada principal (SPA Bootstrap) de Aprendiendo con Ari.
+ * @author Johan Linares (Johan Sttive Linares Barragán)
+ * @copyright 2026 Johan Linares. Todos los derechos reservados.
+ * @license Propiedad Intelectual Protegida. Prohibida su copia o plagio.
+ */
+
 import { Router } from './router/Router.js';
 import { StorageService } from './services/StorageService.js';
 import { SoundService } from './services/SoundService.js';
@@ -135,6 +142,19 @@ function renderApp(route, { isRerender = false } = {}) {
 }
 
 function bootstrap() {
+  // Aviso institucional de propiedad intelectual en consola para inspección
+  if (typeof console !== 'undefined' && console.log) {
+    console.log(
+      '%c🦉 Aprendiendo con Ari %c © 2026 Johan Linares\n' +
+      '%cTodos los derechos reservados. Obra original y personaje «Ari» protegidos por leyes de propiedad intelectual.\n' +
+      'Autor y Creador: Johan Linares (Johan Sttive Linares Barragán) · johansttivelinaresb@gmail.com\n' +
+      'Plataforma educativa interactiva · https://johanlinaress.github.io/Aprendiendo-con-Ari/',
+      'background: #4f46e5; color: #ffffff; font-size: 14px; font-weight: bold; padding: 4px 10px; border-radius: 4px;',
+      'background: #312e81; color: #fde047; font-size: 13px; font-weight: bold; padding: 4px 8px; border-radius: 4px;',
+      'color: #4338ca; font-size: 11px; font-weight: 600; line-height: 1.5;'
+    );
+  }
+
   AnalyticsService.init();
   SoundService.syncDebugState();
 

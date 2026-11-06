@@ -1,4 +1,9 @@
 /**
+ * @fileoverview Enrutador SPA basado en hash con paso de parámetros para Aprendiendo con Ari.
+ * @author Johan Linares (Johan Sttive Linares Barragán)
+ * @copyright 2026 Johan Linares. Todos los derechos reservados.
+ * @license Propiedad Intelectual Protegida. Prohibida su copia o plagio.
+ *
  * Tabla declarativa de rutas.
  * - name:    vista que se renderiza.
  * - section: pestaña de la barra de navegación que debe quedar activa.

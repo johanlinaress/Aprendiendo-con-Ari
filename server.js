@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Servidor HTTP nativo con soporte de streaming parcial (HTTP 206) para Aprendiendo con Ari.
+ * @author Johan Linares (Johan Sttive Linares Barragán)
+ * @copyright 2026 Johan Linares. Todos los derechos reservados.
+ * @license Propiedad Intelectual Protegida. Prohibida su copia o plagio.
+ */
+
 const http = require('http');
 const fs = require('fs');
 const path = require('path');

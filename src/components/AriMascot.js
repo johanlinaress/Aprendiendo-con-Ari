@@ -1,3 +1,11 @@
+/**
+ * @fileoverview Componente y personaje original «Ari el Búho Sabio» (SVG, expresiones y estados).
+ * @author Johan Linares (Johan Sttive Linares Barragán)
+ * @copyright 2026 Johan Linares. Todos los derechos reservados.
+ * @license Propiedad Intelectual Protegida. El diseño de Ari (birrete, gafas, expresiones y libro)
+ *          es una creación original y exclusiva de Johan Linares. Prohibida su copia o plagio.
+ */
+
 import { SoundService } from '../services/SoundService.js';
 import { escapeHtml } from '../utils/escapeHtml.js';
 

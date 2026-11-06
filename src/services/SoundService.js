@@ -1,4 +1,9 @@
 /**
+ * @fileoverview Motor de Audio, Música Adaptativa y Síntesis de Voz para Aprendiendo con Ari.
+ * @author Johan Linares (Johan Sttive Linares Barragán)
+ * @copyright 2026 Johan Linares. Todos los derechos reservados.
+ * @license Propiedad Intelectual Protegida. Prohibida su copia o plagio.
+ *
  * Resuelve URLs de recursos de audio asegurando rutas absolutas válidas
  * tanto en servidor local (localhost:4173) como en GitHub Pages (repo subpath).
  */

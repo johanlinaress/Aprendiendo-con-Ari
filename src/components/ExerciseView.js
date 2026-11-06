@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Motor de Ejercicios y Actividades Pedagógicas de Aprendiendo con Ari.
+ * @author Johan Linares (Johan Sttive Linares Barragán)
+ * @copyright 2026 Johan Linares. Todos los derechos reservados.
+ * @license Propiedad Intelectual Protegida. Prohibida su copia o plagio.
+ */
+
 import {
   LEVELS_DATA,
   EXPOSITIVE_READINGS_DATA,

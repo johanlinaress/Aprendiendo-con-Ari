@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Barra de navegación principal y controles de audio para Aprendiendo con Ari.
+ * @author Johan Linares (Johan Sttive Linares Barragán)
+ * @copyright 2026 Johan Linares. Todos los derechos reservados.
+ * @license Propiedad Intelectual Protegida. Prohibida su copia o plagio.
+ */
+
 import { StorageService } from '../services/StorageService.js';
 import { SoundService } from '../services/SoundService.js';
 import { Router } from '../router/Router.js';

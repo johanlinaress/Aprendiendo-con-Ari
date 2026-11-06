@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Servicio de almacenamiento y persistencia en localStorage para Aprendiendo con Ari.
+ * @author Johan Linares (Johan Sttive Linares Barragán)
+ * @copyright 2026 Johan Linares. Todos los derechos reservados.
+ * @license Propiedad Intelectual Protegida. Prohibida su copia o plagio.
+ */
+
 import { LEVELS_DATA, ACHIEVEMENTS_DATA } from '../data/levelsData.js';
 import { SoundService } from './SoundService.js';
 
