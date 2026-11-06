@@ -17,7 +17,7 @@ Plataforma educativa web interactiva, gamificada y de código limpio diseñada p
 
 | Métrica | Resultado | Verificación |
 |---|---|---|
-| **Batería de Pruebas E2E (Chrome/CDP)** | **176 / 176 Aprobadas (100%)** | `npm run audit` (`tests/audit.js`) |
+| **Batería de Pruebas E2E (Chrome/CDP)** | **184 / 184 Aprobadas (100%)** | `npm run audit` (`tests/audit.js`) |
 | **Errores de Consola JavaScript** | **0 errores** | Consola limpia en todas las pantallas |
 | **Errores de Red (404 / 500)** | **0 errores** | Todos los assets y rutas verificadas |
 | **Auditoría Responsive Multidispositivo** | **9.5 / 10** | 14 resoluciones verificadas (1920×1080 a 320×568) |
@@ -165,7 +165,7 @@ npm run audit
 ```
 
 ### Resultados de la auditoría actual (`tests/audit-report.json`):
-- ✅ **176 pruebas aprobadas** (0 fallidas)
+- ✅ **184 pruebas aprobadas** (0 fallidas)
 - 🖥️ **0 errores de consola JavaScript**
 - 🌐 **0 errores de red (404/500)**
 - 📱 **Capturas de pantalla responsive automatizadas** en resoluciones de móvil, tablet y escritorio en `tests/screenshots/`

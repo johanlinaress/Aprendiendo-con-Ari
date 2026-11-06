@@ -1305,7 +1305,7 @@ async function runAudit() {
       });
       await sleep(120);
 
-      for (const routeHash of ['#/inicio', '#/niveles', '#/nivel/1', '#/nivel/10', '#/practica', '#/progreso']) {
+      for (const routeHash of ['#/inicio', '#/niveles', '#/nivel/1', '#/nivel/10', '#/practica', '#/progreso', '#/donaciones']) {
         await cdp.eval(`window.location.hash = '${routeHash}';`);
         await sleep(100);
 

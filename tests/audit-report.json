@@ -528,7 +528,7 @@
     {
       "category": "7. Persistencia de progreso",
       "description": "Recargar el navegador recupera exactamente nombre, puntaje, 30/30 estrellas, 10 unidades desbloqueadas y las 9 medallas desde localStorage",
-      "details": "{\"playerName\":\"Valentina\",\"totalScore\":36330,\"totalStars\":30,\"unlockedCount\":10,\"achievementsCount\":9,\"navScoreText\":\"36330\",\"navStarsText\":\"30/30\"}"
+      "details": "{\"playerName\":\"Valentina\",\"totalScore\":36300,\"totalStars\":30,\"unlockedCount\":10,\"achievementsCount\":9,\"navScoreText\":\"36300\",\"navStarsText\":\"30/30\"}"
     },
     {
       "category": "3. Botones",
@@ -607,6 +607,11 @@
     },
     {
       "category": "10. Responsive",
+      "description": "Móvil-360 (360x800) en #/donaciones sin desbordamiento horizontal",
+      "details": "scrollWidth=360, clientWidth=360"
+    },
+    {
+      "category": "10. Responsive",
       "description": "Teléfono (375x667) en #/inicio sin desbordamiento horizontal",
       "details": "scrollWidth=375, clientWidth=375"
     },
@@ -647,6 +652,11 @@
     },
     {
       "category": "10. Responsive",
+      "description": "Teléfono (375x667) en #/donaciones sin desbordamiento horizontal",
+      "details": "scrollWidth=375, clientWidth=375"
+    },
+    {
+      "category": "10. Responsive",
       "description": "Móvil-390 (390x844) en #/inicio sin desbordamiento horizontal",
       "details": "scrollWidth=390, clientWidth=390"
     },
@@ -678,6 +688,11 @@
     {
       "category": "10. Responsive",
       "description": "Móvil-390 (390x844) en #/progreso sin desbordamiento horizontal",
+      "details": "scrollWidth=390, clientWidth=390"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Móvil-390 (390x844) en #/donaciones sin desbordamiento horizontal",
       "details": "scrollWidth=390, clientWidth=390"
     },
     {
@@ -717,6 +732,11 @@
     },
     {
       "category": "10. Responsive",
+      "description": "Tablet (768x1024) en #/donaciones sin desbordamiento horizontal",
+      "details": "scrollWidth=768, clientWidth=768"
+    },
+    {
+      "category": "10. Responsive",
       "description": "Tablet-Horizontal (1024x768) en #/inicio sin desbordamiento horizontal",
       "details": "scrollWidth=1024, clientWidth=1024"
     },
@@ -748,6 +768,11 @@
     {
       "category": "10. Responsive",
       "description": "Tablet-Horizontal (1024x768) en #/progreso sin desbordamiento horizontal",
+      "details": "scrollWidth=1024, clientWidth=1024"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Tablet-Horizontal (1024x768) en #/donaciones sin desbordamiento horizontal",
       "details": "scrollWidth=1024, clientWidth=1024"
     },
     {
@@ -788,6 +813,11 @@
     {
       "category": "10. Responsive",
       "description": "Computador (1280x800) en #/progreso sin desbordamiento horizontal",
+      "details": "scrollWidth=1265, clientWidth=1265"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Computador (1280x800) en #/donaciones sin desbordamiento horizontal",
       "details": "scrollWidth=1265, clientWidth=1265"
     },
     {
@@ -837,6 +867,11 @@
     },
     {
       "category": "10. Responsive",
+      "description": "Portátil-1366 (1366x768) en #/donaciones sin desbordamiento horizontal",
+      "details": "scrollWidth=1351, clientWidth=1351"
+    },
+    {
+      "category": "10. Responsive",
       "description": "Escritorio-1920 (1920x1080) en #/inicio sin desbordamiento horizontal",
       "details": "scrollWidth=1905, clientWidth=1905"
     },
@@ -868,6 +903,11 @@
     {
       "category": "10. Responsive",
       "description": "Escritorio-1920 (1920x1080) en #/progreso sin desbordamiento horizontal",
+      "details": "scrollWidth=1905, clientWidth=1905"
+    },
+    {
+      "category": "10. Responsive",
+      "description": "Escritorio-1920 (1920x1080) en #/donaciones sin desbordamiento horizontal",
       "details": "scrollWidth=1905, clientWidth=1905"
     },
     {
