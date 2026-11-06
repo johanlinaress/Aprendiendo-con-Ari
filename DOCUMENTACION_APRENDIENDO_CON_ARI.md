@@ -153,3 +153,17 @@ SIGUIENTE NIVEL
   7. *Lector curioso*
   8. *Campeón de la comprensión*
   9. *Superestudiante*
+
+---
+
+## 6. TELEMETRÍA, ANALÍTICA Y MONITOREO EN TIEMPO REAL
+
+- **Plataforma:** Google Analytics 4 (GA4) y Google Tag Manager (`GTM-NWXWZF9D`).
+- **Servicio:** `AnalyticsService.js`.
+- **Métricas registradas:**
+  - Usuarios concurrentes en tiempo real y tiempo medio de sesión.
+  - Distribución geográfica interactiva (mapa mundial con países y ciudades).
+  - Tipos de dispositivo de acceso (móviles, tablets y computadoras de escritorio).
+  - Navegación de rutas SPA HashRouter (`#/inicio`, `#/materias`, `#/niveles`, `#/progreso`, `#/donaciones/nequi`, etc.).
+  - Eventos de aprendizaje: `level_start` (nivel y materia), `level_complete` (tasa de acierto, estrellas y puntaje) y selección de grado escolar (`select_grade`).
+- **Privacidad y resiliencia:** Arquitectura desacoplada, asíncrona y no invasiva, tolerante a adblockers y modo offline sin emitir errores en consola.

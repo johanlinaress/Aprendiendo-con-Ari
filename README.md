@@ -124,12 +124,25 @@ Plataforma abierta al apoyo voluntario de la comunidad educativa y familias con 
 - **Controles independientes en la barra de navegación:** Botones dedicados para silenciar o encender **Música** (`🎵`/`🔇`) y **Sonidos** (`🔊`/`🔇`).
 - **Síntesis de voz integrada (Web Speech API):** Lectura en voz alta en español neutro para apoyar a niños en proceso de consolidación lectora.
 
+### 📈 11. Analítica Web y Telemetría en Tiempo Real (`AnalyticsService.js`)
+Sistema de medición estadística y telemetría pedagógica integrado con **Google Analytics 4 (GA4)** y **Google Tag Manager** (`GTM-NWXWZF9D`):
+- **Monitoreo en tiempo real:** Panel en vivo que muestra el número de estudiantes conectados simultáneamente, mapa mundial geográfico con países y ciudades de origen, y tiempo de permanencia.
+- **Segmentación por dispositivos:** Métricas inmediatas de acceso desde smartphones, tablets y computadoras de escritorio.
+- **Telemetría para Single Page Application (SPA):** Registro automático de cambios de vista mediante el HashRouter (`page_view`), reflejando navegación exacta a `#/inicio`, `#/materias`, `#/niveles`, `#/progreso`, `#/donaciones/nequi`, etc.
+- **Métricas de aprendizaje y juego:**
+  - `level_start`: Nivel, materia y grado escolar iniciados por el alumno.
+  - `level_complete`: Unidades superadas, porcentaje de precisión, estrellas obtenidas (1, 2 o 3) y puntaje acumulado.
+  - `select_grade`: Grado escolar seleccionado (3° o 4°).
+  - `donation_interaction`: Interacciones de apoyo y consulta de métodos de donación.
+- **Diseño tolerante a fallos y privado:** Carga asíncrona no bloqueante que garantiza un rendimiento óptimo de 60 FPS, respetando adblockers y funcionamiento offline sin generar excepciones en consola.
+
 ---
 
 ## 🛠️ Tecnologías Utilizadas
 
 - **JavaScript Moderno (ES6+):** Arquitectura SPA reactiva y modular orientada a componentes, sin dependencias externas ni frameworks sobrecargados.
 - **CSS3 Puro:** Variables de diseño temáticas, Flexbox, CSS Grid adaptable, animaciones CSS fluidas y diseño responsive sin frameworks pesados.
+- **Google Analytics 4 & Google Tag Manager:** Telemetría pedagógica no invasiva y analítica de tráfico en tiempo real.
 - **Web Audio API & HTML5 Audio:** Motor híbrido tolerante a fallos para efectos instantáneos y streaming continuo.
 - **Web Speech API:** Lectura asistida y sintetizada en español.
 - **Node.js (HTTP Server Nativo):** Servidor local ligero de cero dependencias externas con streaming HTTP 206 Partial Content.
@@ -214,6 +227,7 @@ Aprendiendo-con-Ari/
 │   ├── router/
 │   │   └── Router.js          # Enrutador cliente SPA basado en hash con paso de parámetros
 │   ├── services/
+│   │   ├── AnalyticsService.js # Telemetría GA4/GTM: visitas en tiempo real, niveles jugados y métricas
 │   │   ├── SoundService.js    # Motor de audio Web Audio API, música en bucle y síntesis de voz
 │   │   └── StorageService.js  # Persistencia en localStorage y perfiles de usuario independientes
 │   ├── styles/
