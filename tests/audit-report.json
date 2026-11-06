@@ -142,6 +142,16 @@
     },
     {
       "category": "2. Rutas",
+      "description": "Ruta #/donaciones/podio renderiza DonationsView",
+      "details": "Componente=DonationsView"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Componentes globales (Navbar, Footer, AriMascot) presentes en #/donaciones/podio",
+      "details": "Navbar=true, Footer=true, AriMascot=true"
+    },
+    {
+      "category": "2. Rutas",
       "description": "Ruta #/ruta-no-existente renderiza NotFoundView",
       "details": "Componente=NotFoundView"
     },
@@ -169,6 +179,16 @@
       "category": "1. Componentes",
       "description": "Página dedicada de PayPal (#/donaciones/paypal) tiene portal oficial corregido y correo",
       "details": "{\"isPaypalView\":true,\"hasCorrectUrl\":true,\"hasEmail\":true}"
+    },
+    {
+      "category": "1. Componentes",
+      "description": "Podio de Donadores muestra pedestales 1º (Oro), 2º (Plata), 3º (Bronce), ticker en vivo y mensajes de gracias con corazón 💖",
+      "details": "{\"hasPodium\":true,\"hasTrophy\":true,\"goldPedestal\":true,\"silverPedestal\":true,\"bronzePedestal\":true,\"hasTicker\":true,\"heartButtonsCount\":6,\"allHaveHearts\":true,\"wallCardsCount\":3}"
+    },
+    {
+      "category": "7. Persistencia de progreso",
+      "description": "Interacción en Podio de Donadores: dar amor incrementa corazones y registro automático publica el nuevo donador con mensaje y corazón",
+      "details": "{\"initialText\":\"(52)\",\"updatedText\":\"(53)\",\"isModalOpen\":true,\"modalClosed\":true,\"newDonorCard\":true,\"newDonorThanks\":true}"
     },
     {
       "category": "2. Rutas",
@@ -508,7 +528,7 @@
     {
       "category": "7. Persistencia de progreso",
       "description": "Recargar el navegador recupera exactamente nombre, puntaje, 30/30 estrellas, 10 unidades desbloqueadas y las 9 medallas desde localStorage",
-      "details": "{\"playerName\":\"Valentina\",\"totalScore\":36600,\"totalStars\":30,\"unlockedCount\":10,\"achievementsCount\":9,\"navScoreText\":\"36600\",\"navStarsText\":\"30/30\"}"
+      "details": "{\"playerName\":\"Valentina\",\"totalScore\":36530,\"totalStars\":30,\"unlockedCount\":10,\"achievementsCount\":9,\"navScoreText\":\"36530\",\"navStarsText\":\"30/30\"}"
     },
     {
       "category": "3. Botones",

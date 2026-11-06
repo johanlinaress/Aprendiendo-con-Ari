@@ -234,6 +234,7 @@ async function runAudit() {
       { hash: '#/progreso', component: 'ProgressView' },
       { hash: '#/logros', component: 'ProgressView' },
       { hash: '#/donaciones', component: 'DonationsView' },
+      { hash: '#/donaciones/podio', component: 'DonationsView' },
       { hash: '#/ruta-no-existente', component: 'NotFoundView' }
     ];
 
@@ -330,6 +331,93 @@ async function runAudit() {
       'Página dedicada de PayPal (#/donaciones/paypal) tiene portal oficial corregido y correo',
       paypalPageCheck.isPaypalView && paypalPageCheck.hasCorrectUrl && paypalPageCheck.hasEmail,
       JSON.stringify(paypalPageCheck)
+    );
+
+    // Verify Donors Podium in #/donaciones
+    await cdp.eval(`window.location.hash = '#/donaciones';`);
+    await sleep(100);
+    const podiumCheck = await cdp.eval(`
+      (() => {
+        const podiumEl = document.querySelector('#seccion-podio-donadores');
+        const hasTrophy = Boolean(document.querySelector('.podium-trophy-icon'));
+        const goldPedestal = Boolean(document.querySelector('.pedestal-gold .pedestal-number'));
+        const silverPedestal = Boolean(document.querySelector('.pedestal-silver .pedestal-number'));
+        const bronzePedestal = Boolean(document.querySelector('.pedestal-bronze .pedestal-number'));
+        const tickerMsg = document.querySelector('#ticker-active-msg')?.textContent || '';
+        const heartButtons = document.querySelectorAll('.btn-give-heart');
+        const thanksTexts = Array.from(document.querySelectorAll('.podium-thanks-text, .wall-thanks-message')).map(el => el.textContent);
+        const allHaveHearts = thanksTexts.length > 0 && thanksTexts.every(t => t.includes('💖') && t.toLowerCase().includes('gracias'));
+        const wallCards = document.querySelectorAll('.donor-wall-card');
+        return {
+          hasPodium: Boolean(podiumEl),
+          hasTrophy,
+          goldPedestal,
+          silverPedestal,
+          bronzePedestal,
+          hasTicker: tickerMsg.includes('💖') && tickerMsg.toLowerCase().includes('gracias'),
+          heartButtonsCount: heartButtons.length,
+          allHaveHearts,
+          wallCardsCount: wallCards.length
+        };
+      })()
+    `);
+    assertCheck(
+      '1. Componentes',
+      'Podio de Donadores muestra pedestales 1º (Oro), 2º (Plata), 3º (Bronce), ticker en vivo y mensajes de gracias con corazón 💖',
+      podiumCheck.hasPodium &&
+        podiumCheck.goldPedestal &&
+        podiumCheck.silverPedestal &&
+        podiumCheck.bronzePedestal &&
+        podiumCheck.hasTicker &&
+        podiumCheck.allHaveHearts &&
+        podiumCheck.heartButtonsCount >= 3,
+      JSON.stringify(podiumCheck)
+    );
+
+    // Test giving hearts and registering a new donor automatically
+    const interactivePodiumCheck = await cdp.eval(`
+      (() => {
+        const firstHeartBtn = document.querySelector('.btn-give-heart');
+        const donorId = firstHeartBtn?.getAttribute('data-donor-id');
+        const counterEl = document.querySelector('#heart-count-' + donorId);
+        const initialText = counterEl?.textContent || '';
+        firstHeartBtn?.click();
+        const updatedText = counterEl?.textContent || '';
+
+        // Open modal
+        document.querySelector('#btn-open-donor-modal')?.click();
+        const modal = document.querySelector('#donor-register-modal');
+        const isModalOpen = modal && modal.style.display !== 'none';
+
+        // Fill form
+        const inputName = document.querySelector('#donor-input-name');
+        if (inputName) inputName.value = 'Familia Valderrama';
+        const inputNote = document.querySelector('#donor-input-note');
+        if (inputNote) inputNote.value = '¡Con amor para que los niños sigan jugando!';
+        document.querySelector('#form-register-donor')?.dispatchEvent(new Event('submit', { cancelable: true }));
+
+        const modalClosed = modal && modal.style.display === 'none';
+        const newDonorCard = Boolean(document.body.textContent.includes('Familia Valderrama'));
+        const newDonorThanks = document.body.textContent.includes('¡Muchas gracias Familia Valderrama con todo el corazón! 💖');
+
+        return {
+          initialText,
+          updatedText,
+          isModalOpen,
+          modalClosed,
+          newDonorCard,
+          newDonorThanks
+        };
+      })()
+    `);
+    assertCheck(
+      '7. Persistencia de progreso',
+      'Interacción en Podio de Donadores: dar amor incrementa corazones y registro automático publica el nuevo donador con mensaje y corazón',
+      interactivePodiumCheck.isModalOpen &&
+        interactivePodiumCheck.modalClosed &&
+        interactivePodiumCheck.newDonorCard &&
+        interactivePodiumCheck.newDonorThanks,
+      JSON.stringify(interactivePodiumCheck)
     );
 
     // Verify Breadcrumbs on non-home pages

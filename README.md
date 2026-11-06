@@ -17,7 +17,7 @@ Plataforma educativa web interactiva, gamificada y de código limpio diseñada p
 
 | Métrica | Resultado | Verificación |
 |---|---|---|
-| **Batería de Pruebas E2E (Chrome/CDP)** | **172 / 172 Aprobadas (100%)** | `npm run audit` (`tests/audit.js`) |
+| **Batería de Pruebas E2E (Chrome/CDP)** | **176 / 176 Aprobadas (100%)** | `npm run audit` (`tests/audit.js`) |
 | **Errores de Consola JavaScript** | **0 errores** | Consola limpia en todas las pantallas |
 | **Errores de Red (404 / 500)** | **0 errores** | Todos los assets y rutas verificadas |
 | **Auditoría Responsive Multidispositivo** | **9.5 / 10** | 14 resoluciones verificadas (1920×1080 a 320×568) |
@@ -92,9 +92,16 @@ Cuando un estudiante selecciona una respuesta incorrecta, la plataforma no se li
 - **Relacionar conceptos (Matching):** Conexión de pares con feedback visual inmediato.
 - **Ordenar elementos (Ordering):** Organización cronológica y secuencias narrativas o numéricas.
 
-### 💖 9. Módulo Dedicado de Donaciones y Apoyo (`DonationsView.js`)
-Plataforma abierta al apoyo voluntario de la comunidad educativa y familias con rutas dedicadas:
-- **Página principal de donaciones (`#/donaciones`):** *"¿Quieres apoyar al creador para ver más páginas como esta?"* con 3 bloques destacados e interactivos.
+### 💖 9. Módulo Dedicado de Donaciones y Podio de Agradecimiento (`DonationsView.js` / `DonorsPodium.js`)
+Plataforma abierta al apoyo voluntario de la comunidad educativa y familias con rutas dedicadas y reconocimiento de honor:
+- **🏆 Podio de Agradecimiento a Donadores (`DonorsPodium.js`):**
+  - **Pedestales Físicos 3D:** Reconocimiento en 3 niveles de honor (🥇 1° Oro con corona flotante 👑, 🥈 2° Plata, 🥉 3° Bronce) y Muro de Donadores de la Comunidad.
+  - **Agradecimientos con Corazón 💖:** Cada tarjeta muestra automáticamente el nombre del donador y su mensaje personalizado:  
+    *«¡Muchas gracias [Nombre] con todo el corazón! 💖 Gracias por apoyar la educación abierta y los sueños de los niños.»*
+  - **Marquesina / Ticker Automático en Tiempo Real:** Barra animada que rota automáticamente cada 3.5 segundos agradeciendo en vivo a cada persona o familia colaboradora.
+  - **Interacción con Corazones (`💖 Dar amor`):** Botón interactivo para enviar amor a cualquier donador, con animación de corazones flotantes y efectos sonoros festivos.
+  - **Registro Automático de Donación:** Formulario accesible donde cualquier persona que haya apoyado por Nequi, ARQ o PayPal escribe su nombre y aparece **automáticamente** en el podio, con persistencia en `localStorage`.
+- **Página principal de donaciones (`#/donaciones`, `#/donaciones/podio`):** *"¿Quieres apoyar al creador para ver más páginas como esta?"* con 3 bloques destacados e interactivos más el Podio de Donadores.
 - **🇨🇴 Bre-B | Nequi (Colombia) — `#/donaciones/nequi`:**
   - Código QR oficial Bre-B Nequi en alta definición con recorte optimizado.
   - Switch interactivo para alternar entre **Comprobante Oficial HD** y **Código QR Cuadrado Gigante (780×780)** para escaneo rápido desde cualquier entidad bancaria en Colombia.
@@ -157,7 +164,7 @@ npm run audit
 ```
 
 ### Resultados de la auditoría actual (`tests/audit-report.json`):
-- ✅ **172 pruebas aprobadas** (0 fallidas)
+- ✅ **176 pruebas aprobadas** (0 fallidas)
 - 🖥️ **0 errores de consola JavaScript**
 - 🌐 **0 errores de red (404/500)**
 - 📱 **Capturas de pantalla responsive automatizadas** en resoluciones de móvil, tablet y escritorio en `tests/screenshots/`
@@ -189,6 +196,7 @@ Aprendiendo-con-Ari/
 │   │   ├── Breadcrumbs.js     # Navegación espacial por migas de pan semánticas
 │   │   ├── ConfirmModal.js    # Modal accesible para reinicio de progreso
 │   │   ├── DonationsView.js   # Módulo de donaciones (Bre-B Nequi, ARQ y PayPal)
+│   │   ├── DonorsPodium.js    # Podio de agradecimiento a donadores, pedestales 3D y ticker vivo
 │   │   ├── ExerciseView.js    # Motor de ejercicios (Aprendo con Active Recall, Practico y Evaluación)
 │   │   ├── Footer.js          # Pie de página educativo, copyright y enlace a donaciones
 │   │   ├── GradeSelectView.js # Selector de grado escolar (3° y 4°) y perfiles de estudiante

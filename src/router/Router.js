@@ -17,6 +17,8 @@ const STATIC_ROUTES = {
   '/logros': { name: 'progreso', section: 'progreso', title: 'Mis logros', params: { focus: 'logros' } },
   '/donaciones': { name: 'donaciones', section: 'donaciones', title: 'Donaciones y Apoyo', params: { method: 'hub' } },
   '/apoyar': { name: 'donaciones', section: 'donaciones', title: 'Donaciones y Apoyo', params: { method: 'hub' } },
+  '/donaciones/podio': { name: 'donaciones', section: 'donaciones', title: 'Podio de Donadores', params: { method: 'podio' } },
+  '/podio': { name: 'donaciones', section: 'donaciones', title: 'Podio de Donadores', params: { method: 'podio' } },
   '/donaciones/nequi': { name: 'donaciones', section: 'donaciones', title: 'Donar con Nequi / Bre-B', params: { method: 'nequi' } },
   '/donaciones/arq': { name: 'donaciones', section: 'donaciones', title: 'Donar con ARQ', params: { method: 'arq' } },
   '/donaciones/paypal': { name: 'donaciones', section: 'donaciones', title: 'Donar con PayPal', params: { method: 'paypal' } }

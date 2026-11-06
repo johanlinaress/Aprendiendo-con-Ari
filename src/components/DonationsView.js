@@ -2,6 +2,7 @@ import { SoundService, resolveSoundUrl } from '../services/SoundService.js';
 import { Router } from '../router/Router.js';
 import { renderAriMascot, bindAriMascotEvents } from './AriMascot.js';
 import { escapeHtml } from '../utils/escapeHtml.js';
+import { renderDonorsPodiumSection, bindDonorsPodiumEvents } from './DonorsPodium.js';
 
 // URL oficial verificada para donaciones directas en PayPal
 const PAYPAL_DONATE_URL = 'https://www.paypal.com/donate/?business=johansttivelinaresb%40gmail.com&no_recurring=0&currency_code=USD';
@@ -26,6 +27,9 @@ export function renderDonationsView(method = 'hub') {
   }
   if (method === 'paypal') {
     return renderPaypalDedicatedView();
+  }
+  if (method === 'podio') {
+    return renderDonationsHubView(qrImageUrl);
   }
 
   return renderDonationsHubView(qrImageUrl);
@@ -66,6 +70,11 @@ function renderDonationsHubView(qrImageUrl) {
             <p class="donations-intro-text">
               <strong>Aprendiendo con Ari</strong> es un proyecto independiente desarrollado con dedicación para fortalecer el aprendizaje infantil de matemáticas, lectura y razonamiento. Selecciona cualquiera de las opciones siguientes para ver su página completa con código QR ampliado, enlaces directos y datos de envío:
             </p>
+            <div class="donations-hero-pill-row">
+              <a href="#seccion-podio-donadores" class="donations-hero-podium-btn" id="btn-hero-podium-jump">
+                🏆 Ver Podio de Donadores y Agradecimientos 💖
+              </a>
+            </div>
           </div>
 
           <div class="donations-cards-grid donations-hub-grid">
@@ -176,6 +185,9 @@ function renderDonationsHubView(qrImageUrl) {
               </button>
             </article>
           </div>
+
+          <!-- PODIO DE AGRADECIMIENTO A DONADORES DE CORAZÓN -->
+          ${renderDonorsPodiumSection()}
 
           <div class="donations-footer-actions">
             <button type="button" class="btn-3d-purple btn-lg" id="btn-back-to-adventure">
@@ -302,6 +314,17 @@ function renderNequiDedicatedView(qrImageUrl, qrSquareUrl) {
             </ol>
           </div>
 
+          <div class="dedicated-podium-callout">
+            <div class="podium-callout-icon" aria-hidden="true">🏆</div>
+            <div class="podium-callout-text">
+              <h4>¿Ya realizaste tu donación?</h4>
+              <p>¡Queremos darte las gracias de todo corazón! Tu nombre puede brillar en el Podio de Honor de Aprendiendo con Ari.</p>
+            </div>
+            <button type="button" class="btn-3d-purple btn-goto-podium" data-nav="/donaciones/podio">
+              💖 Ver Podio de Donadores
+            </button>
+          </div>
+
           <div class="dedicated-bottom-nav">
             <button type="button" class="btn-3d-secondary" id="btn-back-hub-bottom">
               ⬅ Ver otros medios de donación
@@ -383,6 +406,17 @@ function renderArqDedicatedView() {
                 <strong>4. Ingresa el monto y envía:</strong> Selecciona la cantidad en dólares digitales y confirma la transferencia inmediata.
               </li>
             </ol>
+          </div>
+
+          <div class="dedicated-podium-callout">
+            <div class="podium-callout-icon" aria-hidden="true">🏆</div>
+            <div class="podium-callout-text">
+              <h4>¿Ya realizaste tu donación?</h4>
+              <p>¡Queremos darte las gracias de todo corazón! Tu nombre puede brillar en el Podio de Honor de Aprendiendo con Ari.</p>
+            </div>
+            <button type="button" class="btn-3d-purple btn-goto-podium" data-nav="/donaciones/podio">
+              💖 Ver Podio de Donadores
+            </button>
           </div>
 
           <div class="dedicated-bottom-nav">
@@ -488,6 +522,17 @@ function renderPaypalDedicatedView() {
                 <strong>Sin cuenta previa:</strong> PayPal te permite pagar directamente con tarjeta de crédito o débito internacional sin necesidad de registrarte.
               </li>
             </ol>
+          </div>
+
+          <div class="dedicated-podium-callout">
+            <div class="podium-callout-icon" aria-hidden="true">🏆</div>
+            <div class="podium-callout-text">
+              <h4>¿Ya realizaste tu donación?</h4>
+              <p>¡Queremos darte las gracias de todo corazón! Tu nombre puede brillar en el Podio de Honor de Aprendiendo con Ari.</p>
+            </div>
+            <button type="button" class="btn-3d-purple btn-goto-podium" data-nav="/donaciones/podio">
+              💖 Ver Podio de Donadores
+            </button>
           </div>
 
           <div class="dedicated-bottom-nav">
@@ -620,4 +665,34 @@ export function bindDonationsViewEvents(rootElement = document, rerender = null,
       }
     });
   });
+
+  // Conectar eventos interactivos del Podio de Donadores (ticker, dar corazón, modal de registro)
+  bindDonorsPodiumEvents(rootElement, () => {
+    if (typeof rerender === 'function') {
+      rerender();
+    }
+  });
+
+  // Salto suave al podio si se hace clic en el botón del Hero
+  const jumpBtn = rootElement.querySelector('#btn-hero-podium-jump');
+  if (jumpBtn) {
+    jumpBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = rootElement.querySelector('#seccion-podio-donadores');
+      if (target) {
+        SoundService.play('click');
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+
+  // Si la ruta invocada es directamente /donaciones/podio o /podio, hacer scroll al podio
+  if (method === 'podio') {
+    setTimeout(() => {
+      const target = rootElement.querySelector('#seccion-podio-donadores');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 120);
+  }
 }

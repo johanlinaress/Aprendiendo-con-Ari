@@ -65,7 +65,8 @@ export function renderBreadcrumbs(route) {
       const methodLabels = {
         nequi: { label: 'Nequi / Bre-B', icon: '🟣' },
         arq: { label: 'ARQ Dólares', icon: '🔵' },
-        paypal: { label: 'PayPal', icon: '🔷' }
+        paypal: { label: 'PayPal', icon: '🔷' },
+        podio: { label: 'Podio de Donadores', icon: '🏆' }
       };
       const info = methodLabels[method] || { label: method, icon: '💳' };
       items.push({ label: info.label, icon: info.icon, path: null });
