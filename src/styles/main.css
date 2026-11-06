@@ -227,36 +227,236 @@ h3,
   animation: modalPop 0.24s ease-out;
 }
 
-/* ========================
-   TOP GAME NAVBAR (Como en la imagen)
-======================== */
+/* ========================================================
+   ARQUITECTURA DE NAVEGACIÓN: SIDEBAR + TOPBAR LIMPIA
+======================================================== */
+
 .app-navbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: linear-gradient(90deg, rgba(67, 56, 202, 0.92), rgba(109, 40, 217, 0.92));
-  backdrop-filter: blur(10px);
-  border-bottom: 3px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 6px 20px rgba(30, 27, 75, 0.22);
+  /* Contenedor padre de navegación semántica */
+  display: block;
 }
 
-.navbar-container {
-  max-width: 1200px;
+/* 1. SIDEBAR LATERAL A LA IZQUIERDA (Estilo Duolingo) */
+.app-sidebar {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #2e1065 0%, #1e1b4b 100%);
+  border-right: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 4px 0 20px rgba(15, 23, 42, 0.25);
+  padding: 1.1rem 0.85rem;
+  z-index: 105;
+}
+
+@media (min-width: 900px) {
+  .app-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 230px;
+  }
+
+  .app-topbar,
+  .app-main-container,
+  .app-footer {
+    margin-left: 230px;
+    width: calc(100% - 230px);
+  }
+}
+
+.sidebar-brand-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.sidebar-brand-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 0.25rem 0.2rem;
+  border-radius: var(--radius-md);
+  transition: transform 0.15s ease;
+}
+
+.sidebar-brand-btn:hover {
+  transform: scale(1.02);
+}
+
+.sidebar-brand-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.3));
+}
+
+.sidebar-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.sidebar-brand-name {
+  font-size: 1.12rem;
+  font-weight: 900;
+  color: #facc15;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.sidebar-brand-tag {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.sidebar-grade-switch {
+  width: 100%;
+  justify-content: center;
+  border-radius: var(--radius-full);
+}
+
+.sidebar-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+
+.sidebar-nav-btn {
+  width: 100%;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: transparent;
+  border: 1.5px solid transparent;
+  border-radius: 14px;
+  padding: 0.55rem 0.95rem;
+  color: #e2e8f0;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  text-align: left;
+}
+
+.sidebar-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateX(3px);
+}
+
+.sidebar-nav-btn.active {
+  background: #ffffff;
+  color: #312e81;
+  font-weight: 900;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  border-color: #ffffff;
+}
+
+.sidebar-nav-icon {
+  font-size: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+}
+
+.sidebar-footer-note {
+  margin-top: auto;
+  padding-top: 1rem;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-footer-author {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #a5b4fc;
+}
+
+/* 2. BARRA SUPERIOR (TOPBAR: Usuario, Estadísticas, Donar y Audio) */
+.app-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 95;
+  background: linear-gradient(90deg, rgba(67, 56, 202, 0.94), rgba(109, 40, 217, 0.94));
+  backdrop-filter: blur(12px);
+  border-bottom: 3px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 16px rgba(30, 27, 75, 0.2);
+}
+
+.topbar-container {
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0.45rem 0.7rem;
+  padding: 0.45rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: nowrap;
+}
+
+.topbar-left-cluster,
+.topbar-right-cluster {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-shrink: 0;
+}
+
+.topbar-center-cluster {
+  display: flex;
+  align-items: center;
   gap: 0.35rem;
   flex-wrap: nowrap;
 }
 
-.navbar-left-cluster,
-.navbar-brand-cluster {
-  display: flex;
+/* Botón destacado de Donar arriba */
+.topbar-donar-btn {
+  min-height: 42px;
+  display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  flex-shrink: 0;
+  background: linear-gradient(135deg, #ec4899, #f43f5e);
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  border-radius: var(--radius-full);
+  padding: 0.3rem 0.9rem;
+  font-weight: 900;
+  font-size: 0.85rem;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(244, 63, 94, 0.35);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.topbar-donar-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 14px rgba(244, 63, 94, 0.5);
+  background: linear-gradient(135deg, #f43f5e, #e11d48);
+}
+
+.topbar-donar-btn.active {
+  background: #ffffff;
+  color: #e11d48;
+  border-color: #f43f5e;
+}
+
+.donar-heart-anim {
+  display: inline-block;
+  animation: pulseHeart 2s infinite ease-in-out;
+}
+
+@keyframes pulseHeart {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.22); }
 }
 
 .player-profile-pill {
@@ -350,40 +550,6 @@ h3,
   border-radius: 2px;
 }
 
-.navbar-links {
-  display: flex;
-  align-items: center;
-  gap: 0.15rem;
-}
-
-.nav-link-btn {
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.22rem;
-  border: none;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.94);
-  font-weight: 800;
-  font-size: 0.8rem;
-  padding: 0.35rem 0.52rem;
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.nav-link-btn:hover {
-  background: rgba(255, 255, 255, 0.18);
-  color: #ffffff;
-}
-
-.nav-link-btn.active {
-  background: #ffffff;
-  color: var(--primary-dark);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-}
-
 .navbar-stats-bar {
   display: flex;
   align-items: center;
@@ -428,8 +594,7 @@ h3,
 .navbar-audio-cluster {
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
-  margin-left: 0.25rem;
+  gap: 0.45rem;
 }
 
 .btn-circle-audio {
@@ -453,6 +618,9 @@ h3,
 
 .btn-circle-audio.audio-off {
   background: #64748b;
+  box-shadow: 0 3px 0 #334155;
+  opacity: 0.85;
+}
   box-shadow: 0 3px 0 #334155;
   opacity: 0.85;
 }
@@ -2548,6 +2716,53 @@ h3,
   }
 }
 
+@media (max-width: 899px) {
+  .app-sidebar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 270px;
+    z-index: 1000;
+    box-shadow: 8px 0 30px rgba(0, 0, 0, 0.45);
+    animation: slideInLeft 0.2s ease;
+  }
+
+  .app-sidebar.mobile-open {
+    display: flex;
+  }
+
+  .app-topbar,
+  .app-main-container,
+  .app-footer {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .mobile-menu-toggle {
+    display: inline-flex;
+  }
+
+  .topbar-container {
+    flex-wrap: wrap;
+    padding: 0.4rem 0.6rem;
+    gap: 0.35rem;
+  }
+
+  .topbar-center-cluster {
+    width: 100%;
+    order: 3;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
 @media (max-width: 767px) {
   .app-main-container {
     padding: 0.85rem 0.75rem 2rem;
@@ -2564,27 +2779,11 @@ h3,
 
   .navbar-links {
     display: none;
-    width: 100%;
-    order: 3;
-    flex-direction: column;
-    align-items: stretch;
-    background: rgba(30, 27, 75, 0.98);
-    padding: 0.75rem;
-    border-radius: var(--radius-md);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
   }
 
   .navbar-links.mobile-open {
     display: flex;
     animation: fadeIn 0.2s ease;
-  }
-
-  .nav-link-btn {
-    text-align: left;
-    width: 100%;
-    min-height: 46px;
-    font-size: 1rem;
-    padding: 0.65rem 1rem;
   }
 
   .app-navbar {
@@ -2598,6 +2797,9 @@ h3,
     justify-content: space-between;
     flex-wrap: nowrap;
     gap: 0.3rem;
+    height: 38px;
+    max-height: 44px;
+    overflow: hidden;
   }
 
   .stat-pill {

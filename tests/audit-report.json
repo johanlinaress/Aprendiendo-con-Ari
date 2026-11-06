@@ -528,7 +528,7 @@
     {
       "category": "7. Persistencia de progreso",
       "description": "Recargar el navegador recupera exactamente nombre, puntaje, 30/30 estrellas, 10 unidades desbloqueadas y las 9 medallas desde localStorage",
-      "details": "{\"playerName\":\"Valentina\",\"totalScore\":36300,\"totalStars\":30,\"unlockedCount\":10,\"achievementsCount\":9,\"navScoreText\":\"36300\",\"navStarsText\":\"30/30\"}"
+      "details": "{\"playerName\":\"Valentina\",\"totalScore\":36480,\"totalStars\":30,\"unlockedCount\":10,\"achievementsCount\":9,\"navScoreText\":\"36480\",\"navStarsText\":\"30/30\"}"
     },
     {
       "category": "3. Botones",
@@ -893,7 +893,7 @@
     {
       "category": "10. Responsive",
       "description": "Escritorio-1920 (1920x1080) en #/nivel/10 sin desbordamiento horizontal",
-      "details": "scrollWidth=1905, clientWidth=1905"
+      "details": "scrollWidth=1920, clientWidth=1920"
     },
     {
       "category": "10. Responsive",
