@@ -1,73 +1,19 @@
 import { SoundService } from '../services/SoundService.js';
 import { escapeHtml } from '../utils/escapeHtml.js';
 
-export const DONORS_STORAGE_KEY = 'aprendiendo_con_ari_donors_v1';
+export const DONORS_STORAGE_KEY = 'aprendiendo_con_ari_donors_v2';
 
 /**
- * Donadores iniciales de muestra con agradecimientos cariñosos y corazones.
+ * Lista inicial oficial: 0 donaciones hasta el momento (esperando donadores reales).
+ * El creador (Johan Linares) registrará quién donó y cuánto cuando lleguen los aportes.
  */
-export const DEFAULT_DONORS = [
-  {
-    id: 'donor-morales',
-    name: 'Familia Morales Rodríguez',
-    badge: 'Patrocinador Estrella 🌟',
-    method: 'Bre-B Nequi',
-    hearts: 68,
-    message: '¡Muchas gracias Familia Morales con todo el corazón! 💖 Gracias por apoyar la educación abierta y los sueños de los niños.',
-    date: 'Donación verificada'
-  },
-  {
-    id: 'donor-torres',
-    name: 'Dra. Lucía Torres',
-    badge: 'Benefactora de Honor ✨',
-    method: 'PayPal',
-    hearts: 52,
-    message: '¡Infinitas gracias Dra. Lucía por tu inmenso corazón! 💖 Tu generosidad impulsa nuevas lecturas y matemáticas para todos.',
-    date: 'Donación verificada'
-  },
-  {
-    id: 'donor-mendoza',
-    name: 'Carlos Mendoza & Hijos',
-    badge: 'Amigo de Ari 🦉',
-    method: 'ARQ',
-    hearts: 41,
-    message: '¡Muchas gracias Carlos y familia con todo el corazón! 💖 Su apoyo hace posible que Ari siga enseñando con alegría.',
-    date: 'Donación verificada'
-  },
-  {
-    id: 'donor-silva',
-    name: 'Profe Andrés Silva',
-    badge: 'Docente Inspirador 📚',
-    method: 'Bre-B Nequi',
-    hearts: 33,
-    message: '¡Gracias de corazón Profe Andrés! 💖 Creemos firmemente en el poder de la educación infantil interactiva y gratuita.',
-    date: 'Donación verificada'
-  },
-  {
-    id: 'donor-mariana',
-    name: 'Mariana & Mamá',
-    badge: 'Pequeña Gran Lectora 🌸',
-    method: 'Bre-B Nequi',
-    hearts: 27,
-    message: '¡Muchas gracias Mariana y mamita con todo el corazón! 💖 ¡Nos encanta jugar y aprender todos los días!',
-    date: 'Donación verificada'
-  },
-  {
-    id: 'donor-riascos',
-    name: 'Ing. David Riascos',
-    badge: 'Impulsor Digital 💻',
-    method: 'PayPal',
-    hearts: 21,
-    message: '¡Muchas gracias David con todo el corazón! 💖 Orgulloso de apoyar el desarrollo tecnológico colombiano para la infancia.',
-    date: 'Donación verificada'
-  }
-];
+export const DEFAULT_DONORS = [];
 
 let cachedDonors = null;
 let tickerTimerId = null;
 
 /**
- * Obtiene la lista actual de donadores desde localStorage o los predeterminados.
+ * Obtiene la lista actual de donadores desde localStorage o lista vacía.
  */
 export function getDonorsList() {
   if (cachedDonors && Array.isArray(cachedDonors)) {
@@ -81,15 +27,12 @@ export function getDonorsList() {
 
   try {
     const raw = window.localStorage.getItem(DONORS_STORAGE_KEY);
-    if (!raw) {
-      cachedDonors = [...DEFAULT_DONORS];
-      saveDonorsList(cachedDonors);
-      return cachedDonors;
-    }
-    const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed) && parsed.length > 0) {
-      cachedDonors = parsed;
-      return cachedDonors;
+    if (raw !== null) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        cachedDonors = parsed;
+        return cachedDonors;
+      }
     }
   } catch (e) {
     // Error al leer JSON
@@ -114,11 +57,66 @@ export function saveDonorsList(donors) {
 }
 
 /**
- * Agrega un nuevo donador al podio y lo persiste inmediatamente.
+ * Calcula los totales recaudados por divisa (COP / USD).
  */
-export function addDonor({ name, method = 'Nequi', message = '' }) {
+export function getTotalDonated(donors = getDonorsList()) {
+  let cop = 0;
+  let usd = 0;
+  for (const d of donors) {
+    const amt = Number(d.amount) || 0;
+    if (amt > 0) {
+      const cur = String(
+        d.currency || (d.method && d.method.includes('PayPal') ? 'USD' : 'COP')
+      ).toUpperCase();
+      if (cur === 'USD') {
+        usd += amt;
+      } else {
+        cop += amt;
+      }
+    }
+  }
+  return { cop, usd, count: donors.length };
+}
+
+/**
+ * Formatea el texto de Total Donado con el signo "+" solicitado por el usuario.
+ */
+export function formatTotalDonated(totals = getTotalDonated()) {
+  const parts = [];
+  if (totals.cop > 0) {
+    parts.push(`$${totals.cop.toLocaleString('es-CO')} COP`);
+  }
+  if (totals.usd > 0) {
+    parts.push(`$${totals.usd} USD`);
+  }
+  if (parts.length === 0) {
+    return '$0 COP';
+  }
+  return parts.join(' + ') + ' +';
+}
+
+/**
+ * Agrega un nuevo donador al podio y lo persiste inmediatamente con su monto y agradecimiento.
+ */
+export function addDonor({
+  name,
+  amount = 0,
+  currency = null,
+  method = 'Bre-B Nequi',
+  message = ''
+}) {
   const cleanName = String(name || '').trim();
   if (!cleanName) return null;
+
+  const numAmount = Number(String(amount).replace(/[^0-9.]/g, '')) || 0;
+  const determinedCurrency =
+    currency || (String(method).includes('PayPal') ? 'USD' : 'COP');
+  const formattedAmount =
+    numAmount > 0
+      ? determinedCurrency === 'USD'
+        ? `$${numAmount} USD`
+        : `$${numAmount.toLocaleString('es-CO')} COP`
+      : '';
 
   const donors = [...getDonorsList()];
   const cleanMessage = String(message || '').trim();
@@ -129,18 +127,27 @@ export function addDonor({ name, method = 'Nequi', message = '' }) {
   const newDonor = {
     id: 'donor-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5),
     name: cleanName,
-    badge: 'Nuevo Donador de Corazón 💖',
-    method: method || 'Aporte Voluntario',
-    hearts: 20, // Corazones iniciales de bienvenida
+    amount: numAmount,
+    currency: determinedCurrency,
+    amountFormatted: formattedAmount,
+    badge: 'Donador de Corazón 💖',
+    method: method || 'Bre-B Nequi',
+    hearts: 10,
     message: thankYouMessage,
-    date: '¡Recién llegado al podio!',
+    date: 'Donación verificada',
     isNew: true
   };
 
-  // Se añade al inicio o según sus corazones
   donors.unshift(newDonor);
   saveDonorsList(donors);
   return newDonor;
+}
+
+/**
+ * Registra una donación confirmada directamente cuando Johan nos indique el donante y monto.
+ */
+export function registerConfirmedDonation(info) {
+  return addDonor(info);
 }
 
 /**
@@ -161,6 +168,7 @@ export function giveHeartToDonor(donorId) {
  */
 export function renderDonorsPodiumSection() {
   const donors = getDonorsList();
+  const totals = getTotalDonated(donors);
 
   // Los 3 primeros ocupan el podio (1º Oro, 2º Plata, 3º Bronce)
   const top1 = donors[0] || null;
@@ -179,7 +187,7 @@ export function renderDonorsPodiumSection() {
           <div class="podium-title-text">
             <h2 class="podium-main-title">Podio de Agradecimiento a Donadores 💖</h2>
             <p class="podium-subtitle">
-              ¡Gracias de todo corazón a las increíbles personas y familias que apoyan este sueño educativo gratuito!
+              ¡Gracias de todo corazón a las personas y familias que apoyan este sueño educativo gratuito!
             </p>
           </div>
         </div>
@@ -189,10 +197,30 @@ export function renderDonorsPodiumSection() {
             type="button"
             class="btn-register-donor pulse-cta"
             id="btn-open-donor-modal"
-            aria-label="Registrar mi donación y aparecer en el podio"
+            aria-label="Registrar donación y aparecer en el podio"
           >
-            ✨ ¡Ya doné! Registrarme en el Podio 💖
+            ✨ Registrar Donación en el Podio 💖
           </button>
+        </div>
+      </div>
+
+      <!-- Barra de TOTAL DONADO (Muestra cuánto se ha donado y el contador acumulado con +) -->
+      <div class="podium-total-donated-bar" id="podium-total-bar">
+        <div class="total-donated-content">
+          <div class="total-donated-icon" aria-hidden="true">💰</div>
+          <div class="total-donated-text-col">
+            <span class="total-donated-label">Total Donado a la Fecha:</span>
+            <span class="total-donated-amount" id="val-total-donated">${formatTotalDonated(totals)}</span>
+          </div>
+        </div>
+        <div class="total-donated-status-col">
+          <span class="total-donated-badge-pill" id="val-donations-count">
+            ${
+              donors.length === 0
+                ? '✨ Esperando primer aporte'
+                : `${donors.length} donación${donors.length === 1 ? '' : 'es'} registrada${donors.length === 1 ? '' : 's'}`
+            }
+          </span>
         </div>
       </div>
 
@@ -203,7 +231,11 @@ export function renderDonorsPodiumSection() {
         </div>
         <div class="ticker-content" id="ticker-text-wrapper">
           <p class="ticker-message" id="ticker-active-msg">
-            💖 ¡Muchas gracias con todo el corazón a <strong>${escapeHtml(top1 ? top1.name : 'Nuestros Donadores')}</strong> por iluminar el aprendizaje infantil! 💖
+            ${
+              donors.length > 0 && top1
+                ? `💖 ¡Muchas gracias con todo el corazón a <strong>${escapeHtml(top1.name)}</strong>${top1.amountFormatted ? ` (${escapeHtml(top1.amountFormatted)})` : ''}! 💖`
+                : `💖 ¡El podio está listo esperando a sus primeros héroes de la educación! Apoya por Nequi, ARQ o PayPal y tu nombre brillará aquí con un corazón 💖`
+            }
           </p>
         </div>
       </div>
@@ -219,7 +251,8 @@ export function renderDonorsPodiumSection() {
             pedestalClass: 'pedestal-silver',
             medalEmoji: '🥈',
             pedestalLabel: '2° Lugar',
-            rankTitle: 'Benefactor de Honor'
+            rankTitle: 'Benefactor de Honor ✨',
+            availableText: '¡Sé el segundo en apoyar! Tu nombre brillará aquí con un corazón 💖'
           })}
 
           <!-- 1º LUGAR (ORO - CENTRO MÁS ALTO) -->
@@ -230,7 +263,8 @@ export function renderDonorsPodiumSection() {
             medalEmoji: '🥇',
             pedestalLabel: '1° Lugar',
             rankTitle: 'Patrocinador Estrella 🌟',
-            hasCrown: true
+            hasCrown: true,
+            availableText: '¡Sé el primer patrocinador en inaugurar el Podio de Honor de Ari! 💖'
           })}
 
           <!-- 3º LUGAR (BRONCE) -->
@@ -240,7 +274,8 @@ export function renderDonorsPodiumSection() {
             pedestalClass: 'pedestal-bronze',
             medalEmoji: '🥉',
             pedestalLabel: '3° Lugar',
-            rankTitle: 'Amigo de Ari'
+            rankTitle: 'Amigo de Ari 🦉',
+            availableText: '¡Haz posible que más niños aprendan gratis con Ari! 💖'
           })}
 
         </div>
@@ -260,15 +295,23 @@ export function renderDonorsPodiumSection() {
             wallDonors.length > 0
               ? wallDonors.map((donor, idx) => renderDonorWallCard(donor, idx + 4)).join('')
               : `
-              <div class="no-more-donors-card">
-                <p>¡Sé de los primeros en sumarte a este muro de generosidad educativa! 💖🦉</p>
+              <div class="empty-donors-card">
+                <span class="empty-donors-icon" aria-hidden="true">🦉💖</span>
+                <h4>${donors.length === 0 ? '¡Aún no hay donaciones registradas!' : '¡Sé el próximo en sumarte!'}</h4>
+                <p>
+                  ${
+                    donors.length === 0
+                      ? 'Hasta el momento no se han recibido aportes. En cuanto recibamos las primeras donaciones, aquí aparecerán los nombres, montos aportados y los respectivos agradecimientos de corazón de cada persona.'
+                      : '¡Gracias a todos por apoyar este sueño educativo!'
+                  }
+                </p>
               </div>
             `
           }
         </div>
       </div>
 
-      <!-- MODAL PARA REGISTRARSE AUTOMÁTICAMENTE EN EL PODIO -->
+      <!-- MODAL PARA REGISTRARSE EN EL PODIO -->
       ${renderDonorModalHtml()}
     </section>
   `;
@@ -284,15 +327,43 @@ function renderPodiumSpot({
   medalEmoji,
   pedestalLabel,
   rankTitle,
-  hasCrown = false
+  hasCrown = false,
+  availableText = '¡Lugar disponible para ti! 💖'
 }) {
   if (!donor) {
     return `
-      <div class="podium-spot-col ${pedestalClass}-col">
-        <div class="podium-card podium-card-empty">
-          <span class="empty-medal">${medalEmoji}</span>
-          <p class="empty-text">Lugar disponible</p>
-        </div>
+      <div class="podium-spot-col ${pedestalClass}-col ${hasCrown ? 'podium-champion-col' : ''}">
+        <article class="podium-card ${pedestalClass}-card podium-card-available">
+          ${hasCrown ? '<div class="champion-crown" aria-hidden="true">👑</div>' : ''}
+          <div class="podium-card-top-row">
+            <span class="podium-medal" title="${medalEmoji} ${pedestalLabel}">${medalEmoji}</span>
+            <span class="podium-badge-tag">${escapeHtml(rankTitle)}</span>
+          </div>
+
+          <div class="podium-avatar-circle avatar-available">
+            <span class="avatar-initials">🦉</span>
+          </div>
+
+          <h3 class="podium-donor-name podium-available-title">
+            ¡Lugar #${rank} Disponible!
+          </h3>
+
+          <div class="podium-method-pill">
+            <span>✨ Esperando Donador</span>
+          </div>
+
+          <div class="podium-thanks-box">
+            <p class="podium-thanks-text">
+              ${escapeHtml(availableText)}
+            </p>
+          </div>
+
+          <div class="podium-card-actions">
+            <span class="podium-slot-status">Disponible para ti 💖</span>
+          </div>
+        </article>
+
+        <!-- Pedestal físico 3D -->
         <div class="pedestal-block ${pedestalClass}">
           <span class="pedestal-number">${rank}</span>
           <span class="pedestal-name">${pedestalLabel}</span>
@@ -325,6 +396,12 @@ function renderPodiumSpot({
         <h3 class="podium-donor-name" title="${escapeHtml(donor.name)}">
           ${escapeHtml(donor.name)}
         </h3>
+
+        ${
+          donor.amountFormatted
+            ? `<div class="podium-donor-amount">💰 Donó: <strong>${escapeHtml(donor.amountFormatted)}</strong></div>`
+            : ''
+        }
 
         <div class="podium-method-pill">
           <span>${getMethodIcon(donor.method)} ${escapeHtml(donor.method || 'Donación')}</span>
@@ -383,6 +460,11 @@ function renderDonorWallCard(donor, rank) {
             <span class="wall-method-tag">${getMethodIcon(donor.method)} ${escapeHtml(donor.method || 'Aporte')}</span>
           </div>
           <h4 class="wall-donor-name">${escapeHtml(donor.name)}</h4>
+          ${
+            donor.amountFormatted
+              ? `<span class="wall-donor-amount">💰 Donó: ${escapeHtml(donor.amountFormatted)}</span>`
+              : ''
+          }
         </div>
       </div>
 
@@ -410,7 +492,7 @@ function renderDonorWallCard(donor, rank) {
 }
 
 /**
- * Modal accesible para registrar un donador.
+ * Modal accesible para registrar un donador con monto.
  */
 function renderDonorModalHtml() {
   return `
@@ -436,7 +518,7 @@ function renderDonorModalHtml() {
           <div class="modal-heart-icon" aria-hidden="true">💖</div>
           <h3 id="donor-modal-title">¡Queremos darte las gracias de corazón!</h3>
           <p class="donor-modal-desc">
-            Si realizaste un aporte voluntario por Nequi, ARQ o PayPal, ingresa tu nombre para aparecer automáticamente en nuestro <strong>Podio de Honor</strong>.
+            Si realizaste un aporte voluntario por Nequi, ARQ o PayPal, ingresa tu nombre y monto para aparecer en el <strong>Podio de Honor</strong>.
           </p>
         </div>
 
@@ -449,7 +531,7 @@ function renderDonorModalHtml() {
               type="text"
               id="donor-input-name"
               class="form-control"
-              placeholder="Ej. Familia Rodríguez, Profe Claudia, Mateo..."
+              placeholder="Ej. Carlos Gómez, Familia Rodríguez, Mateo..."
               maxlength="45"
               required
               autocomplete="name"
@@ -457,6 +539,19 @@ function renderDonorModalHtml() {
             <span class="field-error-msg" id="name-error-msg" style="display: none;">
               Por favor escribe tu nombre (mínimo 2 letras).
             </span>
+          </div>
+
+          <div class="form-group">
+            <label for="donor-input-amount" class="form-label">
+              Monto donado (opcional):
+            </label>
+            <input
+              type="text"
+              id="donor-input-amount"
+              class="form-control"
+              placeholder="Ej. 20000 COP, 10 USD..."
+              maxlength="25"
+            />
           </div>
 
           <div class="form-group">
@@ -502,7 +597,6 @@ function renderDonorModalHtml() {
  * Conecta todos los eventos de interacción del podio y el modal.
  */
 export function bindDonorsPodiumEvents(rootElement = document, onUpdateCallback = null) {
-  // Limpiar temporizador previo del ticker si existía
   if (tickerTimerId) {
     clearInterval(tickerTimerId);
     tickerTimerId = null;
@@ -526,8 +620,6 @@ export function bindDonorsPodiumEvents(rootElement = document, onUpdateCallback 
       }
 
       SoundService.play('correct');
-
-      // Animación de corazón flotante
       createFloatingHeart(btn);
     });
   });
@@ -559,8 +651,9 @@ export function bindDonorsPodiumEvents(rootElement = document, onUpdateCallback 
     openModalBtn.addEventListener('click', openModal);
   }
 
-  // Cerrar modal con botones
-  const closeBtns = rootElement.querySelectorAll('#btn-close-donor-modal, #btn-cancel-donor-modal');
+  const closeBtns = rootElement.querySelectorAll(
+    '#btn-close-donor-modal, #btn-cancel-donor-modal'
+  );
   closeBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       SoundService.play('click');
@@ -568,7 +661,6 @@ export function bindDonorsPodiumEvents(rootElement = document, onUpdateCallback 
     });
   });
 
-  // Cerrar al hacer clic en el fondo oscuro
   if (modalOverlay) {
     modalOverlay.addEventListener('click', (e) => {
       if (e.target === modalOverlay) {
@@ -577,7 +669,6 @@ export function bindDonorsPodiumEvents(rootElement = document, onUpdateCallback 
     });
   }
 
-  // Cerrar con Escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modalOverlay && modalOverlay.style.display !== 'none') {
       closeModal();
@@ -602,28 +693,26 @@ export function bindDonorsPodiumEvents(rootElement = document, onUpdateCallback 
 
       if (errorMsg) errorMsg.style.display = 'none';
 
-      const methodVal = rootElement.querySelector('#donor-select-method')?.value || 'Bre-B Nequi';
+      const amountVal = rootElement.querySelector('#donor-input-amount')?.value || '';
+      const methodVal =
+        rootElement.querySelector('#donor-select-method')?.value || 'Bre-B Nequi';
       const noteVal = rootElement.querySelector('#donor-input-note')?.value || '';
 
       // Agregar donador
       const newDonor = addDonor({
         name: nameVal,
+        amount: amountVal,
         method: methodVal,
         message: noteVal
       });
 
-      // Sonido de victoria y celebración
       SoundService.play('levelComplete');
       closeModal();
-
-      // Disparar confeti / corazones festivos
       createCelebrationConfetti(rootElement);
 
-      // Re-renderizar o actualizar podio
       if (typeof onUpdateCallback === 'function') {
         onUpdateCallback(newDonor);
       } else {
-        // Actualizar automáticamente el DOM del podio en el lugar
         const podiumContainer = rootElement.querySelector('#seccion-podio-donadores');
         if (podiumContainer && podiumContainer.parentElement) {
           const wrapper = document.createElement('div');
@@ -631,8 +720,6 @@ export function bindDonorsPodiumEvents(rootElement = document, onUpdateCallback 
           const newPodiumEl = wrapper.firstElementChild;
           podiumContainer.replaceWith(newPodiumEl);
           bindDonorsPodiumEvents(rootElement, onUpdateCallback);
-
-          // Scroll suave hacia el podio
           newPodiumEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
       }
@@ -663,7 +750,7 @@ function startAutoTicker(rootElement) {
     setTimeout(() => {
       tickerTextWrapper.innerHTML = `
         <p class="ticker-message" id="ticker-active-msg">
-          💖 ¡Muchas gracias con todo el corazón a <strong>${escapeHtml(donor.name)}</strong> (${escapeHtml(donor.method)})! 💖
+          💖 ¡Muchas gracias con todo el corazón a <strong>${escapeHtml(donor.name)}</strong>${donor.amountFormatted ? ` (${escapeHtml(donor.amountFormatted)})` : ''}! 💖
         </p>
       `;
       tickerTextWrapper.style.opacity = '1';
@@ -672,9 +759,6 @@ function startAutoTicker(rootElement) {
   }, 3600);
 }
 
-/**
- * Efecto visual de corazón flotante al presionar "Dar amor".
- */
 function createFloatingHeart(targetBtn) {
   const rect = targetBtn.getBoundingClientRect();
   const heart = document.createElement('span');
@@ -689,9 +773,6 @@ function createFloatingHeart(targetBtn) {
   }, 1200);
 }
 
-/**
- * Efecto festivo de confeti de corazones cuando alguien se registra en el podio.
- */
 function createCelebrationConfetti(rootElement) {
   const emojis = ['💖', '🌟', '✨', '🎉', '🦉', '❤️', '🏆'];
   const count = 24;
@@ -712,9 +793,6 @@ function createCelebrationConfetti(rootElement) {
   }
 }
 
-/**
- * Obtiene las iniciales para el avatar.
- */
 function getInitials(name = '') {
   const parts = String(name).trim().split(/\s+/).filter(Boolean);
   if (parts.length === 0) return '💖';
@@ -722,9 +800,6 @@ function getInitials(name = '') {
   return (parts[0][0] + parts[1][0]).toUpperCase();
 }
 
-/**
- * Devuelve el icono representativo del método.
- */
 function getMethodIcon(method = '') {
   const m = String(method).toLowerCase();
   if (m.includes('nequi') || m.includes('bre-b')) return '🟣';

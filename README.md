@@ -95,8 +95,9 @@ Cuando un estudiante selecciona una respuesta incorrecta, la plataforma no se li
 ### 💖 9. Módulo Dedicado de Donaciones y Podio de Agradecimiento (`DonationsView.js` / `DonorsPodium.js`)
 Plataforma abierta al apoyo voluntario de la comunidad educativa y familias con rutas dedicadas y reconocimiento de honor:
 - **🏆 Podio de Agradecimiento a Donadores (`DonorsPodium.js`):**
-  - **Pedestales Físicos 3D:** Reconocimiento en 3 niveles de honor (🥇 1° Oro con corona flotante 👑, 🥈 2° Plata, 🥉 3° Bronce) y Muro de Donadores de la Comunidad.
-  - **Agradecimientos con Corazón 💖:** Cada tarjeta muestra automáticamente el nombre del donador y su mensaje personalizado:  
+  - **Pedestales Físicos 3D:** Reconocimiento en 3 niveles de honor (🥇 1° Oro con corona flotante 👑, 🥈 2° Plata, 🥉 3° Bronce) y Muro de Donadores de la Comunidad. En estado inicial se presentan en modo de bienvenida y espera para los primeros donadores reales.
+  - **Contador Acumulativo de Total Donado (+):** Barra destacada que muestra el total recaudado a la fecha (inicia en $0 COP y va sumando automáticamente cada aporte confirmado con signo "+", ej. `$25.000 COP +`).
+  - **Agradecimientos con Corazón 💖:** Cada tarjeta muestra automáticamente el nombre del donador, el monto aportado y su mensaje personalizado:  
     *«¡Muchas gracias [Nombre] con todo el corazón! 💖 Gracias por apoyar la educación abierta y los sueños de los niños.»*
   - **Marquesina / Ticker Automático en Tiempo Real:** Barra animada que rota automáticamente cada 3.5 segundos agradeciendo en vivo a cada persona o familia colaboradora.
   - **Interacción con Corazones (`💖 Dar amor`):** Botón interactivo para enviar amor a cualquier donador, con animación de corazones flotantes y efectos sonoros festivos.

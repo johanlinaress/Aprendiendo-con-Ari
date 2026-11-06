@@ -4583,6 +4583,141 @@ select:focus-visible,
   box-shadow: 0 10px 24px rgba(236, 72, 153, 0.5);
 }
 
+/* Barra de Total Donado */
+.podium-total-donated-bar {
+  background: linear-gradient(135deg, #fefce8 0%, #ffffff 50%, #fef3c7 100%);
+  border: 2px solid #facc15;
+  border-radius: 18px;
+  padding: 1rem 1.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 14px rgba(234, 179, 8, 0.18);
+  flex-wrap: wrap;
+}
+
+.total-donated-content {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.total-donated-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.total-donated-text-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.total-donated-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #854d0e;
+  letter-spacing: 0.05em;
+}
+
+.total-donated-amount {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #a16207;
+  line-height: 1.15;
+}
+
+.total-donated-badge-pill {
+  background: #fef9c3;
+  border: 1.5px solid #fde047;
+  color: #854d0e;
+  font-size: 0.84rem;
+  font-weight: 900;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+}
+
+.podium-card-available {
+  border: 2.5px dashed #cbd5e1 !important;
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%) !important;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04) !important;
+}
+
+.avatar-available {
+  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%) !important;
+  color: #64748b !important;
+  box-shadow: none !important;
+}
+
+.podium-available-title {
+  color: #64748b !important;
+  font-size: 0.95rem;
+}
+
+.podium-slot-status {
+  font-size: 0.78rem;
+  font-weight: 900;
+  color: #ec4899;
+  background: #fdf2f8;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  display: inline-block;
+  border: 1px dashed #f472b6;
+}
+
+.podium-donor-amount {
+  display: inline-block;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #047857;
+  font-size: 0.76rem;
+  font-weight: 900;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 0.4rem;
+}
+
+.wall-donor-amount {
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 900;
+  color: #047857;
+  margin-top: 0.15rem;
+}
+
+.empty-donors-card {
+  text-align: center;
+  padding: 2.25rem 1.5rem;
+  background: #ffffff;
+  border: 2px dashed #fbcfe8;
+  border-radius: 20px;
+  width: 100%;
+  grid-column: 1 / -1;
+}
+
+.empty-donors-icon {
+  font-size: 2.8rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.empty-donors-card h4 {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #701a75;
+  margin: 0 0 0.35rem;
+}
+
+.empty-donors-card p {
+  font-size: 0.9rem;
+  color: #64748b;
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
 /* Ticker / Marquesina interactiva viva */
 .donors-ticker-container {
   background: #ffffff;
