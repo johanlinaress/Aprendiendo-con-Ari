@@ -38,31 +38,44 @@ export function renderNavbar(currentRoute) {
       <!-- ==============================================
            1. SIDEBAR LATERAL IZQUIERDO (Opciones didácticas)
       ============================================== -->
+      <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
       <aside class="app-sidebar" id="app-sidebar" aria-label="Navegación lateral de aprendizaje">
-        <div class="sidebar-brand-box">
-          <button
-            type="button"
-            class="sidebar-brand-btn"
-            id="btn-brand-home"
-            data-nav="/inicio"
-            aria-label="Aprendiendo con Ari — Ir al inicio"
-          >
-            <span class="sidebar-brand-icon" aria-hidden="true">🦉</span>
-            <span class="sidebar-brand-text">
-              <strong class="sidebar-brand-name">Aprendiendo</strong>
-              <small class="sidebar-brand-tag">con Ari ⭐</small>
-            </span>
-          </button>
+        <div class="sidebar-top-controls">
+          <div class="sidebar-brand-box">
+            <button
+              type="button"
+              class="sidebar-brand-btn"
+              id="btn-brand-home"
+              data-nav="/inicio"
+              aria-label="Aprendiendo con Ari — Ir al inicio"
+            >
+              <span class="sidebar-brand-icon" aria-hidden="true">🦉</span>
+              <span class="sidebar-brand-text">
+                <strong class="sidebar-brand-name">Aprendiendo</strong>
+                <small class="sidebar-brand-tag">con Ari ⭐</small>
+              </span>
+            </button>
+
+            <button
+              type="button"
+              class="btn-grade-switch sidebar-grade-switch"
+              id="btn-change-grade"
+              data-nav="/grado"
+              title="Cambiar grado o perfil (${state.selectedGrade}° Grado)"
+              aria-label="${state.selectedGrade}° Grado — Cambiar grado escolar"
+            >
+              🎓 <span id="nav-grade-label">${state.selectedGrade}° Grado</span>
+            </button>
+          </div>
 
           <button
             type="button"
-            class="btn-grade-switch sidebar-grade-switch"
-            id="btn-change-grade"
-            data-nav="/grado"
-            title="Cambiar grado o perfil (${state.selectedGrade}° Grado)"
-            aria-label="${state.selectedGrade}° Grado — Cambiar grado escolar"
+            class="sidebar-close-btn"
+            id="btn-sidebar-close"
+            aria-label="Cerrar menú lateral"
+            title="Cerrar menú"
           >
-            🎓 <span id="nav-grade-label">${state.selectedGrade}° Grado</span>
+            ✕
           </button>
         </div>
 
@@ -203,14 +216,27 @@ export function bindNavbarEvents(rootElement = document) {
   const mobileMenuBtn = navbar.querySelector('#btn-mobile-menu');
   const linksGroup = navbar.querySelector('#navbar-links-group');
   const sidebar = navbar.querySelector('#app-sidebar');
+  const sidebarBackdrop = navbar.querySelector('#sidebar-backdrop');
+  const sidebarCloseBtn = navbar.querySelector('#btn-sidebar-close');
 
   const setOpen = (open) => {
     if (!linksGroup || !mobileMenuBtn) return;
     linksGroup.classList.toggle('mobile-open', open);
     if (sidebar) sidebar.classList.toggle('mobile-open', open);
+    if (sidebarBackdrop) sidebarBackdrop.classList.toggle('active', open);
     mobileMenuBtn.setAttribute('aria-expanded', String(open));
     mobileMenuBtn.setAttribute('aria-label', open ? 'Cerrar menú de navegación' : 'Abrir menú de navegación');
   };
+
+  sidebarCloseBtn?.addEventListener('click', () => {
+    SoundService.play('click');
+    setOpen(false);
+  });
+
+  sidebarBackdrop?.addEventListener('click', () => {
+    SoundService.play('click');
+    setOpen(false);
+  });
 
   navbar.querySelectorAll('[data-nav]').forEach((btn) => {
     btn.addEventListener('click', () => {
