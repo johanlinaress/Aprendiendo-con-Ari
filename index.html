@@ -28,6 +28,12 @@ LICENCIA: Propiedad intelectual protegida. Queda prohibida la copia, reproducci√
     <meta name="copyright" content="¬© 2026 Johan Linares. Todos los derechos reservados." />
     <meta name="license" content="./LICENSE" />
     <meta name="theme-color" content="#4c1d95" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Ari Educa" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="apple-touch-icon" href="./assets/icon-192.png" />
     <title>Aprendiendo con Ari ‚Äî Aventura Educativa Interactiva</title>
     <script type="application/ld+json">
       {
@@ -141,5 +147,13 @@ LICENCIA: Propiedad intelectual protegida. Queda prohibida la copia, reproducci√
       </div>
     </div>
     <script type="module" src="./src/main.js?v=2.6"></script>
+    <!-- Registro de Service Worker para PWA y modo sin conexi√≥n -->
+    <script>
+      if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').catch(() => {});
+        });
+      }
+    </script>
   </body>
 </html>

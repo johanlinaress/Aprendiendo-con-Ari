@@ -1016,6 +1016,7 @@ export function bindExerciseViewEvents(rootElement, rerenderCallback) {
 
   if (activeSession && activeSession.isFinished) {
     bindLevelCompleteEvents(rootElement, {
+      passed: Boolean(activeSession.completionResult && activeSession.completionResult.passed),
       onRetry: () => {
         initExerciseSession(activeSession.levelId, { forceFresh: true, initialPhase: 'practico' });
         rerenderCallback(true);

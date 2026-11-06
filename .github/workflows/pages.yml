@@ -29,6 +29,8 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html _site/
+          cp manifest.json _site/ 2>/dev/null || true
+          cp sw.js _site/ 2>/dev/null || true
           cp -r src _site/
           cp -r assets _site/ 2>/dev/null || true
           cp -r sounds _site/ 2>/dev/null || true

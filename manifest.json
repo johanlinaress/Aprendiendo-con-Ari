@@ -1,0 +1,26 @@
+{
+  "name": "Aprendiendo con Ari — Aventura Educativa Interactiva",
+  "short_name": "Ari Educa",
+  "description": "Plataforma educativa interactiva con niveles, ejercicios de matemáticas, lectura, lógica y ciencias para 3° y 4° grado.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#2e1065",
+  "theme_color": "#4c1d95",
+  "orientation": "any",
+  "categories": ["education", "kids", "games"],
+  "icons": [
+    {
+      "src": "./assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

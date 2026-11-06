@@ -697,6 +697,91 @@ class StorageManager {
     return this.state;
   }
 
+  /**
+   * Genera y descarga un archivo JSON con todo el progreso y perfiles del estudiante.
+   */
+  exportProgressBackup() {
+    if (typeof window === 'undefined') return null;
+
+    const exportPayload = {
+      app: 'Aprendiendo con Ari',
+      version: '1.0',
+      exportedAt: new Date().toISOString(),
+      activeState: this.state,
+      profiles: this.getProfiles(),
+      activeProfileId: window.localStorage?.getItem('aprendiendo_con_ari_active_profile_v1') || 'default'
+    };
+
+    try {
+      const jsonString = JSON.stringify(exportPayload, null, 2);
+      const blob = new Blob([jsonString], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const safePlayer = (this.state.playerName || 'Estudiante').replace(/[^a-zA-Z0-9_-]/g, '_');
+      const dateStr = new Date().toISOString().slice(0, 10);
+      a.href = url;
+      a.download = `Respaldo-Ari-${safePlayer}-${dateStr}.json`;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        a.remove();
+        URL.revokeObjectURL(url);
+      }, 120);
+    } catch (e) {
+      console.error('Error al exportar respaldo:', e);
+    }
+
+    return exportPayload;
+  }
+
+  /**
+   * Importa y valida un archivo JSON de respaldo, restaurando el progreso.
+   * @param {string} jsonString
+   * @returns {{ success: boolean, message: string }}
+   */
+  importProgressBackup(jsonString) {
+    if (typeof window === 'undefined') return { success: false, message: 'Entorno no soportado' };
+
+    try {
+      const data = JSON.parse(jsonString);
+      if (!data || typeof data !== 'object') {
+        throw new Error('El archivo no contiene un formato JSON válido.');
+      }
+
+      // Validar si es un estado directo o un paquete de respaldo completo
+      const stateToRestore = data.activeState || (data.levels && data.totalScore !== undefined ? data : null);
+      if (!stateToRestore) {
+        throw new Error('El archivo no contiene datos compatibles con Aprendiendo con Ari.');
+      }
+
+      // Restaurar estado activo
+      this.state = {
+        ...this.state,
+        ...stateToRestore,
+        lastUpdated: new Date().toISOString()
+      };
+      this.persist();
+
+      // Restaurar perfiles si vienen en el archivo
+      if (Array.isArray(data.profiles) && data.profiles.length > 0 && window.localStorage) {
+        window.localStorage.setItem('aprendiendo_con_ari_profiles_v1', JSON.stringify(data.profiles));
+      }
+      if (data.activeProfileId && window.localStorage) {
+        window.localStorage.setItem('aprendiendo_con_ari_active_profile_v1', data.activeProfileId);
+      }
+
+      return {
+        success: true,
+        message: `¡Partida de ${this.state.playerName} restaurada con éxito! (${this.getTotalStars()} ⭐ y ${this.state.totalScore} pts)`
+      };
+    } catch (err) {
+      return {
+        success: false,
+        message: `Error al restaurar: ${err.message}`
+      };
+    }
+  }
+
   normalizeAnswerText(value) {
     return normalizeAnswerText(value);
   }

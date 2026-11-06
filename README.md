@@ -61,9 +61,11 @@ Cuando un estudiante selecciona una respuesta incorrecta, la plataforma no se li
 - **Foco visible de alto contraste:** Contorno dorado accesible de 3px para todos los controles interactivos.
 - **Preferencia de movimiento reducido:** Soporte nativo para `@media (prefers-reduced-motion: reduce)`.
 
-### 👥 6. Perfiles Multidispositivo y Multiusuario (`StorageService.js`)
+### 👥 6. Perfiles Multidispositivo y Respaldo de Partidas (`StorageService.js`)
 - Selector de perfil de estudiante (Sofía, Mateo, Valentina, etc.) desde la pantalla de grado (`#/grado`).
 - Almacenamiento independiente en `localStorage`: varios niños pueden estudiar en el mismo dispositivo o computador sin mezclar sus puntos, estrellas, unidades desbloqueadas ni rachas.
+- **📥 Guardar Partida (Exportar JSON):** Descarga de un clic de una copia de seguridad con todo el progreso, estrellas y medallas para no perder nada si se limpia la caché.
+- **📤 Cargar Partida (Restaurar JSON):** Permite subir y transferir el progreso del alumno a cualquier otro computador, celular o tablet del hogar o salón de clases sin necesidad de servidores externos.
 
 ### 🎓 7. Currículo 100% Diferenciado para 3° y 4° Grado
 - **Selector de Grado escolar (`#/grado`):** Adapta la complejidad léxica, el vocabulario y las magnitudes numéricas.
@@ -135,6 +137,16 @@ Sistema de medición estadística y telemetría pedagógica integrado con **Goog
   - `select_grade`: Grado escolar seleccionado (3° o 4°).
   - `donation_interaction`: Interacciones de apoyo y consulta de métodos de donación.
 - **Diseño tolerante a fallos y privado:** Carga asíncrona no bloqueante que garantiza un rendimiento óptimo de 60 FPS, respetando adblockers y funcionamiento offline sin generar excepciones en consola.
+
+### 📱 12. Progressive Web App (PWA) y Modo Sin Conexión (`sw.js` / `manifest.json`)
+- **Instalable como App Nativa:** En Chrome, Edge, Safari (iOS) y Android aparece el botón **«Instalar Aprendiendo con Ari»** para ejecutarse en ventana dedicada a pantalla completa sin barras de navegador.
+- **Service Worker Inteligente (`sw.js`):** Pre-caché de recursos estáticos con estrategia *Network-First* que permite a los estudiantes seguir jugando, resolviendo ejercicios y escuchando sonidos incluso si se cae la conexión a internet.
+- **Iconografía adaptable:** Iconos optimizados de 192×192 y 512×512 con la insignia de Ari y colores del sistema.
+
+### 🎉 13. Celebración Festiva de Confetti (`confetti.js`)
+- Motor de confeti y estrellas vectoriales de alto rendimiento (60 FPS) sin dependencias externas pesadas.
+- Se dispara automáticamente al aprobar una unidad con 3 estrellas, restaurar una partida o desbloquear una nueva medalla.
+- Respeta estrictamente las preferencias de accesibilidad del sistema (`prefers-reduced-motion: reduce`).
 
 ---
 

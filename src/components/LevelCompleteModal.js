@@ -3,6 +3,7 @@ import { StorageService } from '../services/StorageService.js';
 import { renderAriMascot, bindAriMascotEvents } from './AriMascot.js';
 import { SoundService } from '../services/SoundService.js';
 import { Router } from '../router/Router.js';
+import { fireConfetti } from '../utils/confetti.js';
 import { escapeHtml } from '../utils/escapeHtml.js';
 
 export function renderLevelCompleteModal({
@@ -205,8 +206,15 @@ export function renderLevelCompleteModal({
   `;
 }
 
-export function bindLevelCompleteEvents(rootElement, { onRetry, onReadAgain }) {
+export function bindLevelCompleteEvents(rootElement, { onRetry, onReadAgain, passed = true } = {}) {
   bindAriMascotEvents(rootElement);
+
+  // Animación festiva de confetti y estrellas cuando aprueba la unidad
+  if (passed) {
+    setTimeout(() => {
+      fireConfetti({ count: 85, duration: 3400 });
+    }, 220);
+  }
 
   const nextLevelBtn = rootElement.querySelector('#btn-next-level');
   if (nextLevelBtn) {

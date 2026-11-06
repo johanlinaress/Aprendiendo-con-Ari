@@ -4,6 +4,7 @@ import { SoundService } from '../services/SoundService.js';
 import { Router } from '../router/Router.js';
 import { renderAriMascot, bindAriMascotEvents } from './AriMascot.js';
 import { showConfirmModal } from './ConfirmModal.js';
+import { fireConfetti } from '../utils/confetti.js';
 import { LEVEL_STATUS_META, renderStarsHtml } from '../utils/levelStatus.js';
 import { escapeHtml } from '../utils/escapeHtml.js';
 
@@ -35,6 +36,13 @@ export function renderProgressView(focus = 'resumen') {
           <button type="button" class="btn btn-primary" id="btn-progress-to-map">
             🗺️ Ir al Mapa
           </button>
+          <button type="button" class="btn btn-secondary" id="btn-export-backup" title="Descargar archivo de respaldo con tus estrellas y avance">
+            📥 Guardar Partida
+          </button>
+          <button type="button" class="btn btn-secondary" id="btn-import-backup" title="Restaurar tu partida desde un archivo de respaldo">
+            📤 Cargar Partida
+          </button>
+          <input type="file" id="input-import-backup" accept=".json,application/json" style="display:none" aria-hidden="true" />
           <button type="button" class="btn btn-danger" id="btn-reset-progress">
             🗑️ Reiniciar Progreso
           </button>
@@ -243,6 +251,51 @@ export function bindProgressViewEvents(rootElement, rerenderCallback, focus = 'r
     toMapBtn.addEventListener('click', () => {
       SoundService.play('click');
       Router.navigate('/niveles');
+    });
+  }
+
+  // Exportar respaldo de partida (JSON)
+  const exportBtn = rootElement.querySelector('#btn-export-backup');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+      SoundService.play('collect');
+      StorageService.exportProgressBackup();
+      fireConfetti({ count: 50, duration: 2500 });
+      alert('¡Tu partida ha sido descargada en tu dispositivo! Puedes conservarla o llevarla a otro computador o tablet.');
+    });
+  }
+
+  // Importar respaldo de partida
+  const importBtn = rootElement.querySelector('#btn-import-backup');
+  const importFileInput = rootElement.querySelector('#input-import-backup');
+  if (importBtn && importFileInput) {
+    importBtn.addEventListener('click', () => {
+      SoundService.play('click');
+      importFileInput.click();
+    });
+
+    importFileInput.addEventListener('change', (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const content = event.target?.result;
+        if (typeof content === 'string') {
+          const res = StorageService.importProgressBackup(content);
+          if (res.success) {
+            SoundService.play('levelComplete');
+            fireConfetti({ count: 90, duration: 3500 });
+            alert(res.message);
+            rerenderCallback();
+          } else {
+            SoundService.play('wrong');
+            alert(res.message);
+          }
+        }
+        importFileInput.value = '';
+      };
+      reader.readAsText(file);
     });
   }
 
