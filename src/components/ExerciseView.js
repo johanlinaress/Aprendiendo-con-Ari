@@ -14,6 +14,7 @@ import {
 } from './AriMascot.js';
 import { renderReadingIllustrationSvg } from './Illustrations.js';
 import { renderLevelCompleteModal, bindLevelCompleteEvents } from './LevelCompleteModal.js';
+import { AnalyticsService } from '../services/AnalyticsService.js';
 import { escapeHtml } from '../utils/escapeHtml.js';
 
 let activeSession = null;
@@ -134,6 +135,9 @@ export function initExerciseSession(levelId, options = {}) {
     timerSeconds: 0
   };
   StorageService.saveExerciseSession(activeSession);
+  if (level) {
+    AnalyticsService.trackLevelStart(id, level.subject, level.title);
+  }
   return activeSession;
 }
 
@@ -1384,6 +1388,15 @@ export function bindExerciseViewEvents(rootElement, rerenderCallback) {
           totalQuestions,
           sessionScore: activeSession.sessionScore
         });
+        if (result) {
+          AnalyticsService.trackLevelComplete({
+            levelId: activeSession.levelId,
+            passed: result.passed,
+            accuracy: result.accuracy,
+            stars: result.starsEarned,
+            score: activeSession.sessionScore
+          });
+        }
         StorageService.clearExerciseSession(activeSession.levelId);
         activeSession.isFinished = true;
         activeSession.completionResult = result;

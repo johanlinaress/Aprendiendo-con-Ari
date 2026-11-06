@@ -1,6 +1,7 @@
 import { Router } from './router/Router.js';
 import { StorageService } from './services/StorageService.js';
 import { SoundService } from './services/SoundService.js';
+import { AnalyticsService } from './services/AnalyticsService.js';
 import { LEVELS_DATA, ACHIEVEMENTS_DATA, EXPOSITIVE_READINGS_DATA } from './data/levelsData.js';
 import { renderNavbar, bindNavbarEvents } from './components/Navbar.js';
 import { renderFooter, bindFooterEvents } from './components/Footer.js';
@@ -134,12 +135,14 @@ function renderApp(route, { isRerender = false } = {}) {
 }
 
 function bootstrap() {
+  AnalyticsService.init();
   SoundService.syncDebugState();
 
   window.__ARI_APP__ = {
     Router,
     StorageService,
     SoundService,
+    AnalyticsService,
     LEVELS_DATA,
     ACHIEVEMENTS_DATA,
     EXPOSITIVE_READINGS_DATA,
@@ -152,6 +155,7 @@ function bootstrap() {
   Router.onRouteChange((route) => {
     SoundService.updateRouteMusic(route.name);
     renderApp(route);
+    AnalyticsService.trackPageView(route.path, route.title);
   });
   Router.init();
 }

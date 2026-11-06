@@ -1,6 +1,7 @@
 import { StorageService } from '../services/StorageService.js';
 import { SoundService } from '../services/SoundService.js';
 import { Router } from '../router/Router.js';
+import { AnalyticsService } from '../services/AnalyticsService.js';
 import { renderAriMascot, bindAriMascotEvents } from './AriMascot.js';
 import { renderBoyGrade3Svg, renderGirlGrade4Svg } from './Illustrations.js';
 import { escapeHtml } from '../utils/escapeHtml.js';
@@ -152,6 +153,7 @@ export function bindGradeSelectViewEvents(rootElement = document) {
       }
       SoundService.play('correct');
       StorageService.setGrade(grade);
+      AnalyticsService.trackGradeSelect(grade);
       Router.navigate('/materias');
     });
   });

@@ -34,12 +34,22 @@
     <link rel="modulepreload" href="./src/router/Router.js" />
     <link rel="modulepreload" href="./src/services/StorageService.js" />
     <link rel="modulepreload" href="./src/services/SoundService.js" />
+    <link rel="modulepreload" href="./src/services/AnalyticsService.js" />
     <link rel="modulepreload" href="./src/data/levelsData.js" />
     <link rel="modulepreload" href="./src/components/Navbar.js" />
     <link rel="modulepreload" href="./src/components/HomeView.js" />
     <link rel="modulepreload" href="./src/components/AriMascot.js" />
     <link rel="modulepreload" href="./src/components/Illustrations.js" />
     <link rel="modulepreload" href="./src/utils/levelStatus.js" />
+    <!-- Google Tag (Google Analytics 4 & GTM) -->
+    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-NWXWZF9D"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GTM-NWXWZF9D', { send_page_view: false });
+      window.GA_MEASUREMENT_ID = 'GTM-NWXWZF9D';
+    </script>
   </head>
   <body>
     <div id="app">
