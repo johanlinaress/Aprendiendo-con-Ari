@@ -10,7 +10,13 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = Number(process.env.PORT) || 4173;
-const ROOT_DIR = __dirname;
+const ROOT_DIR = path.resolve(__dirname);
+
+const SECURITY_HEADERS = {
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'SAMEORIGIN',
+  'Referrer-Policy': 'strict-origin-when-cross-origin'
+};
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -36,9 +42,9 @@ const server = http.createServer((req, res) => {
       pathname = '/index.html';
     }
 
-    const safePath = path.normalize(path.join(ROOT_DIR, pathname));
-    if (!safePath.startsWith(ROOT_DIR)) {
-      res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
+    const safePath = path.resolve(ROOT_DIR, '.' + pathname);
+    if (safePath !== ROOT_DIR && !safePath.startsWith(ROOT_DIR + path.sep)) {
+      res.writeHead(403, { ...SECURITY_HEADERS, 'Content-Type': 'text/plain; charset=utf-8' });
       res.end('Acceso denegado');
       return;
     }
@@ -50,16 +56,16 @@ const server = http.createServer((req, res) => {
           const indexPath = path.join(ROOT_DIR, 'index.html');
           fs.readFile(indexPath, (readErr, content) => {
             if (readErr) {
-              res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+              res.writeHead(500, { ...SECURITY_HEADERS, 'Content-Type': 'text/plain; charset=utf-8' });
               res.end('Error interno del servidor');
               return;
             }
-            res.writeHead(200, { 'Content-Type': MIME_TYPES['.html'] });
+            res.writeHead(200, { ...SECURITY_HEADERS, 'Content-Type': MIME_TYPES['.html'] });
             res.end(content);
           });
           return;
         }
-        res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+        res.writeHead(404, { ...SECURITY_HEADERS, 'Content-Type': 'text/plain; charset=utf-8' });
         res.end('Archivo no encontrado');
         return;
       }
@@ -69,6 +75,7 @@ const server = http.createServer((req, res) => {
 
       if (req.method === 'HEAD') {
         res.writeHead(200, {
+          ...SECURITY_HEADERS,
           'Content-Type': contentType,
           'Content-Length': stats.size,
           'Accept-Ranges': 'bytes',
@@ -84,9 +91,24 @@ const server = http.createServer((req, res) => {
         const parts = range.replace(/bytes=/, '').split('-');
         const start = parseInt(parts[0], 10);
         const end = parts[1] ? parseInt(parts[1], 10) : stats.size - 1;
+        if (
+          Number.isNaN(start) ||
+          Number.isNaN(end) ||
+          start < 0 ||
+          end >= stats.size ||
+          start > end
+        ) {
+          res.writeHead(416, {
+            ...SECURITY_HEADERS,
+            'Content-Range': `bytes */${stats.size}`
+          });
+          res.end();
+          return;
+        }
         const chunksize = end - start + 1;
         const stream = fs.createReadStream(safePath, { start, end });
         res.writeHead(206, {
+          ...SECURITY_HEADERS,
           'Content-Range': `bytes ${start}-${end}/${stats.size}`,
           'Accept-Ranges': 'bytes',
           'Content-Length': chunksize,
@@ -98,11 +120,12 @@ const server = http.createServer((req, res) => {
 
       fs.readFile(safePath, (readErr, content) => {
         if (readErr) {
-          res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+          res.writeHead(500, { ...SECURITY_HEADERS, 'Content-Type': 'text/plain; charset=utf-8' });
           res.end('Error leyendo el archivo');
           return;
         }
         res.writeHead(200, {
+          ...SECURITY_HEADERS,
           'Content-Type': contentType,
           'Content-Length': stats.size,
           'Accept-Ranges': 'bytes',

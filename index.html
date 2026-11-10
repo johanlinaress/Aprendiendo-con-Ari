@@ -27,6 +27,11 @@ LICENCIA: Propiedad intelectual protegida. Queda prohibida la copia, reproducci√
     <meta charset="UTF-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https://xrvjugfxdswprzyxyghq.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://region1.google-analytics.com; object-src 'none'; base-uri 'self'; form-action 'self';"
+    />
     <meta
       name="description"
       content="Aprendiendo con Ari: plataforma educativa interactiva con niveles, ejercicios de matem√°ticas, lectura, l√≥gica, ciencias y geometr√≠a."
@@ -78,23 +83,16 @@ LICENCIA: Propiedad intelectual protegida. Queda prohibida la copia, reproducci√
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="preload"
-      as="style"
+      rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800;900&display=swap"
-      onload="this.onload=null;this.rel='stylesheet'"
     />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800;900&display=swap"
-      />
-    </noscript>
-    <link rel="stylesheet" href="./src/styles/main.css?v=3.1" />
-    <link rel="modulepreload" href="./src/main.js?v=3.1" />
+    <link rel="stylesheet" href="./src/styles/main.css?v=3.2" />
+    <link rel="modulepreload" href="./src/main.js?v=3.2" />
     <link rel="modulepreload" href="./src/router/Router.js" />
     <link rel="modulepreload" href="./src/services/StorageService.js" />
     <link rel="modulepreload" href="./src/services/SoundService.js" />
     <link rel="modulepreload" href="./src/services/AnalyticsService.js" />
+    <link rel="modulepreload" href="./src/services/SupabaseService.js" />
     <link rel="modulepreload" href="./src/data/levelsData.js" />
     <link rel="modulepreload" href="./src/components/Navbar.js" />
     <link rel="modulepreload" href="./src/components/HomeView.js" />
@@ -155,7 +153,7 @@ LICENCIA: Propiedad intelectual protegida. Queda prohibida la copia, reproducci√
         </main>
       </div>
     </div>
-    <script type="module" src="./src/main.js?v=2.8"></script>
+    <script type="module" src="./src/main.js?v=3.2"></script>
     <!-- Registro de Service Worker para PWA y modo sin conexi√≥n -->
     <script>
       if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {

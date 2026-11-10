@@ -288,6 +288,10 @@ Aprendiendo-con-Ari/
 ├── package.json               # Configuración de scripts (start, dev, audit) y metadatos
 ├── LICENSE                    # Licencia oficial de propiedad intelectual y derechos de autor
 ├── README.md                  # Documentación oficial del proyecto
+├── .github/workflows/
+│   └── ci-audit.yml           # Pipeline CI/CD automatizado (integridad curricular + suite E2E)
+├── docs/
+│   └── DOCUMENTACION_APRENDIENDO_CON_ARI.md # Documentación académica, pedagógica y técnica detallada
 ├── assets/                    # Recursos visuales y códigos QR oficiales
 │   ├── nequi-qr.jpg           # Comprobante oficial HD Bre-B Nequi (800×1025)
 │   └── nequi-qr-square.jpg    # Código QR cuadrado gigante optimizado para escaneo (780×780)
@@ -303,33 +307,43 @@ Aprendiendo-con-Ari/
 │   │   ├── Breadcrumbs.js     # Navegación espacial por migas de pan semánticas
 │   │   ├── ConfirmModal.js    # Modal accesible para reinicio de progreso
 │   │   ├── DonationsView.js   # Módulo de donaciones (Bre-B Nequi, ARQ y PayPal)
-│   │   ├── DonorsPodium.js    # Podio de agradecimiento a donadores, pedestales 3D y ticker vivo
+│   │   ├── DonorsPodium.js    # Podio de agradecimiento a donadores en vivo (Supabase + localStorage)
 │   │   ├── ExerciseView.js    # Motor de ejercicios (Aprendo con Active Recall, Practico y Evaluación)
 │   │   ├── Footer.js          # Pie de página educativo, copyright y enlace a donaciones
 │   │   ├── GradeSelectView.js # Selector de grado escolar (3° y 4°) y perfiles de estudiante
 │   │   ├── HomeView.js        # Portada interactiva, bienvenida de Ari y accesos directos
 │   │   ├── Illustrations.js   # Ilustraciones vectoriales (ciencias, astronomía, naturaleza)
+│   │   ├── LegalNoticeModal.js # Modal de Derechos de Autor y Privacidad Infantil (Ley 1581)
 │   │   ├── LevelCompleteModal.js # Modal interactivo de nivel superado y recompensas
 │   │   ├── LevelsMapView.js   # Mapa de aventura con sendero visual de las 10 unidades
 │   │   ├── Navbar.js          # Barra superior con botón de donaciones, menú móvil y audio
 │   │   ├── NotFoundView.js    # Pantalla 404 lúdica con guía de retorno al sendero
 │   │   ├── PracticeView.js    # Modo de práctica libre con bonus +50% y banco dinámico
-│   │   └── ProgressView.js    # Panel de progreso, estadísticas y medallas con siluetas
-│   ├── data/
-│   │   └── levelsData.js      # Banco curricular de 200+ ejercicios, lecturas y medallas
+│   │   ├── ProgressView.js    # Panel de progreso, sincronización en la nube (Supabase) y medallas
+│   │   └── ToastNotification.js # Notificaciones emergentes 3D accesibles y no bloqueantes
+│   ├── data/                  # Banco curricular modularizado por dominio
+│   │   ├── levelsData.js      # Índice modular (barrel) y selector Fisher-Yates de preguntas
+│   │   ├── mathLevelsData.js  # 5 unidades curriculares de Matemáticas (3° y 4° primaria)
+│   │   ├── spanishLevelsData.js # 5 unidades curriculares de Español (3° y 4° primaria)
+│   │   ├── readingsData.js    # Lecturas expositivas interactivas con glosario emergente
+│   │   ├── achievementsData.js # Catálogo de las 9 medallas y logros pedagógicos
+│   │   └── subjectsData.js    # Definición de asignaturas y categorías curriculares
 │   ├── router/
 │   │   └── Router.js          # Enrutador cliente SPA basado en hash con paso de parámetros
 │   ├── services/
-│   │   ├── AnalyticsService.js # Telemetría GA4/GTM: visitas en tiempo real, niveles jugados y métricas
+│   │   ├── AnalyticsService.js # Telemetría GA4/GTM y eventos pedagógicos hacia Supabase
 │   │   ├── SoundService.js    # Motor de audio Web Audio API, música en bucle y síntesis de voz
-│   │   └── StorageService.js  # Persistencia en localStorage y perfiles de usuario independientes
+│   │   ├── StorageService.js  # Persistencia local con sanitización whitelist y perfiles múltiples
+│   │   └── SupabaseService.js # Cliente REST ligero para PostgreSQL / Supabase (RLS + Código ARI)
 │   ├── styles/
-│   │   └── main.css           # Sistema de diseño CSS3, variables, responsive 9.5/10 y modo accesible
+│   │   └── main.css           # Sistema de diseño CSS3, variables, responsive y modo accesible
 │   └── utils/
 │       ├── a11yKeyboard.js    # Navegación por teclado roving tabindex para ARIA
+│       ├── confetti.js        # Motor de celebración de confeti a 60 FPS
+│       ├── escapeHtml.js      # Prevención XSS mediante escapado estricto de entidades HTML
 │       └── levelStatus.js     # Lógica de desbloqueo progresivo y cálculo de estrellas
 └── tests/
-    ├── audit.js               # Suite de 172 pruebas E2E automatizadas con Chrome DevTools Protocol
+    ├── audit.js               # Suite de 184 pruebas E2E automatizadas con Chrome DevTools Protocol
     ├── audit-report.json      # Reporte detallado de la última auditoría
     └── screenshots/           # Capturas de pantalla de evidencia en diferentes resoluciones
 ```

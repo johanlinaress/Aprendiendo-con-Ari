@@ -41,6 +41,21 @@ export function renderLegalNoticeModal() {
             </ul>
           </div>
 
+          <div class="legal-protection-list">
+            <h4>🔒 Privacidad Infantil y Protección de Datos (Ley 1581 / Habeas Data):</h4>
+            <ul>
+              <li>
+                <strong>Cero Datos Personales Sensibles:</strong> La plataforma solo solicita un primer nombre o apodo lúdico para saludar al estudiante. No recolecta apellidos, correos electrónicos, teléfonos ni ubicación de menores.
+              </li>
+              <li>
+                <strong>Sincronización Anónima en la Nube:</strong> El respaldo opcional en Supabase funciona mediante un Código de Explorador aleatorio (<code>ARI-XXXX-XXXX</code>) sin cuentas ni contraseñas.
+              </li>
+              <li>
+                <strong>Telemetría Pedagógica Anónima:</strong> Las estadísticas de aprendizaje registran únicamente aciertos y avance curricular de forma agregada y anónima.
+              </li>
+            </ul>
+          </div>
+
           <div class="legal-warning-box">
             <p>
               ⚠️ <em>Queda expresamente prohibida la copia, reproducción, duplicación, distribución, ingeniería inversa o cualquier explotación no autorizada de esta plataforma o de su personaje sin el consentimiento previo por escrito de Johan Linares.</em>

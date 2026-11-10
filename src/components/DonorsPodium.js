@@ -142,6 +142,21 @@ export function addDonor({
 
   donors.unshift(newDonor);
   saveDonorsList(donors);
+
+  SupabaseService.registerDonorInCloud({
+    name: cleanName,
+    amount: numAmount,
+    currency: determinedCurrency,
+    method: method || 'Bre-B Nequi',
+    message: thankYouMessage
+  }).then((cloudRow) => {
+    if (cloudRow && cloudRow.id) {
+      newDonor.dbId = Number(cloudRow.id);
+      newDonor.isCloud = true;
+      saveDonorsList(getDonorsList());
+    }
+  });
+
   return newDonor;
 }
 

@@ -5,6 +5,7 @@ import { SupabaseService } from '../services/SupabaseService.js';
 import { Router } from '../router/Router.js';
 import { renderAriMascot, bindAriMascotEvents } from './AriMascot.js';
 import { showConfirmModal } from './ConfirmModal.js';
+import { showAriToast } from './ToastNotification.js';
 import { fireConfetti } from '../utils/confetti.js';
 import { LEVEL_STATUS_META, renderStarsHtml } from '../utils/levelStatus.js';
 import { escapeHtml } from '../utils/escapeHtml.js';
@@ -308,7 +309,7 @@ export function bindProgressViewEvents(rootElement, rerenderCallback, focus = 'r
       SoundService.play('collect');
       StorageService.exportProgressBackup();
       fireConfetti({ count: 50, duration: 2500 });
-      alert('¡Tu partida ha sido descargada en tu dispositivo! Puedes conservarla o llevarla a otro computador o tablet.');
+      showAriToast('¡Tu partida ha sido descargada en tu dispositivo! Puedes conservarla o llevarla a otro computador o tablet.', 'success');
     });
   }
 
@@ -333,11 +334,11 @@ export function bindProgressViewEvents(rootElement, rerenderCallback, focus = 'r
           if (res.success) {
             SoundService.play('levelComplete');
             fireConfetti({ count: 90, duration: 3500 });
-            alert(res.message);
+            showAriToast(res.message, 'success');
             rerenderCallback();
           } else {
             SoundService.play('wrong');
-            alert(res.message);
+            showAriToast(res.message, 'error');
           }
         }
         importFileInput.value = '';

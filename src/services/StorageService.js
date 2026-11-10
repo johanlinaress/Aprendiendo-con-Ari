@@ -700,40 +700,104 @@ class StorageManager {
   }
 
   /**
-   * Restaura una instantánea de progreso descargada desde Supabase.
+   * Sanitiza mediante lista blanca (whitelist) un estado importado desde JSON o desde la nube,
+   * previniendo inyección de propiedades arbitrarias, valores negativos o contaminación de prototipos.
    */
-  restoreCloudSnapshot(snapshot) {
-    if (!snapshot || typeof snapshot !== 'object') return false;
+  sanitizeSnapshotState(rawState) {
     const defaults = getDefaultState();
+    if (!rawState || typeof rawState !== 'object') return defaults;
+
+    const clampInt = (val, min = 0, max = 1000000) => {
+      const n = Math.round(Number(val));
+      if (!Number.isFinite(n)) return min;
+      return Math.max(min, Math.min(max, n));
+    };
+
+    const cleanName =
+      String(rawState.playerName || defaults.playerName)
+        .replace(/[\u0000-\u001F\u007F]/g, '')
+        .trim()
+        .slice(0, 40) || defaults.playerName;
+
+    const cleanGrade = String(rawState.selectedGrade) === '4' ? '4' : '3';
+    const cleanLastLabel =
+      String(rawState.lastActivityLabel || defaults.lastActivityLabel)
+        .replace(/[\u0000-\u001F\u007F]/g, '')
+        .trim()
+        .slice(0, 120) || defaults.lastActivityLabel;
+
     const mergedLevels = createInitialLevelsState();
-    if (snapshot.levels && typeof snapshot.levels === 'object') {
+    if (rawState.levels && typeof rawState.levels === 'object') {
       for (const level of LEVELS_DATA) {
-        if (snapshot.levels[level.id]) {
+        const src = rawState.levels[level.id];
+        if (src && typeof src === 'object') {
           mergedLevels[level.id] = {
-            ...mergedLevels[level.id],
-            ...snapshot.levels[level.id]
+            id: level.id,
+            completed: Boolean(src.completed),
+            inProgress: Boolean(src.inProgress),
+            stars: clampInt(src.stars, 0, 3),
+            bestScore: clampInt(src.bestScore, 0, 100000),
+            bestAccuracy: clampInt(src.bestAccuracy, 0, 100),
+            attempts: clampInt(src.attempts, 0, 10000),
+            lastPlayedAt: typeof src.lastPlayedAt === 'string' ? src.lastPlayedAt.slice(0, 40) : null
           };
         }
       }
     }
-    const unlocked = Array.isArray(snapshot.unlockedLevels)
+
+    const validLevelIds = new Set(LEVELS_DATA.map((l) => l.id));
+    const unlocked = Array.isArray(rawState.unlockedLevels)
       ? Array.from(
           new Set([
             ...INITIAL_UNLOCKED_LEVELS,
-            ...snapshot.unlockedLevels.map(Number).filter((n) => Number.isFinite(n) && n > 0)
+            ...rawState.unlockedLevels.map(Number).filter((n) => validLevelIds.has(n))
           ])
         ).sort((a, b) => a - b)
       : [...INITIAL_UNLOCKED_LEVELS];
 
-    this.state = {
-      ...defaults,
-      ...snapshot,
-      soundEnabled: this.state.soundEnabled,
-      musicEnabled: this.state.musicEnabled,
+    const validAchIds = new Set(ACHIEVEMENTS_DATA.map((a) => a.id));
+    const cleanAchievements = Array.isArray(rawState.achievements)
+      ? Array.from(new Set(rawState.achievements.filter((id) => validAchIds.has(id))))
+      : [];
+
+    const cleanRewardedIds = Array.isArray(rawState.rewardedQuestionIds)
+      ? rawState.rewardedQuestionIds
+          .filter((id) => typeof id === 'string' || typeof id === 'number')
+          .map((id) => String(id).slice(0, 50))
+          .slice(0, 500)
+      : [];
+
+    return {
+      version: 2,
+      playerName: cleanName,
+      selectedGrade: cleanGrade,
+      startedAt: typeof rawState.startedAt === 'string' ? rawState.startedAt.slice(0, 40) : defaults.startedAt,
+      lastActivityLabel: cleanLastLabel,
+      lastLevelId: validLevelIds.has(Number(rawState.lastLevelId)) ? Number(rawState.lastLevelId) : null,
+      soundEnabled: this.state?.soundEnabled ?? true,
+      musicEnabled: this.state?.musicEnabled ?? true,
+      totalScore: clampInt(rawState.totalScore, 0, 10000000),
+      starPoints: clampInt(rawState.starPoints, 0, 10000),
+      bonusStars: clampInt(rawState.bonusStars, 0, 10000),
+      practiceScore: clampInt(rawState.practiceScore, 0, 10000000),
+      currentStreak: clampInt(rawState.currentStreak, 0, 10000),
+      bestStreak: clampInt(rawState.bestStreak, 0, 10000),
+      totalCorrectAnswers: clampInt(rawState.totalCorrectAnswers, 0, 100000),
+      totalQuestionsAnswered: clampInt(rawState.totalQuestionsAnswered, 0, 100000),
       unlockedLevels: unlocked,
+      rewardedQuestionIds: cleanRewardedIds,
       levels: mergedLevels,
-      achievements: Array.isArray(snapshot.achievements) ? snapshot.achievements : []
+      achievements: cleanAchievements,
+      lastUpdated: new Date().toISOString()
     };
+  }
+
+  /**
+   * Restaura una instantánea de progreso descargada desde Supabase.
+   */
+  restoreCloudSnapshot(snapshot) {
+    if (!snapshot || typeof snapshot !== 'object') return false;
+    this.state = this.sanitizeSnapshotState(snapshot);
     this.persist(this.state, { skipCloudSync: true });
     return true;
   }
@@ -795,12 +859,8 @@ class StorageManager {
         throw new Error('El archivo no contiene datos compatibles con Aprendiendo con Ari.');
       }
 
-      // Restaurar estado activo
-      this.state = {
-        ...this.state,
-        ...stateToRestore,
-        lastUpdated: new Date().toISOString()
-      };
+      // Restaurar estado activo sanitizado por lista blanca
+      this.state = this.sanitizeSnapshotState(stateToRestore);
       this.persist();
 
       // Restaurar perfiles si vienen en el archivo

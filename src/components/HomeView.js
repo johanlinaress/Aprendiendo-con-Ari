@@ -400,6 +400,9 @@ export function renderHomeView(mode = 'inicio') {
               <p class="step-subtitle">
                 Escribe tu nombre o apodo para que Ari te acompañe, guarde tus estrellas y celebre tus victorias:
               </p>
+              <p class="child-privacy-hint">
+                🔒 <strong>Privacidad infantil:</strong> escribe solo tu primer nombre o un apodo divertido (sin apellidos ni datos personales).
+              </p>
 
               <form class="player-name-form-step" id="form-player-name" aria-label="Escribe tu nombre de estudiante">
                 <div class="name-input-wrapper">

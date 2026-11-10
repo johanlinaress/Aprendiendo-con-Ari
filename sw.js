@@ -5,7 +5,7 @@
  * @license Propiedad Intelectual Protegida. Prohibida su copia o plagio.
  */
 
-const CACHE_NAME = 'ari-educa-cache-v6';
+const CACHE_NAME = 'ari-educa-cache-v7';
 
 const STATIC_ASSETS = [
   './',
@@ -15,6 +15,11 @@ const STATIC_ASSETS = [
   './src/main.js',
   './src/router/Router.js',
   './src/data/levelsData.js',
+  './src/data/subjectsData.js',
+  './src/data/readingsData.js',
+  './src/data/achievementsData.js',
+  './src/data/mathLevelsData.js',
+  './src/data/spanishLevelsData.js',
   './src/services/StorageService.js',
   './src/services/SoundService.js',
   './src/services/AnalyticsService.js',
@@ -33,6 +38,8 @@ const STATIC_ASSETS = [
   './src/components/Illustrations.js',
   './src/components/LevelCompleteModal.js',
   './src/components/LegalNoticeModal.js',
+  './src/components/ConfirmModal.js',
+  './src/components/ToastNotification.js',
   './src/components/Breadcrumbs.js',
   './src/utils/confetti.js',
   './src/utils/levelStatus.js',

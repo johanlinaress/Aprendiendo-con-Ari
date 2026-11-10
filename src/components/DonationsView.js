@@ -88,7 +88,6 @@ function renderDonationsHubView(qrImageUrl) {
               <div class="donation-qr-box donation-qr-thumb">
                 <img
                   src="${qrImageUrl}"
-                  onerror="if (!this.dataset.triedFallback) { this.dataset.triedFallback = '1'; this.src = './assets/nequi-qr.jpg'; }"
                   alt="Código QR Bre-B Nequi de Johan Linares"
                   class="donation-qr-image"
                   id="nequi-qr-img"
@@ -253,7 +252,6 @@ function renderNequiDedicatedView(qrImageUrl, qrSquareUrl) {
             <div class="nequi-big-qr-stage">
               <img
                 src="${qrImageUrl}"
-                onerror="if (!this.dataset.triedFallback) { this.dataset.triedFallback = '1'; this.src = './assets/nequi-qr.jpg'; }"
                 alt="Código QR Bre-B Nequi de Johan Linares en alta resolución"
                 class="nequi-big-qr-img"
                 id="nequi-dedicated-qr-img"
@@ -554,6 +552,16 @@ function renderPaypalDedicatedView() {
  */
 export function bindDonationsViewEvents(rootElement = document, rerender = null, method = 'hub') {
   bindAriMascotEvents(rootElement);
+
+  // Respaldo de imágenes QR mediante listener JS limpio (sin atributos inline onerror)
+  rootElement.querySelectorAll('#nequi-qr-img, #nequi-dedicated-qr-img').forEach((imgEl) => {
+    imgEl.addEventListener('error', () => {
+      if (!imgEl.dataset.triedFallback) {
+        imgEl.dataset.triedFallback = '1';
+        imgEl.src = './assets/nequi-qr.jpg';
+      }
+    });
+  });
 
   // Botón superior de volver al inicio
   const backBtn = rootElement.querySelector('#btn-donations-back');

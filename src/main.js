@@ -165,7 +165,7 @@ function bootstrap() {
   AnalyticsService.init();
   SoundService.syncDebugState();
 
-  window.__ARI_APP__ = {
+  window.__ARI_APP__ = Object.freeze({
     Router,
     StorageService,
     SoundService,
@@ -181,7 +181,7 @@ function bootstrap() {
     get activeSession() {
       return getActiveSession();
     }
-  };
+  });
 
   Router.onRouteChange((route) => {
     SoundService.updateRouteMusic(route.name);

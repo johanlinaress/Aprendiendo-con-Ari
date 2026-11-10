@@ -1,0 +1,27 @@
+name: CI - Auditoría E2E y Seguridad (Aprendiendo con Ari)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify-curriculum-and-e2e:
+    name: Verificación Curricular y Suite E2E (184 pruebas)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validar integridad modular del banco curricular
+        run: |
+          node -e "import('./src/data/levelsData.js').then(m => { if (m.LEVELS_DATA.length !== 10 || m.ACHIEVEMENTS_DATA.length !== 9) process.exit(1); console.log('Curriculo OK:', m.LEVELS_DATA.length, 'unidades'); })"
+
+      - name: Ejecutar suite de auditoría automatizada E2E (Chrome Headless)
+        run: npm run audit

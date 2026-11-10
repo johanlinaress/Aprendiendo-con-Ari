@@ -36,6 +36,7 @@ class SupabaseClientService {
   constructor() {
     this.restBase = `${SUPABASE_URL}/rest/v1`;
     this.syncDebounceId = null;
+    this.lastHeartByDonor = new Map();
   }
 
   getHeaders(extraHeaders = {}) {
@@ -142,13 +143,20 @@ class SupabaseClientService {
   }
 
   /**
-   * Registra un corazón (+1) para un donador en Supabase (`donor_hearts`).
+   * Registra un corazón (+1) para un donador en Supabase (`donor_hearts`) con protección anti-spam.
    */
   async sendDonorHeart(dbId) {
     const idNum = Number(dbId);
     if (!Number.isInteger(idNum) || idNum <= 0 || typeof fetch !== 'function') {
       return false;
     }
+    const now = Date.now();
+    const lastSent = this.lastHeartByDonor.get(idNum) || 0;
+    if (now - lastSent < 1000) {
+      return false;
+    }
+    this.lastHeartByDonor.set(idNum, now);
+
     try {
       const res = await fetch(`${this.restBase}/donor_hearts`, {
         method: 'POST',
@@ -160,6 +168,48 @@ class SupabaseClientService {
       return res.ok;
     } catch (err) {
       return false;
+    }
+  }
+
+  /**
+   * Registra un donador en la tabla `donors` de Supabase para que sea visible para todos los usuarios.
+   */
+  async registerDonorInCloud({ name, amount = 0, currency = 'COP', method = 'Bre-B Nequi', message = '' }) {
+    if (isHeadlessAuditBrowser() || typeof fetch !== 'function') {
+      return null;
+    }
+    const cleanName = String(name || '').trim().slice(0, 80);
+    if (cleanName.length < 2) return null;
+
+    const cleanAmount = Math.max(0, Math.min(50000000, Number(amount) || 0));
+    const cleanCurrency = String(currency).toUpperCase() === 'USD' ? 'USD' : 'COP';
+    const cleanMethod = String(method || 'Bre-B Nequi').trim().slice(0, 40) || 'Bre-B Nequi';
+    const cleanMessage = String(message || '').trim().slice(0, 500);
+
+    try {
+      const res = await fetch(`${this.restBase}/donors`, {
+        method: 'POST',
+        headers: this.getHeaders({
+          'Content-Type': 'application/json',
+          Prefer: 'return=representation'
+        }),
+        body: JSON.stringify({
+          name: cleanName,
+          amount: cleanAmount,
+          currency: cleanCurrency,
+          method: cleanMethod,
+          badge: 'Donador de Corazón 💖',
+          message: cleanMessage,
+          base_hearts: 10,
+          display_date: 'Donación registrada',
+          is_active: true
+        })
+      });
+      if (!res.ok) return null;
+      const rows = await res.json();
+      return Array.isArray(rows) && rows[0] ? rows[0] : null;
+    } catch (err) {
+      return null;
     }
   }
 

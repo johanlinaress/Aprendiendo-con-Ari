@@ -69,7 +69,7 @@ export function renderGradeSelectView() {
 
           <!-- Presentación del Estudiante (RF-03) -->
           <form class="student-setup-bar" id="form-grade-student-name" aria-label="Configurar nombre o apodo del estudiante">
-            <label for="input-grade-student-name" class="student-setup-label">👦👧 Tu nombre o apodo:</label>
+            <label for="input-grade-student-name" class="student-setup-label">👦👧 Tu primer nombre o apodo <small>(🔒 sin apellidos)</small>:</label>
             <div class="student-setup-controls">
               <input
                 type="text"
