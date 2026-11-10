@@ -5,7 +5,7 @@
  * @license Propiedad Intelectual Protegida. Prohibida su copia o plagio.
  */
 
-const CACHE_NAME = 'ari-educa-cache-v2';
+const CACHE_NAME = 'ari-educa-cache-v3';
 
 const STATIC_ASSETS = [
   './',
