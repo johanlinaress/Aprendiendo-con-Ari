@@ -1,5 +1,5 @@
 import { LEVELS_DATA, ACHIEVEMENTS_DATA } from '../data/levelsData.js';
-import { StorageService } from '../services/StorageService.js';
+import { StorageService, ARI_ACCESSORIES } from '../services/StorageService.js';
 import { SoundService } from '../services/SoundService.js';
 import { SupabaseService } from '../services/SupabaseService.js';
 import { Router } from '../router/Router.js';
@@ -218,8 +218,68 @@ export function renderProgressView(focus = 'resumen') {
             compact: false,
             showGreetButton: true
           })}
+
+          <!-- Armario de Personalización de Ari -->
+          <div class="ari-wardrobe-card" aria-label="Personalizar accesorio de Ari">
+            <h3 class="wardrobe-title">🎨 Personaliza a Ari con tus ⭐</h3>
+            <p class="wardrobe-subtitle">Desbloquea sombreros especiales recolectando estrellas:</p>
+            <div class="wardrobe-grid">
+              ${ARI_ACCESSORIES.map((acc) => {
+                const isUnlocked = totalStars >= acc.requiredStars;
+                const isEquipped = (state.ariAccessory || 'cap') === acc.id;
+                return `
+                  <button
+                    type="button"
+                    class="wardrobe-item-btn ${isEquipped ? 'is-equipped' : ''} ${!isUnlocked ? 'is-locked' : ''}"
+                    data-ari-accessory="${acc.id}"
+                    ${!isUnlocked ? 'disabled' : ''}
+                    title="${isUnlocked ? `Equipar ${acc.label}` : `Requiere ${acc.requiredStars} estrellas`}"
+                  >
+                    <span class="wardrobe-item-icon" aria-hidden="true">${acc.icon}</span>
+                    <span class="wardrobe-item-name">${escapeHtml(acc.label)}</span>
+                    <small class="wardrobe-item-req">
+                      ${isEquipped ? '✅ Puesto' : isUnlocked ? '✨ Usar' : `🔒 ${acc.requiredStars} ⭐`}
+                    </small>
+                  </button>
+                `;
+              }).join('')}
+            </div>
+          </div>
         </aside>
       </div>
+
+      <!-- Resumen para Padres/Tutores y Certificado Imprimible -->
+      <article class="parents-report-card" aria-label="Reporte pedagógico para padres y certificado imprimible">
+        <div class="parents-report-header">
+          <div>
+            <h2 class="subsection-title">👨‍👩‍👧 Resumen Pedagógico para Padres y Docentes</h2>
+            <p class="parents-report-desc">
+              Diagnóstico curricular de <strong>${safeName}</strong> en <strong>${state.selectedGrade}° Grado de Primaria</strong>:
+              Matemáticas al <strong>${mathPercent}%</strong> · Español al <strong>${espPercent}%</strong> · Precisión global del <strong>${globalAccuracy}%</strong>.
+            </p>
+          </div>
+          <button type="button" class="btn btn-primary btn-sm" id="btn-print-certificate">
+            🎓 Imprimir Certificado Oficial
+          </button>
+        </div>
+
+        <div class="official-certificate-preview" id="official-certificate-card">
+          <div class="certificate-inner-border">
+            <span class="certificate-badge">🦉 DIPLOMA OFICIAL • APRENDIENDO CON ARI</span>
+            <h3 class="certificate-student-name">${safeName}</h3>
+            <p class="certificate-body-text">
+              Por su dedicación, curiosidad y esfuerzo en <strong>${state.selectedGrade}° Grado de Primaria</strong>,
+              alcanzando <strong>${totalStars} de ${maxStars} estrellas (⭐)</strong>,
+              <strong>${completedLevels} de ${LEVELS_DATA.length} unidades superadas</strong> y
+              <strong>${state.totalScore} puntos</strong> en Matemáticas y Español.
+            </p>
+            <div class="certificate-footer-sign">
+              <span>📅 Fecha: ${new Date().toLocaleDateString('es-CO')}</span>
+              <span>🦉 Firma: <strong>Ari el Búho Sabio · Johan Linares</strong></span>
+            </div>
+          </div>
+        </div>
+      </article>
 
       <div class="levels-breakdown-section">
         <h2 class="subsection-title">📊 Detalle por Unidad</h2>
@@ -448,4 +508,28 @@ export function bindProgressViewEvents(rootElement, rerenderCallback, focus = 'r
       }
     });
   });
+
+  // Personalización de accesorios de Ari
+  rootElement.querySelectorAll('[data-ari-accessory]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const accId = btn.getAttribute('data-ari-accessory');
+      if (!accId) return;
+      SoundService.play('collect');
+      StorageService.setAriAccessory(accId);
+      showAriToast('¡Ari se puso su nuevo accesorio! 🦉✨', 'success');
+      rerenderCallback();
+    });
+  });
+
+  // Imprimir Certificado Oficial
+  const printCertBtn = rootElement.querySelector('#btn-print-certificate');
+  if (printCertBtn) {
+    printCertBtn.addEventListener('click', () => {
+      SoundService.play('levelComplete');
+      fireConfetti({ count: 60, duration: 2500 });
+      if (typeof window !== 'undefined' && typeof window.print === 'function') {
+        window.print();
+      }
+    });
+  }
 }

@@ -168,7 +168,27 @@ export function renderNavbar(currentRoute) {
               <span class="donar-label-text">Donar</span>
             </button>
 
-            <div class="navbar-audio-cluster" role="group" aria-label="Controles de audio">
+            <div class="navbar-audio-cluster" role="group" aria-label="Controles de audio y accesibilidad">
+              <button
+                type="button"
+                id="btn-large-text-toggle"
+                class="btn-circle-audio btn-a11y-toggle ${state.largeTextMode ? 'audio-on' : 'audio-off'}"
+                aria-pressed="${state.largeTextMode ? 'true' : 'false'}"
+                title="${state.largeTextMode ? 'Desactivar texto grande' : 'Activar modo de texto grande accesible (A+)'}"
+              >
+                <span class="a11y-text-icon" aria-hidden="true">A+</span>
+                <span class="sr-only">Texto grande</span>
+              </button>
+              <button
+                type="button"
+                id="btn-dark-mode-toggle"
+                class="btn-circle-audio btn-a11y-toggle ${state.darkMode ? 'audio-on' : 'audio-off'}"
+                aria-pressed="${state.darkMode ? 'true' : 'false'}"
+                title="${state.darkMode ? 'Activar modo claro' : 'Activar modo descanso visual (nocturno)'}"
+              >
+                <span class="dark-mode-icon" aria-hidden="true">${state.darkMode ? '☀️' : '🌙'}</span>
+                <span class="sr-only">Modo nocturno</span>
+              </button>
               <button
                 type="button"
                 id="btn-music-toggle"
@@ -239,6 +259,32 @@ export function bindNavbarEvents(rootElement = document) {
       setOpen(false);
       Router.navigate(btn.getAttribute('data-nav'));
     });
+  });
+
+  const largeTextBtn = navbar.querySelector('#btn-large-text-toggle');
+  largeTextBtn?.addEventListener('click', () => {
+    SoundService.play('click');
+    const enabled = StorageService.toggleLargeTextMode();
+    syncAudioButton(
+      largeTextBtn,
+      enabled,
+      'Desactivar texto grande',
+      'Activar modo de texto grande accesible (A+)'
+    );
+  });
+
+  const darkModeBtn = navbar.querySelector('#btn-dark-mode-toggle');
+  darkModeBtn?.addEventListener('click', () => {
+    SoundService.play('click');
+    const enabled = StorageService.toggleDarkMode();
+    syncAudioButton(
+      darkModeBtn,
+      enabled,
+      'Activar modo claro',
+      'Activar modo descanso visual (nocturno)'
+    );
+    const dmIcon = darkModeBtn.querySelector('.dark-mode-icon');
+    if (dmIcon) dmIcon.textContent = enabled ? '☀️' : '🌙';
   });
 
   const musicBtn = navbar.querySelector('#btn-music-toggle');

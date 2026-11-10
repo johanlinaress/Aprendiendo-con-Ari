@@ -78,6 +78,7 @@ export function renderGradeSelectView() {
                 maxlength="28"
                 value="${safeName}"
                 placeholder="Escribe tu nombre..."
+                title="Escribe tu primer nombre o apodo usando letras y espacios"
               />
               <button type="submit" class="btn btn-primary btn-sm" id="btn-save-student-setup">
                 ✅ Continuar al Menú

@@ -7,15 +7,69 @@
  */
 
 import { SoundService } from '../services/SoundService.js';
+import { StorageService } from '../services/StorageService.js';
 import { escapeHtml } from '../utils/escapeHtml.js';
 
-const ARI_PHRASES = [
-  '¡Hola! ¿Qué quieres aprender hoy? Elige Matemáticas o Español.',
-  '¡Muy bien! Las sumas nos ayudan a juntar cantidades.',
-  '¡Lee cada texto con atención! También puedes pulsar «Escuchar» 🔊.',
-  '¡Cada unidad superada te da estrellas y desbloquea nuevos retos! ⭐',
-  '¡Tú puedes lograr todas las medallas y llegar al 100%! 🏆'
-];
+function getPersonalizedAriPhrases() {
+  const state = StorageService?.getState?.() || { playerName: 'Explorador/a', selectedGrade: '3' };
+  const name = state.playerName || 'Explorador/a';
+  const grade = state.selectedGrade || '3';
+  const stars = StorageService?.getTotalStars?.() ?? 0;
+
+  return [
+    `¡Hola, ${name}! ¿Qué quieres aprender hoy en ${grade}° Grado? Elige Matemáticas o Español.`,
+    `¡Vas genial, ${name}! Ya llevas ${stars} estrellas brillantes en tu aventura ⭐.`,
+    `¡Consejo para ${name}! Lee cada texto con atención o pulsa «Escuchar» 🔊 para que te lo narre.`,
+    `¡Recuerda, ${name}! En la sección Progreso puedes personalizar mi sombrero con tus estrellas 👑🧙.`,
+    `¡Tú puedes lograr todas las medallas de ${grade}° Grado y descargar tu Diploma Oficial, ${name}! 🎓`
+  ];
+}
+
+function renderAriHeadwearSvg(accessory = 'cap', mood = 'happy') {
+  if (accessory === 'crown') {
+    return `
+      <!-- Royal Gold Crown -->
+      <g transform="rotate(-4 105 34)">
+        <polygon points="68,48 64,18 86,34 105,12 124,34 146,18 142,48" fill="#facc15" stroke="#b45309" stroke-width="2.5" stroke-linejoin="round" />
+        <rect x="68" y="44" width="74" height="8" rx="3" fill="#eab308" stroke="#b45309" stroke-width="2" />
+        <circle cx="105" cy="30" r="4.5" fill="#ef4444" />
+        <circle cx="84" cy="38" r="3.5" fill="#3b82f6" />
+        <circle cx="126" cy="38" r="3.5" fill="#22c55e" />
+      </g>
+    `;
+  }
+  if (accessory === 'wizard') {
+    return `
+      <!-- Starry Wizard Hat -->
+      <g transform="rotate(-5 105 34)">
+        <ellipse cx="105" cy="46" rx="54" ry="11" fill="#312e81" stroke="#1e1b4b" stroke-width="2.5" />
+        <path d="M70,45 L108,4 L140,45 Z" fill="#4f46e5" stroke="#1e1b4b" stroke-width="2.5" stroke-linejoin="round" />
+        <path d="M74,42 Q105,48 136,42" stroke="#facc15" stroke-width="4" fill="none" />
+        <polygon points="106,20 108,25 113,25 109,28 110,33 106,30 102,33 103,28 99,25 104,25" fill="#fde047" />
+      </g>
+    `;
+  }
+  if (accessory === 'explorer') {
+    return `
+      <!-- Space / Explorer Crest -->
+      <g transform="rotate(-3 105 34)">
+        <path d="M68,46 Q105,14 142,46 Z" fill="#0ea5e9" stroke="#0369a1" stroke-width="2.5" />
+        <rect x="64" y="42" width="82" height="8" rx="4" fill="#f8fafc" stroke="#0369a1" stroke-width="2" />
+        <circle cx="105" cy="32" r="7" fill="#fde047" stroke="#ca8a04" stroke-width="2" />
+      </g>
+    `;
+  }
+  return `
+    <!-- Graduation Cap (Birrete Clásico) -->
+    <g transform="rotate(-6 105 34)">
+      <path d="M74,36 L136,36 L132,52 Q105,60 78,52 Z" fill="url(#capGrad-${mood})" />
+      <polygon points="105,14 162,30 105,46 48,30" fill="url(#capGrad-${mood})" stroke="#475569" stroke-width="2" />
+      <circle cx="105" cy="30" r="4" fill="#f59e0b" />
+      <path d="M105,30 Q68,36 58,58" stroke="#f59e0b" stroke-width="3.5" fill="none" stroke-linecap="round" />
+      <polygon points="58,55 52,69 64,69" fill="#f97316" />
+    </g>
+  `;
+}
 
 export const POSITIVE_CORRECT_MESSAGES = [
   '¡Excelente trabajo!',
@@ -31,7 +85,8 @@ export const POSITIVE_RETRY_MESSAGES = [
   'Recuerda el ejemplo que acabamos de ver.'
 ];
 
-export function renderAriOwlSvg({ mood = 'happy' } = {}) {
+export function renderAriOwlSvg({ mood = 'happy', accessory } = {}) {
+  const activeAccessory = accessory || StorageService?.getState?.()?.ariAccessory || 'cap';
   const isWink = mood === 'wink' || mood === 'thinking';
   const isCelebrating = mood === 'celebrating' || mood === 'excited';
   const isSurprised = mood === 'surprised';
@@ -120,14 +175,8 @@ export function renderAriOwlSvg({ mood = 'happy' } = {}) {
       <polygon points="97,94 113,94 105,108" fill="#fb923c" stroke="#c2410c" stroke-width="2" />
       <path d="M98,107 Q105,117 112,107" fill="#ef4444" stroke="#991b1b" stroke-width="2" />
 
-      <!-- Graduation Cap (Birrete) -->
-      <g transform="rotate(-6 105 34)">
-        <path d="M74,36 L136,36 L132,52 Q105,60 78,52 Z" fill="url(#capGrad-${mood})" />
-        <polygon points="105,14 162,30 105,46 48,30" fill="url(#capGrad-${mood})" stroke="#475569" stroke-width="2" />
-        <circle cx="105" cy="30" r="4" fill="#f59e0b" />
-        <path d="M105,30 Q68,36 58,58" stroke="#f59e0b" stroke-width="3.5" fill="none" stroke-linecap="round" />
-        <polygon points="58,55 52,69 64,69" fill="#f97316" />
-      </g>
+      <!-- Headwear / Accessory (Birrete, Corona, Mago o Explorador) -->
+      ${renderAriHeadwearSvg(activeAccessory, mood)}
 
       <!-- Green Book OR Gold Victory Medal -->
       ${
@@ -207,8 +256,9 @@ export function bindAriMascotEvents(rootElement = document) {
       avatarBox.classList.add('ari-jump-anim');
     }
     if (speechText) {
-      phraseIndex = (phraseIndex + 1) % ARI_PHRASES.length;
-      speechText.textContent = ARI_PHRASES[phraseIndex];
+      const phrases = getPersonalizedAriPhrases();
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      speechText.textContent = phrases[phraseIndex];
     }
   };
 

@@ -6453,3 +6453,266 @@ select:focus-visible,
   }
 }
 
+/* ==========================================================================
+   MEJORAS DE EVALUACIÓN: TEXTO GRANDE (A+), MODO OSCURO, MÓVIL, ARMARIO Y DIPLOMA
+   ========================================================================== */
+
+/* 1. Mayor legibilidad en textos de lectura prolongada */
+.reading-passage-body {
+  font-size: 1.12rem !important;
+  line-height: 1.78 !important;
+  letter-spacing: 0.01em;
+}
+
+/* 2. Modo de Texto Grande Accesible (A+) */
+.a11y-text-icon {
+  font-size: 0.88rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+html.ari-large-text {
+  font-size: 112.5%;
+}
+
+html.ari-large-text .reading-passage-body,
+html.ari-large-text .question-prompt-title,
+html.ari-large-text .option-text {
+  font-size: 1.18rem !important;
+  line-height: 1.75 !important;
+}
+
+/* 3. Modo Descanso Visual / Oscuro (🌙) con contraste WCAG AA */
+html.ari-dark-mode body {
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+html.ari-dark-mode .stage-step-card,
+html.ari-dark-mode .exercise-main-card,
+html.ari-dark-mode .progress-summary-card,
+html.ari-dark-mode .cloud-sync-card,
+html.ari-dark-mode .achievement-card,
+html.ari-dark-mode .ari-wardrobe-card,
+html.ari-dark-mode .parents-report-card,
+html.ari-dark-mode .levels-breakdown-section,
+html.ari-dark-mode .grade-select-card,
+html.ari-dark-mode .practice-card {
+  background: #1e293b !important;
+  border-color: #475569 !important;
+  color: #f8fafc !important;
+}
+
+html.ari-dark-mode .step-title-3d,
+html.ari-dark-mode .section-title,
+html.ari-dark-mode .subsection-title,
+html.ari-dark-mode .question-prompt-title,
+html.ari-dark-mode .cloud-sync-title,
+html.ari-dark-mode .wardrobe-title {
+  color: #fde047 !important;
+}
+
+html.ari-dark-mode .step-subtitle,
+html.ari-dark-mode .section-subtitle,
+html.ari-dark-mode .cloud-sync-desc,
+html.ari-dark-mode .parents-report-desc,
+html.ari-dark-mode .reading-passage-body {
+  color: #e2e8f0 !important;
+}
+
+/* 4. Optimización táctil y barra superior compacta en móviles pequeños */
+.option-key-hint {
+  pointer-events: none;
+}
+
+@media (max-width: 560px) {
+  .stat-pill-progress,
+  .stat-pill-streak {
+    display: none !important;
+  }
+
+  .option-btn {
+    min-height: 52px;
+    padding: 0.7rem 0.85rem;
+  }
+
+  .option-key-hint {
+    width: 24px;
+    height: 24px;
+    font-size: 0.75rem;
+  }
+}
+
+/* 5. Armario de Personalización de Ari */
+.ari-wardrobe-card {
+  margin-top: 1rem;
+  padding: 1rem 1.1rem;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #ffffff 0%, #f5f3ff 100%);
+  border: 2.5px solid #c4b5fd;
+  box-shadow: 0 8px 20px rgba(109, 40, 217, 0.1);
+}
+
+.wardrobe-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #4c1d95;
+}
+
+.wardrobe-subtitle {
+  margin: 0 0 0.75rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #5b21b6;
+}
+
+.wardrobe-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.wardrobe-item-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.6rem 0.5rem;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 2px solid #ddd6fe;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.wardrobe-item-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: #8b5cf6;
+}
+
+.wardrobe-item-btn.is-equipped {
+  background: #f0fdf4;
+  border-color: #22c55e;
+  box-shadow: 0 3px 0 #16a34a;
+}
+
+.wardrobe-item-btn.is-locked {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: #f8fafc;
+}
+
+.wardrobe-item-icon {
+  font-size: 1.45rem;
+}
+
+.wardrobe-item-name {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #1e1b4b;
+}
+
+.wardrobe-item-req {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #6d28d9;
+}
+
+/* 6. Reporte para Padres y Certificado Oficial Imprimible */
+.parents-report-card {
+  margin: 1.25rem 0;
+  padding: 1.25rem 1.4rem;
+  border-radius: 22px;
+  background: #ffffff;
+  border: 2.5px solid #fde047;
+  box-shadow: 0 10px 24px rgba(202, 138, 4, 0.12);
+}
+
+.parents-report-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.parents-report-desc {
+  margin: 0.25rem 0 0;
+  font-size: 0.94rem;
+  color: #334155;
+}
+
+.official-certificate-preview {
+  padding: 0.5rem;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #fef9c3 0%, #ede9fe 50%, #dbeafe 100%);
+}
+
+.certificate-inner-border {
+  padding: 1.35rem 1.5rem;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 3px double #ca8a04;
+  text-align: center;
+}
+
+.certificate-badge {
+  display: inline-block;
+  padding: 0.25rem 0.85rem;
+  border-radius: 999px;
+  background: #fef08a;
+  color: #854d0e;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.certificate-student-name {
+  margin: 0.55rem 0 0.35rem;
+  font-size: 1.65rem;
+  font-weight: 900;
+  color: #312e81;
+}
+
+.certificate-body-text {
+  margin: 0 auto 0.9rem;
+  max-width: 640px;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: #334155;
+}
+
+.certificate-footer-sign {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1.5px dashed #cbd5e1;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+@media print {
+  .app-navbar,
+  .app-footer,
+  .progress-tabs-bar,
+  .cloud-sync-card,
+  .achievements-section,
+  .progress-mascot-aside,
+  .levels-breakdown-section,
+  #btn-print-certificate {
+    display: none !important;
+  }
+
+  .parents-report-card,
+  .official-certificate-preview,
+  .certificate-inner-border {
+    border-color: #ca8a04 !important;
+    box-shadow: none !important;
+  }
+}
+
+

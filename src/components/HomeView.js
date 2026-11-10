@@ -414,6 +414,7 @@ export function renderHomeView(mode = 'inicio') {
                     maxlength="28"
                     value="${safeName}"
                     placeholder="Escribe tu nombre aquí..."
+                    title="Escribe tu primer nombre o apodo usando letras y espacios"
                     autocomplete="off"
                     required
                   />

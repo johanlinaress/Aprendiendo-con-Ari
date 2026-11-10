@@ -56,11 +56,31 @@ function createInitialLevelsState() {
   return levels;
 }
 
+export const ARI_ACCESSORIES = [
+  { id: 'cap', label: 'Birrete Sabio', icon: '🎓', requiredStars: 0 },
+  { id: 'crown', label: 'Corona Dorada', icon: '👑', requiredStars: 3 },
+  { id: 'wizard', label: 'Sombrero Mágico', icon: '🧙', requiredStars: 6 },
+  { id: 'explorer', label: 'Casco Espacial', icon: '🚀', requiredStars: 10 }
+];
+
+export function sanitizePlayerNameInput(value) {
+  const cleaned = String(value || '')
+    .replace(/[<>"'`;&={}[\]\\/]/g, '')
+    .replace(/[\u0000-\u001F\u007F]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 28);
+  return cleaned || 'Juanito';
+}
+
 export function getDefaultState() {
   return {
     version: 2,
     playerName: 'Juanito',
     selectedGrade: '3',
+    ariAccessory: 'cap',
+    largeTextMode: false,
+    darkMode: false,
     startedAt: new Date().toISOString(),
     lastActivityLabel: 'Inicio de aventura',
     lastLevelId: null,
@@ -89,6 +109,13 @@ class StorageManager {
     this.state = this.loadState();
     SoundService.setEnabled(this.state.soundEnabled);
     SoundService.setMusicEnabled(this.state.musicEnabled);
+    this.applyVisualPreferences();
+  }
+
+  applyVisualPreferences() {
+    if (typeof document === 'undefined' || !document.documentElement) return;
+    document.documentElement.classList.toggle('ari-large-text', Boolean(this.state?.largeTextMode));
+    document.documentElement.classList.toggle('ari-dark-mode', Boolean(this.state?.darkMode));
   }
 
   loadState() {
@@ -241,10 +268,33 @@ class StorageManager {
   }
 
   setPlayerName(name) {
-    const clean = String(name || '').trim().slice(0, 28) || 'Juanito';
+    const clean = sanitizePlayerNameInput(name);
     this.state.playerName = clean;
     this.persist();
     return clean;
+  }
+
+  setAriAccessory(accessoryId) {
+    const valid = ARI_ACCESSORIES.find((a) => a.id === accessoryId);
+    if (!valid) return this.state.ariAccessory || 'cap';
+    if (this.getTotalStars() < valid.requiredStars) return this.state.ariAccessory || 'cap';
+    this.state.ariAccessory = valid.id;
+    this.persist();
+    return valid.id;
+  }
+
+  toggleLargeTextMode() {
+    this.state.largeTextMode = !this.state.largeTextMode;
+    this.applyVisualPreferences();
+    this.persist(this.state, { skipCloudSync: true });
+    return this.state.largeTextMode;
+  }
+
+  toggleDarkMode() {
+    this.state.darkMode = !this.state.darkMode;
+    this.applyVisualPreferences();
+    this.persist(this.state, { skipCloudSync: true });
+    return this.state.darkMode;
   }
 
   setGrade(grade) {
@@ -713,11 +763,9 @@ class StorageManager {
       return Math.max(min, Math.min(max, n));
     };
 
-    const cleanName =
-      String(rawState.playerName || defaults.playerName)
-        .replace(/[\u0000-\u001F\u007F]/g, '')
-        .trim()
-        .slice(0, 40) || defaults.playerName;
+    const cleanName = sanitizePlayerNameInput(rawState.playerName || defaults.playerName);
+    const validAccessories = new Set(ARI_ACCESSORIES.map((a) => a.id));
+    const cleanAccessory = validAccessories.has(rawState.ariAccessory) ? rawState.ariAccessory : 'cap';
 
     const cleanGrade = String(rawState.selectedGrade) === '4' ? '4' : '3';
     const cleanLastLabel =
@@ -771,6 +819,9 @@ class StorageManager {
       version: 2,
       playerName: cleanName,
       selectedGrade: cleanGrade,
+      ariAccessory: cleanAccessory,
+      largeTextMode: Boolean(this.state?.largeTextMode),
+      darkMode: Boolean(this.state?.darkMode),
       startedAt: typeof rawState.startedAt === 'string' ? rawState.startedAt.slice(0, 40) : defaults.startedAt,
       lastActivityLabel: cleanLastLabel,
       lastLevelId: validLevelIds.has(Number(rawState.lastLevelId)) ? Number(rawState.lastLevelId) : null,

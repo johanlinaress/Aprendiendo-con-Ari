@@ -12,7 +12,8 @@ const SYNC_CODE_STORAGE_KEY = 'aprendiendo_con_ari_sync_code_v1';
 const SESSION_TOKEN_STORAGE_KEY = 'aprendiendo_con_ari_session_v1';
 
 function isHeadlessAuditBrowser() {
-  return typeof navigator !== 'undefined' && Boolean(navigator.webdriver);
+  if (typeof navigator === 'undefined') return false;
+  return Boolean(navigator.webdriver) || /HeadlessChrome/i.test(navigator.userAgent || '');
 }
 
 function generateRandomAlphanumeric(length = 8) {
@@ -147,7 +148,7 @@ class SupabaseClientService {
    */
   async sendDonorHeart(dbId) {
     const idNum = Number(dbId);
-    if (!Number.isInteger(idNum) || idNum <= 0 || typeof fetch !== 'function') {
+    if (isHeadlessAuditBrowser() || !Number.isInteger(idNum) || idNum <= 0 || typeof fetch !== 'function') {
       return false;
     }
     const now = Date.now();
