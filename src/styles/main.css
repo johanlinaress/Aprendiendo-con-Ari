@@ -1386,6 +1386,41 @@ h3,
   flex-shrink: 0;
 }
 
+@media (max-width: 768px) {
+  .onboarding-stepper {
+    padding: 0.55rem 0.85rem;
+    gap: 0.5rem;
+    border-radius: 20px;
+  }
+  .stepper-step {
+    padding: 0.5rem 0.75rem;
+    gap: 0.5rem;
+  }
+  .stepper-step .step-text small {
+    display: none;
+  }
+  .stepper-arrow {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .onboarding-stepper {
+    padding: 0.45rem 0.6rem;
+    gap: 0.35rem;
+  }
+  .stepper-step {
+    padding: 0.4rem 0.55rem;
+    gap: 0.35rem;
+  }
+  .stepper-step .step-text strong {
+    font-size: 0.78rem;
+  }
+  .stepper-arrow {
+    display: none;
+  }
+}
+
 /* Botón 3D Secundario genérico para cancelar o volver */
 .btn-3d-secondary {
   display: inline-flex;
