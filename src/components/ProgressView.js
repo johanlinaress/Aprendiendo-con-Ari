@@ -1,6 +1,7 @@
 import { LEVELS_DATA, ACHIEVEMENTS_DATA } from '../data/levelsData.js';
 import { StorageService } from '../services/StorageService.js';
 import { SoundService } from '../services/SoundService.js';
+import { SupabaseService } from '../services/SupabaseService.js';
 import { Router } from '../router/Router.js';
 import { renderAriMascot, bindAriMascotEvents } from './AriMascot.js';
 import { showConfirmModal } from './ConfirmModal.js';
@@ -17,6 +18,7 @@ export function renderProgressView(focus = 'resumen') {
   const completedLevels = StorageService.getCompletedCount();
   const mathPercent = StorageService.getSubjectProgress('matematicas');
   const espPercent = StorageService.getSubjectProgress('espanol');
+  const syncCode = escapeHtml(SupabaseService.getOrCreateSyncCode());
   const globalAccuracy =
     state.totalQuestionsAnswered > 0
       ? Math.round((state.totalCorrectAnswers / state.totalQuestionsAnswered) * 100)
@@ -125,6 +127,51 @@ export function renderProgressView(focus = 'resumen') {
           </div>
         </article>
       </div>
+
+      <!-- Sincronización Segura en la Nube (Supabase) -->
+      <article class="cloud-sync-card" aria-label="Sincronización de progreso en la nube con Supabase">
+        <div class="cloud-sync-header">
+          <div>
+            <span class="cloud-sync-badge">☁️ Base de Datos en la Nube • Supabase</span>
+            <h2 class="cloud-sync-title">Guarda y lleva tu progreso a otro dispositivo</h2>
+            <p class="cloud-sync-desc">
+              Usa tu <strong>Código de Explorador</strong> para guardar tus estrellas en la nube o recuperarlas en otro celular, tablet o computador.
+            </p>
+          </div>
+          <div class="cloud-code-box">
+            <span class="cloud-code-label">Tu Código de Explorador:</span>
+            <div class="cloud-code-pill-row">
+              <code class="cloud-code-value" id="cloud-sync-code-display">${syncCode}</code>
+              <button type="button" class="btn btn-sm btn-secondary" id="btn-copy-sync-code" title="Copiar código de explorador">
+                📋 Copiar
+              </button>
+              <button type="button" class="btn btn-sm btn-primary" id="btn-cloud-save" title="Subir progreso actual a Supabase">
+                ☁️ Guardar ahora
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <form class="cloud-restore-form" id="form-cloud-load" aria-label="Recuperar partida desde otro dispositivo">
+          <label for="input-cloud-sync-code" class="cloud-restore-label">
+            ¿Ya tienes un código de otro dispositivo?
+          </label>
+          <div class="cloud-restore-controls">
+            <input
+              type="text"
+              id="input-cloud-sync-code"
+              class="input-player-name cloud-code-input"
+              placeholder="Ej: ARI-7K9M-P4X2"
+              maxlength="32"
+              autocomplete="off"
+            />
+            <button type="submit" class="btn btn-sm btn-secondary" id="btn-cloud-load">
+              📥 Recuperar desde la nube
+            </button>
+          </div>
+        </form>
+        <p class="cloud-sync-feedback" id="cloud-sync-feedback" aria-live="polite"></p>
+      </article>
 
       <div class="progress-main-columns">
         <div class="achievements-section" id="achievements-panel">
@@ -296,6 +343,79 @@ export function bindProgressViewEvents(rootElement, rerenderCallback, focus = 'r
         importFileInput.value = '';
       };
       reader.readAsText(file);
+    });
+  }
+
+  // Sincronización en la nube con Supabase
+  const syncFeedbackEl = rootElement.querySelector('#cloud-sync-feedback');
+  const setCloudFeedback = (text, isError = false) => {
+    if (!syncFeedbackEl) return;
+    syncFeedbackEl.textContent = text;
+    syncFeedbackEl.classList.toggle('is-error', isError);
+    syncFeedbackEl.classList.toggle('is-success', !isError);
+  };
+
+  const copySyncCodeBtn = rootElement.querySelector('#btn-copy-sync-code');
+  if (copySyncCodeBtn) {
+    copySyncCodeBtn.addEventListener('click', async () => {
+      SoundService.play('click');
+      const currentCode = SupabaseService.getOrCreateSyncCode();
+      try {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(currentCode);
+        }
+        setCloudFeedback(`✅ ¡Código ${currentCode} copiado! Guárdalo para usar tu partida en otro dispositivo.`);
+      } catch (e) {
+        setCloudFeedback(`Tu código de explorador es: ${currentCode}`);
+      }
+    });
+  }
+
+  const cloudSaveBtn = rootElement.querySelector('#btn-cloud-save');
+  if (cloudSaveBtn) {
+    cloudSaveBtn.addEventListener('click', async () => {
+      SoundService.play('click');
+      cloudSaveBtn.disabled = true;
+      setCloudFeedback('⏳ Guardando estrellas y progreso en Supabase...');
+      const res = await SupabaseService.saveProfileToCloud(
+        StorageService.getState(),
+        StorageService.getCompletedCount()
+      );
+      cloudSaveBtn.disabled = false;
+      if (res.success) {
+        SoundService.play('collect');
+        fireConfetti({ count: 40, duration: 2000 });
+        setCloudFeedback(`☁️ ${res.message}`);
+      } else {
+        SoundService.play('wrong');
+        setCloudFeedback(res.message, true);
+      }
+    });
+  }
+
+  const cloudLoadForm = rootElement.querySelector('#form-cloud-load');
+  const cloudLoadInput = rootElement.querySelector('#input-cloud-sync-code');
+  if (cloudLoadForm && cloudLoadInput) {
+    cloudLoadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      SoundService.play('click');
+      const codeVal = cloudLoadInput.value.trim();
+      setCloudFeedback('⏳ Buscando tu aventura en la nube...');
+      const res = await SupabaseService.loadProfileFromCloud(codeVal);
+      if (res.success && res.stateSnapshot) {
+        StorageService.restoreCloudSnapshot(res.stateSnapshot);
+        SoundService.play('levelComplete');
+        fireConfetti({ count: 80, duration: 3000 });
+        setCloudFeedback(
+          `✅ ¡Partida de ${res.profile.player_name} (${res.profile.star_points} ⭐) restaurada desde la nube!`
+        );
+        setTimeout(() => {
+          rerenderCallback();
+        }, 700);
+      } else {
+        SoundService.play('wrong');
+        setCloudFeedback(res.message, true);
+      }
     });
   }
 

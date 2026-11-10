@@ -5,7 +5,7 @@
  * @license Propiedad Intelectual Protegida. Prohibida su copia o plagio.
  */
 
-const CACHE_NAME = 'ari-educa-cache-v5';
+const CACHE_NAME = 'ari-educa-cache-v6';
 
 const STATIC_ASSETS = [
   './',
@@ -18,6 +18,7 @@ const STATIC_ASSETS = [
   './src/services/StorageService.js',
   './src/services/SoundService.js',
   './src/services/AnalyticsService.js',
+  './src/services/SupabaseService.js',
   './src/components/Navbar.js',
   './src/components/Footer.js',
   './src/components/HomeView.js',

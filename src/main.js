@@ -9,6 +9,7 @@ import { Router } from './router/Router.js';
 import { StorageService } from './services/StorageService.js';
 import { SoundService } from './services/SoundService.js';
 import { AnalyticsService } from './services/AnalyticsService.js';
+import { SupabaseService } from './services/SupabaseService.js';
 import { LEVELS_DATA, ACHIEVEMENTS_DATA, EXPOSITIVE_READINGS_DATA } from './data/levelsData.js';
 import { renderNavbar, bindNavbarEvents } from './components/Navbar.js';
 import { renderFooter, bindFooterEvents } from './components/Footer.js';
@@ -169,6 +170,7 @@ function bootstrap() {
     StorageService,
     SoundService,
     AnalyticsService,
+    SupabaseService,
     LEVELS_DATA,
     ACHIEVEMENTS_DATA,
     EXPOSITIVE_READINGS_DATA,

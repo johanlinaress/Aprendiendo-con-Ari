@@ -7,6 +7,7 @@
 
 import { LEVELS_DATA, ACHIEVEMENTS_DATA } from '../data/levelsData.js';
 import { SoundService } from './SoundService.js';
+import { SupabaseService } from './SupabaseService.js';
 
 export const STORAGE_KEY = 'aprendiendo_con_ari_state_v1';
 export const SESSION_STORAGE_KEY = 'aprendiendo_con_ari_active_session_v1';
@@ -145,7 +146,7 @@ class StorageManager {
     }
   }
 
-  persist(stateToSave = this.state) {
+  persist(stateToSave = this.state, { skipCloudSync = false } = {}) {
     stateToSave.lastUpdated = new Date().toISOString();
     if (typeof window !== 'undefined' && window.localStorage) {
       try {
@@ -157,6 +158,9 @@ class StorageManager {
       }
     }
     this.notify();
+    if (!skipCloudSync) {
+      SupabaseService.scheduleAutoSync(stateToSave, this.getCompletedCount());
+    }
   }
 
   getStorageWarning() {
@@ -688,11 +692,50 @@ class StorageManager {
     this.state = getDefaultState();
     this.state.soundEnabled = soundPref;
     this.state.musicEnabled = musicPref;
-    this.persist();
+    this.persist(this.state, { skipCloudSync: true });
     if (typeof window !== 'undefined' && window.__ARI_APP__?.resetHomeStep) {
       window.__ARI_APP__.resetHomeStep();
     }
     return this.state;
+  }
+
+  /**
+   * Restaura una instantánea de progreso descargada desde Supabase.
+   */
+  restoreCloudSnapshot(snapshot) {
+    if (!snapshot || typeof snapshot !== 'object') return false;
+    const defaults = getDefaultState();
+    const mergedLevels = createInitialLevelsState();
+    if (snapshot.levels && typeof snapshot.levels === 'object') {
+      for (const level of LEVELS_DATA) {
+        if (snapshot.levels[level.id]) {
+          mergedLevels[level.id] = {
+            ...mergedLevels[level.id],
+            ...snapshot.levels[level.id]
+          };
+        }
+      }
+    }
+    const unlocked = Array.isArray(snapshot.unlockedLevels)
+      ? Array.from(
+          new Set([
+            ...INITIAL_UNLOCKED_LEVELS,
+            ...snapshot.unlockedLevels.map(Number).filter((n) => Number.isFinite(n) && n > 0)
+          ])
+        ).sort((a, b) => a - b)
+      : [...INITIAL_UNLOCKED_LEVELS];
+
+    this.state = {
+      ...defaults,
+      ...snapshot,
+      soundEnabled: this.state.soundEnabled,
+      musicEnabled: this.state.musicEnabled,
+      unlockedLevels: unlocked,
+      levels: mergedLevels,
+      achievements: Array.isArray(snapshot.achievements) ? snapshot.achievements : []
+    };
+    this.persist(this.state, { skipCloudSync: true });
+    return true;
   }
 
   /**

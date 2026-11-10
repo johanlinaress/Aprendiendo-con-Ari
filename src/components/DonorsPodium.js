@@ -1,4 +1,5 @@
 import { SoundService } from '../services/SoundService.js';
+import { SupabaseService } from '../services/SupabaseService.js';
 import { escapeHtml } from '../utils/escapeHtml.js';
 
 export const DONORS_STORAGE_KEY = 'aprendiendo_con_ari_donors_v2';
@@ -11,6 +12,7 @@ export const DEFAULT_DONORS = [];
 
 let cachedDonors = null;
 let tickerTimerId = null;
+let isFetchingCloudDonors = false;
 
 /**
  * Obtiene la lista actual de donadores desde localStorage o lista vacía.
@@ -144,7 +146,7 @@ export function addDonor({
 }
 
 /**
- * Incrementa en 1 los corazones de un donador.
+ * Incrementa en 1 los corazones de un donador (y lo registra en Supabase si es un donador verificado en la nube).
  */
 export function giveHeartToDonor(donorId) {
   const donors = [...getDonorsList()];
@@ -153,7 +155,43 @@ export function giveHeartToDonor(donorId) {
 
   donor.hearts = (Number(donor.hearts) || 0) + 1;
   saveDonorsList(donors);
+
+  if (donor.isCloud && donor.dbId) {
+    SupabaseService.sendDonorHeart(donor.dbId);
+  }
+
   return donor.hearts;
+}
+
+/**
+ * Sincroniza el podio con la vista pública en tiempo real de Supabase (`donors_podium_view`).
+ */
+async function syncDonorsFromSupabase(rootElement = document, onUpdateCallback = null) {
+  if (isFetchingCloudDonors) return;
+  isFetchingCloudDonors = true;
+  try {
+    const cloudDonors = await SupabaseService.fetchPublicDonors();
+    if (!Array.isArray(cloudDonors)) return;
+
+    const currentLocalOnly = getDonorsList().filter((d) => !d.isCloud);
+    const merged = [...cloudDonors, ...currentLocalOnly];
+    const prevJson = JSON.stringify(getDonorsList());
+    const nextJson = JSON.stringify(merged);
+
+    if (prevJson !== nextJson) {
+      saveDonorsList(merged);
+      const podiumContainer = rootElement.querySelector('#seccion-podio-donadores');
+      if (podiumContainer && podiumContainer.parentElement) {
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = renderDonorsPodiumSection();
+        const newPodiumEl = wrapper.firstElementChild;
+        podiumContainer.replaceWith(newPodiumEl);
+        bindDonorsPodiumEvents(rootElement, onUpdateCallback, { skipCloudSync: true });
+      }
+    }
+  } finally {
+    isFetchingCloudDonors = false;
+  }
 }
 
 /**
@@ -589,10 +627,19 @@ function renderDonorModalHtml() {
 /**
  * Conecta todos los eventos de interacción del podio y el modal.
  */
-export function bindDonorsPodiumEvents(rootElement = document, onUpdateCallback = null) {
+export function bindDonorsPodiumEvents(
+  rootElement = document,
+  onUpdateCallback = null,
+  { skipCloudSync = false } = {}
+) {
   if (tickerTimerId) {
     clearInterval(tickerTimerId);
     tickerTimerId = null;
+  }
+
+  // 0. Sincronizar donadores en tiempo real desde Supabase
+  if (!skipCloudSync) {
+    syncDonorsFromSupabase(rootElement, onUpdateCallback);
   }
 
   // 1. Iniciar Ticker automático de agradecimientos

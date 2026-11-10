@@ -9,6 +9,8 @@
  * - Seguimiento de niveles jugados, niveles completados, aciertos y materias.
  */
 
+import { SupabaseService } from './SupabaseService.js';
+
 export const DEFAULT_GA_ID = 'GTM-NWXWZF9D';
 
 class AnalyticsManager {
@@ -139,6 +141,23 @@ class AnalyticsManager {
       stars_earned: Number(stars || 0),
       session_score: Number(score || 0)
     });
+
+    let activeGrade = '3';
+    try {
+      const raw = window.localStorage?.getItem('aprendiendo_con_ari_state_v1');
+      if (raw) activeGrade = JSON.parse(raw).selectedGrade || '3';
+    } catch (e) {
+      // Fallback silencioso
+    }
+
+    SupabaseService.trackLearningEvent({
+      selectedGrade: activeGrade,
+      eventType: passed ? 'level_completed' : 'level_attempted',
+      levelId: Number(levelId),
+      score: Number(score || 0),
+      accuracy: Number(accuracy || 0),
+      passed: Boolean(passed)
+    });
   }
 
   /**
@@ -148,6 +167,11 @@ class AnalyticsManager {
    */
   trackGradeSelect(grade) {
     this.sendEvent('select_grade', { grade: String(grade) });
+    SupabaseService.trackLearningEvent({
+      selectedGrade: String(grade),
+      eventType: 'grade_selected',
+      passed: true
+    });
   }
 
   /**
