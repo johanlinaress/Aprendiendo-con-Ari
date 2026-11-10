@@ -28,6 +28,17 @@ Plataforma educativa web interactiva, gamificada y de código limpio diseñada p
 
 ## ✨ Características Principales
 
+### 🎓 0. Flujo Guiado y Secuencial de Bienvenida (`HomeView.js`)
+Al ingresar a la plataforma, la experiencia sigue un orden pedagógico intuitivo estructurado en 3 pasos obligatorios y guiados por **Ari**:
+1. **Paso 1: Selección de Grado Escolar (Primero):**
+   - Ari saluda al estudiante y le solicita elegir entre **3° de Primaria** o **4° de Primaria** mediante tarjetas interactivas 3D con ilustraciones vectoriales dedicadas.
+   - Al seleccionar el grado, se reproduce un sonido alegre de confirmación y el sistema adapta inmediatamente la complejidad curricular.
+2. **Paso 2: Escribe tu Nombre (Luego):**
+   - El estudiante ingresa su nombre o apodo en un campo amplio con foco automático y botón destacado *«🚀 ¡Listo! Continuar a las Actividades»*.
+   - Permite personalizar su perfil, guardar sus estrellas de forma individual y celebrar sus logros por su nombre.
+3. **Paso 3: Sección de Actividades (Y ya ahí muestra las actividades):**
+   - Se desbloquea y despliega la pantalla completa de actividades con las materias (**Matemáticas** y **Español**), las 10 unidades de aprendizaje, las estadísticas acumuladas y el botón *«✏️ Cambiar grado o nombre»* para ajustar la configuración cuando se desee.
+
 ### 🦉 1. Acompañamiento Pedagógico de Ari (`AriMascot.js`)
 - **Mascota vectorial en SVG puro:** Birrete académico, gafas redondas, libro escolar y plumaje morado con 8 estados emocionales (saludo, pensamiento, celebración, aliento, concentración, sorpresa, etc.).
 - **Interacción viva:** Mensajes de bienvenida contextuales, pistas pedagógicas animadas y botón de saludo interactivo con animación de guiño.
@@ -158,6 +169,76 @@ Sistema de medición estadística y telemetría pedagógica integrado con **Goog
 - **Web Audio API & HTML5 Audio:** Motor híbrido tolerante a fallos para efectos instantáneos y streaming continuo.
 - **Web Speech API:** Lectura asistida y sintetizada en español.
 - **Node.js (HTTP Server Nativo):** Servidor local ligero de cero dependencias externas con streaming HTTP 206 Partial Content.
+
+---
+
+## 🧠 ¿Cómo Funciona el Código? (Arquitectura Técnica y Funcionamiento Interno)
+
+La aplicación fue desarrollada siguiendo los principios de **Clean Code**, **Vanilla JavaScript Modular (ES Modules)** y arquitectura **Single Page Application (SPA)** sin frameworks pesados (React, Angular o Vue), garantizando máxima velocidad de carga (< 200 ms), portabilidad total y cero dependencias de compilación.
+
+```mermaid
+flowchart TD
+    A[Navegador del Usuario] -->|Abre index.html| B[sw.js - Service Worker]
+    B -->|Network-First / Caché| C[main.js - Bootstrap]
+    C -->|Inicializa| D[StorageService]
+    C -->|Inicializa| E[SoundService]
+    C -->|Inicializa| F[AnalyticsService GA4]
+    C -->|Escucha rutas hash| G[Router.js]
+    G -->|Ruta #/inicio| H[HomeView.js - Flujo de 3 Pasos]
+    H -->|Paso 1| I[1. Selección de Grado: 3° o 4°]
+    I -->|Paso 2| J[2. Escribe tu Nombre]
+    J -->|Paso 3| K[3. Muestra Sección de Actividades]
+    K -->|Selecciona Nivel| L[ExerciseView.js - Aprendo, Practico, Demuestro]
+    L -->|Puntos, Estrellas y Medallas| D
+```
+
+### 1. Punto de Entrada y Ciclo de Vida (`main.js` e `index.html`)
+- **`index.html`:** Provee el cascarón estructural HTML5 (`.app-shell`), carga asíncrona de fuentes web (`Fredoka` y `Nunito`), metadatos SEO y PWA, y el script principal `<script type="module" src="./src/main.js"></script>`.
+- **`main.js` (Bootstrap):**
+  - Orquesta los servicios globales (`StorageService`, `SoundService`, `AnalyticsService`).
+  - Configura el contenedor principal (`#app`) inyectando el fondo vectorial dinámico (`renderSceneBackgroundSvg()`), la barra de navegación lateral/superior (`Navbar.js`) y el pie de página (`Footer.js`).
+  - Registra el listener del router: ante cada cambio de ruta hash, actualiza la música de fondo correspondiente, renderiza la vista solicitada con sus migas de pan (`Breadcrumbs.js`) y envía telemetría anónima a Google Analytics 4.
+
+### 2. Enrutador SPA Declarativo Basado en Hash (`src/router/Router.js`)
+- Utiliza la API nativa `window.location.hash` (`#/inicio`, `#/materias`, `#/nivel/1`, `#/practica`, etc.).
+- **Ventaja pedagógica:** Permite a los estudiantes guardar enlaces directos o usar los botones de avance/retroceso del navegador sin recargar la página ni perder el estado de su sesión.
+- Mapea rutas dinámicas como `#/nivel/:id` mediante expresiones regulares para cargar de inmediato los ejercicios de la unidad seleccionada.
+
+### 3. Flujo Secuencial de Bienvenida al Abrir la Página (`src/components/HomeView.js`)
+- Gestiona el estado de onboarding del estudiante en tres etapas secuenciales:
+  1. `activeHomeStep = 1`: Muestra de forma destacada el **Paso 1 (Selección de Grado)** con Ari saludando y las dos tarjetas interactivas de 3° y 4° grado.
+  2. Al pulsar el grado, ejecuta `StorageService.setGrade(grade)`, reproduce el sonido de acierto y transiciona a `activeHomeStep = 2`.
+  3. `activeHomeStep = 2`: Muestra el **Paso 2 (Escribe tu Nombre)** con foco automático en el campo de texto.
+  4. Al pulsar «Continuar» o presionar Enter, ejecuta `StorageService.setPlayerName(name)`, dispara sonido festivo y transiciona a `activeHomeStep = 3`.
+  5. `activeHomeStep = 3`: Desbloquea y despliega la **Sección de Actividades**, con las materias (Matemáticas y Español), las unidades de aprendizaje, estadísticas y acceso a mapa y práctica.
+- Incluye la barra visual `.onboarding-stepper` para que el alumno siempre sepa en qué paso se encuentra y pueda pulsar `✏️ Cambiar grado o nombre` para reconfigurar sus datos cuando lo desee.
+
+### 4. Capa de Persistencia y Perfiles de Estudiante (`src/services/StorageService.js`)
+- Centraliza todo el estado en un único objeto serializado en `localStorage` (`aprendiendo_con_ari_state_v1`).
+- **Patrón Observable:** Dispone de un método `.subscribe(listener)` que notifica reactivamente a los componentes cuando se actualiza el puntaje, las estrellas o el nombre.
+- **Soporte de perfiles múltiples:** Permite almacenar diferentes perfiles de niños en el mismo dispositivo (`getProfiles()`, `createProfile()`, `switchProfile()`), asegurando que hermanos o compañeros de clase mantengan su avance individual.
+- **Normalización lingüística avanzada (`normalizeAnswerText`):**
+  - Trata la letra `ñ` como carácter único sagrado (`año` ≠ `ano`).
+  - Normaliza tildes y diacríticos (`canción` → `cancion`).
+  - Elimina espacios accidentales y signos de puntuación no relevantes.
+  - Normaliza números con puntos de mil (`1.400` → `1400`).
+
+### 5. Motor Didáctico de Ejercicios y Evaluación (`src/components/ExerciseView.js` y `src/data/levelsData.js`)
+- **Fase 1: Aprendo:** Presenta la idea clave, el ejemplo visual guiado y un mini-reto formativo de auto-comprobación inmediata (*Active Recall*).
+- **Fase 2: Practico:** Selecciona 5 ejercicios del banco de preguntas usando el algoritmo **Fisher-Yates**, asegurando que si un niño repite la unidad, no le salgan las mismas preguntas inmediatamente.
+- **Fase 3: Demuestro:** Evaluación con retroalimentación en 3 capas de andamiaje: afectiva (ánimo), pista pedagógica y procedimiento detallado paso a paso (`📖 Ver procedimiento`).
+- **Aprobación formativa:** Requiere un mínimo del **70%** de respuestas correctas para aprobar y desbloquear la siguiente unidad en el mapa.
+
+### 6. Motor de Audio y Música Adaptativa (`src/services/SoundService.js`)
+- **Doble motor de audio:**
+  - **HTML5 Audio Elements:** Para música ambiental en bucle con control de volumen suave y streaming HTTP 206 Partial Content.
+  - **Web Audio API:** Sintetizador digital de tonos para retroalimentación auditiva inmediata (clics, aciertos, errores, bloqueos) sin latencia.
+- **Síntesis de voz (Web Speech API):** Provee el botón `🔊 Escuchar` para narrar oraciones y textos expositivos a niños que aún están consolidando su lectura.
+
+### 7. Rendimiento Offline y PWA (`sw.js` y `manifest.json`)
+- El Service Worker intercepta las peticiones de red:
+  - Si hay conexión a internet, obtiene la versión más reciente del servidor (*Network-First*) y refresca la caché local en segundo plano.
+  - Si el dispositivo se queda sin conexión, sirve instantáneamente los archivos desde la caché (`ari-educa-cache-v2`), permitiendo a los niños seguir jugando en el autobús, en la escuela o en zonas rurales sin internet.
 
 ---
 

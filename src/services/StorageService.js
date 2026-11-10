@@ -694,6 +694,9 @@ class StorageManager {
     this.state.soundEnabled = soundPref;
     this.state.musicEnabled = musicPref;
     this.persist();
+    if (typeof window !== 'undefined' && window.__ARI_APP__?.resetHomeStep) {
+      window.__ARI_APP__.resetHomeStep();
+    }
     return this.state;
   }
 

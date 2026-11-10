@@ -12,7 +12,13 @@ import { AnalyticsService } from './services/AnalyticsService.js';
 import { LEVELS_DATA, ACHIEVEMENTS_DATA, EXPOSITIVE_READINGS_DATA } from './data/levelsData.js';
 import { renderNavbar, bindNavbarEvents } from './components/Navbar.js';
 import { renderFooter, bindFooterEvents } from './components/Footer.js';
-import { renderHomeView, bindHomeViewEvents } from './components/HomeView.js';
+import {
+  renderHomeView,
+  bindHomeViewEvents,
+  resetHomeStep,
+  getActiveHomeStep,
+  setActiveHomeStep
+} from './components/HomeView.js';
 import { renderGradeSelectView, bindGradeSelectViewEvents } from './components/GradeSelectView.js';
 import { renderLevelsMapView, bindLevelsMapViewEvents } from './components/LevelsMapView.js';
 import { renderExerciseView, bindExerciseViewEvents, getActiveSession } from './components/ExerciseView.js';
@@ -166,6 +172,9 @@ function bootstrap() {
     LEVELS_DATA,
     ACHIEVEMENTS_DATA,
     EXPOSITIVE_READINGS_DATA,
+    resetHomeStep,
+    getActiveHomeStep,
+    setActiveHomeStep,
     getActiveSession,
     get activeSession() {
       return getActiveSession();

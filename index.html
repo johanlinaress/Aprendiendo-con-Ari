@@ -89,8 +89,8 @@ LICENCIA: Propiedad intelectual protegida. Queda prohibida la copia, reproducci�
         href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800;900&display=swap"
       />
     </noscript>
-    <link rel="stylesheet" href="./src/styles/main.css?v=2.6" />
-    <link rel="modulepreload" href="./src/main.js?v=2.6" />
+    <link rel="stylesheet" href="./src/styles/main.css?v=2.7" />
+    <link rel="modulepreload" href="./src/main.js?v=2.7" />
     <link rel="modulepreload" href="./src/router/Router.js" />
     <link rel="modulepreload" href="./src/services/StorageService.js" />
     <link rel="modulepreload" href="./src/services/SoundService.js" />
@@ -120,24 +120,33 @@ LICENCIA: Propiedad intelectual protegida. Queda prohibida la copia, reproducci�
           </div>
         </header>
         <main class="app-main-container" id="main-content" tabindex="-1">
-          <section class="home-view">
-            <div class="hero-stage-card">
-              <div class="hero-stage-grid">
-                <div class="hero-owl-column">
+          <section class="home-view" data-active-step="1">
+            <div class="stage-step-card">
+              <div class="stage-step-grid">
+                <div class="stage-owl-column">
                   <div class="ari-mascot-card">
                     <div class="ari-speech-box">
-                      <div class="ari-speech-bubble">¡Hola, Explorador/a! ¿Qué quieres aprender hoy?</div>
+                      <div class="ari-speech-bubble">¡Hola! Bienvenido/a a Aprendiendo con Ari 🦉 ¿En qué grado estás?</div>
                     </div>
                   </div>
                 </div>
-                <div class="hero-logo-and-subjects">
-                  <div class="cartoon-logo-box">
-                    <h1 class="title-3d-stack">
-                      <span class="title-3d-gold">Aprendiendo</span>
-                      <span class="title-3d-purple">con Ari <span class="title-star" aria-hidden="true">⭐</span></span>
-                    </h1>
-                    <div class="golden-ribbon-tag">¡Explora, aprende y diviértete!</div>
-                    <p class="hero-welcome-line">¡Bienvenido/a, <strong>Explorador/a</strong>!</p>
+                <div class="stage-step-content">
+                  <div class="step-pill-header">🎯 Paso 1 de 3 • Selección de Grado</div>
+                  <h1 class="step-title-3d">¿En qué grado estás?</h1>
+                  <p class="step-subtitle">Elige tu grado escolar para comenzar:</p>
+                  <div class="grade-cards-row">
+                    <div class="grade-choice-card grade-card-blue">
+                      <div class="grade-number-col">
+                        <span class="grade-big-num">3°</span>
+                        <span class="grade-word">Grado</span>
+                      </div>
+                    </div>
+                    <div class="grade-choice-card grade-card-pink">
+                      <div class="grade-number-col">
+                        <span class="grade-big-num">4°</span>
+                        <span class="grade-word">Grado</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -146,7 +155,7 @@ LICENCIA: Propiedad intelectual protegida. Queda prohibida la copia, reproducci�
         </main>
       </div>
     </div>
-    <script type="module" src="./src/main.js?v=2.6"></script>
+    <script type="module" src="./src/main.js?v=2.7"></script>
     <!-- Registro de Service Worker para PWA y modo sin conexión -->
     <script>
       if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
