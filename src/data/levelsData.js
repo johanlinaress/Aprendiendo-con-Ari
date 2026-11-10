@@ -5,23 +5,6 @@
  * @license Propiedad Intelectual Protegida. Prohibida su copia o plagio.
  */
 
-export const GRADES_DATA = [
-  {
-    id: '3',
-    label: '3° Grado',
-    shortLabel: '3°',
-    theme: 'blue',
-    description: 'Sumas y restas de 3 cifras, tablas del 1 al 10, repartos exactos, verbos, sujeto, predicado y lecturas.'
-  },
-  {
-    id: '4',
-    label: '4° Grado',
-    shortLabel: '4°',
-    theme: 'pink',
-    description: 'Operaciones de mayor magnitud, propiedades, divisiones con residuo, núcleo del sujeto/predicado y textos expositivos.'
-  }
-];
-
 export const SUBJECTS_DATA = [
   {
     id: 'matematicas',

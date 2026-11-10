@@ -39,22 +39,10 @@ class SoundManager {
 
     // Rutas de archivos de audio reales (carpeta sounds/)
     this.audioSources = {
-      correct: [
-        'sounds/collect-points.mp3',
-        'sounds/sonido al selecionar una respuesta correcta/liecio-collect-points-190037.mp3'
-      ],
-      levelComplete: [
-        'sounds/level-passed.mp3',
-        'sounds/sonido al pasar nivel/universfield-level-passed-143039.mp3'
-      ],
-      homeMusic: [
-        'sounds/home-music.mp3',
-        'sounds/sonidos de fondo de inicio, etc/mihailandrei-praia-de-domingo-477785.mp3'
-      ],
-      activityMusic: [
-        'sounds/activity-music.mp3',
-        'sounds/sonido al realizar cualquier prueba-actividad/ejah_music-wake-up-clair-de-lune-468898.mp3'
-      ]
+      correct: ['sounds/collect-points.mp3'],
+      levelComplete: ['sounds/level-passed.mp3'],
+      homeMusic: ['sounds/home-music.mp3'],
+      activityMusic: ['sounds/activity-music.mp3']
     };
 
     this.initUserGestureHandler();

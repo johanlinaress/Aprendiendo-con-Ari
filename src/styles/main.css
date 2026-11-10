@@ -1163,29 +1163,7 @@ h3,
   gap: 0.55rem;
 }
 
-.profile-customizer-strip {
-  background: rgba(255, 255, 255, 0.92);
-  border: 2.5px solid #ffffff;
-  border-radius: 22px;
-  padding: 0.85rem 1.25rem;
-  margin-bottom: 1.35rem;
-  box-shadow: var(--shadow-sm);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.player-name-form {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
 .input-player-name,
-.grade-mini-pill,
 .btn-secondary.btn-sm {
   min-height: 44px;
 }
@@ -1205,39 +1183,6 @@ h3,
   font-size: 0.85rem;
   font-weight: 800;
   color: #15803d;
-}
-
-.inline-grade-selector {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.grade-selector-label {
-  font-size: 0.92rem;
-  font-weight: 900;
-  color: #1e1b4b;
-}
-
-.grade-mini-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  border: 2px solid #94a3b8;
-  background: #ffffff;
-  color: #0f172a;
-  font-weight: 800;
-  font-size: 0.88rem;
-  padding: 0.42rem 0.85rem;
-  border-radius: var(--radius-full);
-  cursor: pointer;
-}
-
-.grade-mini-pill.active {
-  background: #6d28d9;
-  color: #ffffff;
-  border-color: #3b0764;
 }
 
 /* =========================================================================
@@ -2205,7 +2150,6 @@ h3,
   cursor: pointer;
 }
 
-.math-Blocks-tower,
 .math-blocks-tower {
   display: flex;
   flex-direction: column;
@@ -3211,10 +3155,6 @@ h3,
    Tablet (<= 1024px) & Phone (<= 767px)
 ======================== */
 @media (max-width: 1024px) {
-  .navbar-container {
-    flex-wrap: wrap;
-  }
-
   .hero-stage-grid,
   .grade-stage-grid,
   .map-header-banner,
@@ -3345,8 +3285,7 @@ h3,
     font-size: 0.95rem;
   }
 
-  .stat-unit,
-  .sound-label {
+  .stat-unit {
     display: none;
   }
 
@@ -3424,22 +3363,6 @@ h3,
   color: #ffffff;
   border-color: #ffffff;
   box-shadow: 0 4px 12px rgba(109, 40, 217, 0.35);
-}
-
-.unit-phases-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  margin-top: 0.55rem;
-}
-
-.phase-mini-pill {
-  font-size: 0.75rem;
-  font-weight: 800;
-  padding: 0.2rem 0.55rem;
-  border-radius: var(--radius-full);
-  background: #ede9fe;
-  color: #5b21b6;
 }
 
 .lesson-aprendo-card,
@@ -4116,63 +4039,6 @@ h3,
     width: 100%;
     justify-content: space-between;
   }
-
-  /* Optimización First-Fold Móvil (375x667): compactar cabecera de inicio para mostrar materias antes */
-  .home-hero-card {
-    padding: 0.75rem 0.9rem !important;
-    gap: 0.55rem !important;
-  }
-
-  .hero-top-welcome-row {
-    gap: 0.45rem !important;
-  }
-
-  .hero-ari-stage {
-    flex-direction: row !important;
-    align-items: center !important;
-    padding: 0.45rem 0.65rem !important;
-    gap: 0.55rem !important;
-  }
-
-  .hero-ari-mascot .ari-character-wrapper {
-    gap: 0.4rem !important;
-  }
-
-  .hero-ari-mascot .ari-svg-container {
-    width: 64px !important;
-    height: 64px !important;
-  }
-
-  .hero-ari-mascot .ari-speech-bubble {
-    padding: 0.45rem 0.65rem !important;
-    font-size: 0.82rem !important;
-  }
-
-  .hero-title {
-    font-size: 1.25rem !important;
-    line-height: 1.2 !important;
-    margin-bottom: 0.15rem !important;
-  }
-
-  .hero-description {
-    font-size: 0.85rem !important;
-    line-height: 1.3 !important;
-    margin-bottom: 0.25rem !important;
-  }
-
-  .student-inline-row {
-    padding: 0.4rem 0.55rem !important;
-    margin-top: 0.15rem !important;
-  }
-}
-
-/* Acciones duales en la fase 1. Aprendo */
-.lesson-aprendo-actions-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem;
-  margin-top: 0.85rem;
 }
 
 /* Indicador de foco de teclado de alto contraste (WCAG 2.4.7 / 2.4.11) */
@@ -4202,9 +4068,9 @@ select:focus-visible,
   .ari-float,
   .ari-jump,
   .ari-svg,
-  .view-fade-in,
+  .view-fade-anim,
   .pulse-correct,
-  .shake-wrong,
+  .shake-anim,
   .star-earned {
     animation: none !important;
     transform: none !important;
@@ -4214,32 +4080,6 @@ select:focus-visible,
 /* ==========================================================================
    DONACIONES / APOYO AL CREADOR (Nequi, ARQ, PayPal)
    ========================================================================== */
-
-.nav-link-btn.nav-link-highlight {
-  background: linear-gradient(135deg, #fff1f2, #ffe4e6);
-  border: 1.5px solid #f43f5e;
-  color: #be123c;
-  font-weight: 800;
-  box-shadow: 0 2px 6px rgba(244, 63, 94, 0.15);
-  animation: pulse-heart-btn 3s infinite ease-in-out;
-}
-
-@keyframes pulse-heart-btn {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.03);
-  }
-}
-
-.nav-link-btn.nav-link-highlight:hover,
-.nav-link-btn.nav-link-highlight.active {
-  background: linear-gradient(135deg, #f43f5e, #e11d48);
-  color: #ffffff;
-  border-color: #be123c;
-  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.35);
-}
 
 .footer-donation-btn {
   color: #be185d !important;
@@ -4528,12 +4368,6 @@ select:focus-visible,
   background: #f0fdf4;
   border-color: #38bdf8;
   color: #0369a1;
-}
-
-.donation-actions-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 }
 
 .btn-donation-direct {
@@ -5089,13 +4923,8 @@ select:focus-visible,
   }
 }
 
-/* Adaptación del Navbar para pantallas intermedias (768px - 1180px) */
+/* Adaptación de la Barra Superior para pantallas intermedias (768px - 1180px) */
 @media (max-width: 1180px) and (min-width: 768px) {
-  .navbar-container {
-    padding: 0.35rem 0.5rem;
-    gap: 0.2rem;
-    flex-wrap: nowrap;
-  }
   .profile-text-col small {
     display: none;
   }
@@ -5112,12 +4941,6 @@ select:focus-visible,
   .navbar-links {
     gap: 0.1rem;
     flex-shrink: 1;
-  }
-  .nav-link-btn {
-    font-size: 0.76rem;
-    padding: 0.3rem 0.42rem;
-    gap: 0.18rem;
-    min-height: 40px;
   }
   .navbar-stats-bar {
     gap: 0.2rem;

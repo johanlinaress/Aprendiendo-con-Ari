@@ -88,7 +88,7 @@ function renderDonationsHubView(qrImageUrl) {
               <div class="donation-qr-box donation-qr-thumb">
                 <img
                   src="${qrImageUrl}"
-                  onerror="if (!this.dataset.triedFallback) { this.dataset.triedFallback = '1'; this.src = './src/assets/nequi-qr.jpg'; }"
+                  onerror="if (!this.dataset.triedFallback) { this.dataset.triedFallback = '1'; this.src = './assets/nequi-qr.jpg'; }"
                   alt="Código QR Bre-B Nequi de Johan Linares"
                   class="donation-qr-image"
                   id="nequi-qr-img"
@@ -253,7 +253,7 @@ function renderNequiDedicatedView(qrImageUrl, qrSquareUrl) {
             <div class="nequi-big-qr-stage">
               <img
                 src="${qrImageUrl}"
-                onerror="if (!this.dataset.triedFallback) { this.dataset.triedFallback = '1'; this.src = './src/assets/nequi-qr.jpg'; }"
+                onerror="if (!this.dataset.triedFallback) { this.dataset.triedFallback = '1'; this.src = './assets/nequi-qr.jpg'; }"
                 alt="Código QR Bre-B Nequi de Johan Linares en alta resolución"
                 class="nequi-big-qr-img"
                 id="nequi-dedicated-qr-img"

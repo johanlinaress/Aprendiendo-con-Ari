@@ -20,11 +20,6 @@ export const SIDEBAR_ITEMS = [
   { id: 'progreso', path: '/progreso', icon: '🏅', label: 'Progreso' }
 ];
 
-export const NAV_ITEMS = [
-  ...SIDEBAR_ITEMS,
-  { id: 'donaciones', path: '/donaciones', icon: '💖', label: 'Donaciones', isHighlighted: true }
-];
-
 export function renderNavbar(currentRoute) {
   const state = StorageService.getState();
   const safeName = escapeHtml(state.playerName);

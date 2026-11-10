@@ -37,11 +37,6 @@ export function isAnswerMatch(userAnswer, correctAnswer) {
   return normUser.length > 0 && normUser === normCorrect;
 }
 
-/** Cantidad mínima de respuestas correctas para aprobar (ej. 5 preguntas al 70% → 4). */
-export function getRequiredCorrectAnswers(totalQuestions, minPassPercent = 70) {
-  return Math.ceil((Number(totalQuestions) * Number(minPassPercent)) / 100);
-}
-
 function createInitialLevelsState() {
   const levels = {};
   for (const level of LEVELS_DATA) {

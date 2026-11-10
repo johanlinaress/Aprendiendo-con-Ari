@@ -144,13 +144,6 @@ export function addDonor({
 }
 
 /**
- * Registra una donación confirmada directamente cuando Johan nos indique el donante y monto.
- */
-export function registerConfirmedDonation(info) {
-  return addDonor(info);
-}
-
-/**
  * Incrementa en 1 los corazones de un donador.
  */
 export function giveHeartToDonor(donorId) {
