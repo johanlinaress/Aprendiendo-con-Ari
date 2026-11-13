@@ -40,9 +40,10 @@ export function renderLevelsMapView(routeSubject = 'todas') {
       : LEVELS_DATA.filter((l) => l.subject === subjectFilter);
 
   const bannerMeta = SUBJECT_BANNER_META[subjectFilter] || SUBJECT_BANNER_META.todas;
-  const recommendedLevelId = StorageService.getNextPlayableLevelForSubject(
-    subjectFilter === 'todas' ? null : subjectFilter
-  );
+  const recommendedLevelId =
+    subjectFilter === 'todas'
+      ? StorageService.getRecommendedLevelId()
+      : StorageService.getNextPlayableLevelForSubject(subjectFilter);
 
   return `
     <section class="levels-map-view view-fade-anim" data-component="LevelsMapView" data-subject-filter="${subjectFilter}">
@@ -169,7 +170,7 @@ export function renderLevelsMapView(routeSubject = 'todas') {
                         <span>Requisito: Supera el <strong>Nivel ${lvl.requiredLevel}</strong> con al menos <strong>70%</strong> para abrir este candado.</span>
                       </div>`
                     : `<div class="level-stars-criteria-hint">
-                        <span>⭐ Recompensas: 1★ (70%+) • 2★ (85%+) • 3★ (100% perfecto)</span>
+                        <span>⭐ Recompensas: 1★ (60%+) • 2★ (80%+) • 3★ (100% perfecto)</span>
                       </div>`
                 }
 

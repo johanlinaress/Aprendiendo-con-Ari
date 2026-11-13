@@ -1029,7 +1029,9 @@ export function bindExerciseViewEvents(rootElement, rerenderCallback) {
         rerenderCallback(true);
       }
     });
-    return;
+    return () => {
+      stopSessionTimer();
+    };
   }
 
   bindAriMascotEvents(rootElement);

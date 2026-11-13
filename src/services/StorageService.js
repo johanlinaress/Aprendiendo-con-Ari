@@ -14,7 +14,9 @@ export const SESSION_STORAGE_KEY = 'aprendiendo_con_ari_active_session_v1';
 export const INITIAL_UNLOCKED_LEVELS = [1, 6, 10];
 
 export function normalizeAnswerText(value) {
-  const str = String(value ?? '')
+  let str = String(value ?? '')
+    .trim()
+    .replace(/[.,;:]+$/, '')
     .trim()
     .replace(/\s+/g, ' ')
     .toLowerCase()
@@ -23,10 +25,13 @@ export function normalizeAnswerText(value) {
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/__enie__/g, 'ñ');
 
-  // Si es numérico con puntos de mil (ej. 1.400 -> 1400), normalizar
-  if (/^\d{1,3}(\.\d{3})+$/.test(str)) {
-    return str.replace(/\./g, '');
+  // Si es numérico con puntos de mil (ej. 1.400 -> 1400)
+  if (/^\$?\d{1,3}(\.\d{3})+(\s*[a-z]+)?$/.test(str)) {
+    str = str.replace(/\./g, '');
   }
+  // Quitar signo de moneda al inicio
+  str = str.replace(/^\$\s*/, '');
+
   return str;
 }
 
@@ -35,7 +40,23 @@ export function isAnswerMatch(userAnswer, correctAnswer) {
   if (String(userAnswer).trim() === String(correctAnswer).trim()) return true;
   const normUser = normalizeAnswerText(userAnswer);
   const normCorrect = normalizeAnswerText(correctAnswer);
-  return normUser.length > 0 && normUser === normCorrect;
+  if (!normUser || !normCorrect) return false;
+  if (normUser === normCorrect) return true;
+
+  // Manejar opciones con alternativas (ej: "Ellos o Ellas", "Ellos / Ellas")
+  if (normCorrect.includes(' o ') || normCorrect.includes(' / ')) {
+    const parts = normCorrect.split(/\s+o\s+|\s*\/\s*/);
+    if (parts.some((p) => p.trim() === normUser)) return true;
+  }
+
+  // Manejar números con unidades (ej: "600 metros" con usuario "600", o "3.550 kg" con "3550")
+  const numOnlyCorrect = normCorrect.replace(/^(.*?)(-?\d+)\s*(metros|m|kg|kilogramos|canicas|libros|ovejas|asientos|cuadernos|panes|sillas|galletas|cajas|pasajeros)?.*$/, '$2');
+  const numOnlyUser = normUser.replace(/^(.*?)(-?\d+)\s*(metros|m|kg|kilogramos|canicas|libros|ovejas|asientos|cuadernos|panes|sillas|galletas|cajas|pasajeros)?.*$/, '$2');
+  if (numOnlyCorrect && numOnlyUser && numOnlyCorrect === numOnlyUser && /^\d+$/.test(numOnlyUser)) {
+    return true;
+  }
+
+  return false;
 }
 
 function createInitialLevelsState() {
@@ -787,6 +808,8 @@ class StorageManager {
             bestScore: clampInt(src.bestScore, 0, 100000),
             bestAccuracy: clampInt(src.bestAccuracy, 0, 100),
             attempts: clampInt(src.attempts, 0, 10000),
+            completionBonusClaimed: Boolean(src.completionBonusClaimed ?? src.completed),
+            perfectBonusClaimed: Boolean(src.perfectBonusClaimed ?? (src.completed && src.bestAccuracy === 100)),
             lastPlayedAt: typeof src.lastPlayedAt === 'string' ? src.lastPlayedAt.slice(0, 40) : null
           };
         }

@@ -53,7 +53,20 @@ export function renderPracticeView() {
   if (practiceState.questionIndex >= pool.length) {
     practiceState.questionIndex = 0;
   }
-  const currentQuestion = pool[practiceState.questionIndex] || pool[0];
+  const defaultFallbackQuestion = {
+    id: 1,
+    levelId: 1,
+    levelTitle: 'Práctica Libre',
+    levelIcon: '⭐',
+    category: 'matematicas',
+    visual: '🎯',
+    prompt: '¡Bienvenido a la Práctica Libre! Elige una categoría arriba para comenzar.',
+    options: ['Opción A', 'Opción B'],
+    correctAnswer: 'Opción A',
+    hint: 'Selecciona una categoría arriba para explorar ejercicios.',
+    explanation: 'Excelente comienzo.'
+  };
+  const currentQuestion = pool[practiceState.questionIndex] || pool[0] || defaultFallbackQuestion;
 
   let ariMood = 'happy';
   let ariMessage = '¡En la Práctica Libre puedes entrenar todas las materias sin límite de intentos y sumar puntos extra!';

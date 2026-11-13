@@ -341,7 +341,6 @@ export function renderHomeView(mode = 'inicio') {
                   id="btn-home-grade-3"
                   class="grade-choice-card grade-card-blue ${state.selectedGrade === '3' ? 'grade-selected' : ''}"
                   data-step-grade="3"
-                  data-select-grade="3"
                   aria-pressed="${state.selectedGrade === '3' ? 'true' : 'false'}"
                 >
                   <div class="grade-number-col">
@@ -359,7 +358,6 @@ export function renderHomeView(mode = 'inicio') {
                   id="btn-home-grade-4"
                   class="grade-choice-card grade-card-pink ${state.selectedGrade === '4' ? 'grade-selected' : ''}"
                   data-step-grade="4"
-                  data-select-grade="4"
                   aria-pressed="${state.selectedGrade === '4' ? 'true' : 'false'}"
                 >
                   <div class="grade-number-col">
@@ -619,16 +617,6 @@ export function bindHomeViewEvents(rootElement, rerender) {
     });
   });
 
-  rootElement.querySelectorAll('[data-select-grade]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const grade = btn.getAttribute('data-select-grade');
-      SoundService.play('click');
-      StorageService.setGrade(grade);
-      activeHomeStep = 2;
-      if (rerender) rerender();
-    });
-  });
-
   // Eventos de Paso 2: Escribe tu Nombre
   const nameForm = rootElement.querySelector('#form-player-name');
   const nameInput = rootElement.querySelector('#input-player-name');
@@ -651,8 +639,11 @@ export function bindHomeViewEvents(rootElement, rerender) {
     }
   };
 
-  saveNameBtn?.addEventListener('click', handleSaveName);
-  nameForm?.addEventListener('submit', handleSaveName);
+  if (nameForm) {
+    nameForm.addEventListener('submit', handleSaveName);
+  } else if (saveNameBtn) {
+    saveNameBtn.addEventListener('click', handleSaveName);
+  }
 
   const backToGradeBtn = rootElement.querySelector('#btn-back-to-grade');
   backToGradeBtn?.addEventListener('click', () => {

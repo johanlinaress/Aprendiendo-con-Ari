@@ -85,7 +85,15 @@ export function showLegalNoticeModal() {
   SoundService.play('click');
 
   const closeBtn = modalEl.querySelector('#legal-modal-close');
+
+  const handleKeydown = (e) => {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  };
+
   const closeModal = () => {
+    window.removeEventListener('keydown', handleKeydown);
     SoundService.play('click');
     modalEl.remove();
   };
@@ -95,11 +103,5 @@ export function showLegalNoticeModal() {
     if (e.target === modalEl) closeModal();
   });
 
-  const handleKeydown = (e) => {
-    if (e.key === 'Escape') {
-      window.removeEventListener('keydown', handleKeydown);
-      closeModal();
-    }
-  };
   window.addEventListener('keydown', handleKeydown);
 }

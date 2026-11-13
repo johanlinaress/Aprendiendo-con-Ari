@@ -32,6 +32,11 @@ export function fireConfetti(options = {}) {
   const count = options.count || 80;
   const duration = options.duration || 3200;
 
+  const existingCanvas = document.getElementById('ari-confetti-canvas');
+  if (existingCanvas) {
+    existingCanvas.remove();
+  }
+
   const canvas = document.createElement('canvas');
   canvas.id = 'ari-confetti-canvas';
   canvas.style.position = 'fixed';

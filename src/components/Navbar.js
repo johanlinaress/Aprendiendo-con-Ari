@@ -309,8 +309,8 @@ export function bindNavbarEvents(rootElement = document) {
       setOpen(!linksGroup.classList.contains('mobile-open'));
     });
 
-    linksGroup.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
+    navbar.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && (linksGroup.classList.contains('mobile-open') || sidebar?.classList.contains('mobile-open'))) {
         setOpen(false);
         mobileMenuBtn.focus();
       }

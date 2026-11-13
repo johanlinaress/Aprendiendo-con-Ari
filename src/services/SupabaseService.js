@@ -249,7 +249,7 @@ class SupabaseClientService {
           bestStreak: Math.max(0, Number(state.bestStreak) || 0),
           totalCorrectAnswers: Math.max(0, Number(state.totalCorrectAnswers) || 0),
           totalQuestionsAnswered: Math.max(0, Number(state.totalQuestionsAnswered) || 0),
-          unlockedLevels: Array.isArray(state.unlockedLevels) ? state.unlockedLevels : [1, 6],
+          unlockedLevels: Array.isArray(state.unlockedLevels) ? state.unlockedLevels : [1, 6, 10],
           rewardedQuestionIds: Array.isArray(state.rewardedQuestionIds) ? state.rewardedQuestionIds : [],
           levels: state.levels || {},
           achievements: Array.isArray(state.achievements) ? state.achievements : []

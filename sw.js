@@ -79,12 +79,14 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
-  // Ignorar analíticas y llamadas externas
+  // Ignorar peticiones no GET, analíticas y llamadas a la API de Supabase
   if (
+    event.request.method !== 'GET' ||
     url.hostname.includes('googletagmanager') ||
     url.hostname.includes('google-analytics') ||
     url.hostname.includes('fonts.googleapis') ||
-    url.hostname.includes('fonts.gstatic')
+    url.hostname.includes('fonts.gstatic') ||
+    url.hostname.includes('supabase.co')
   ) {
     return;
   }

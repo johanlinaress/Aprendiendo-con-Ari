@@ -1,4 +1,5 @@
 import { SoundService } from '../services/SoundService.js';
+import { escapeHtml } from '../utils/escapeHtml.js';
 
 export function renderConfirmModal({
   id = 'confirm-modal',
@@ -11,14 +12,14 @@ export function renderConfirmModal({
     <div class="modal-backdrop" id="${id}" data-component="ConfirmModal" role="dialog" aria-modal="true" aria-labelledby="${id}-title">
       <div class="modal-card modal-pop-anim">
         <div class="modal-icon" aria-hidden="true">⚠️</div>
-        <h3 class="modal-title" id="${id}-title">${title}</h3>
-        <p class="modal-message">${message}</p>
+        <h3 class="modal-title" id="${id}-title">${escapeHtml(title)}</h3>
+        <p class="modal-message">${escapeHtml(message)}</p>
         <div class="modal-actions">
           <button type="button" class="btn btn-secondary" id="${id}-cancel">
-            ${cancelLabel}
+            ${escapeHtml(cancelLabel)}
           </button>
           <button type="button" class="btn btn-danger" id="${id}-confirm">
-            ${confirmLabel}
+            ${escapeHtml(confirmLabel)}
           </button>
         </div>
       </div>
@@ -45,9 +46,26 @@ export function showConfirmModal({ title, message, confirmLabel, cancelLabel, on
   const cancelBtn = modalEl.querySelector('#confirm-modal-cancel');
   const confirmBtn = modalEl.querySelector('#confirm-modal-confirm');
 
+  const handleKeydown = (e) => {
+    if (e.key === 'Escape') {
+      closeModal();
+      if (onCancel) onCancel();
+    }
+  };
+  window.addEventListener('keydown', handleKeydown);
+
   const closeModal = () => {
+    window.removeEventListener('keydown', handleKeydown);
     modalEl.remove();
   };
+
+  modalEl.addEventListener('click', (e) => {
+    if (e.target === modalEl) {
+      SoundService.play('click');
+      closeModal();
+      if (onCancel) onCancel();
+    }
+  });
 
   if (cancelBtn) {
     cancelBtn.addEventListener('click', () => {

@@ -3,6 +3,7 @@ import { Router } from '../router/Router.js';
 import { renderAriMascot, bindAriMascotEvents } from './AriMascot.js';
 import { escapeHtml } from '../utils/escapeHtml.js';
 import { renderDonorsPodiumSection, bindDonorsPodiumEvents } from './DonorsPodium.js';
+import { fireConfetti } from '../utils/confetti.js';
 
 // URL oficial verificada para donaciones directas en PayPal
 const PAYPAL_DONATE_URL = 'https://www.paypal.com/donate/?business=johansttivelinaresb%40gmail.com&no_recurring=0&currency_code=USD';
@@ -106,20 +107,30 @@ function renderDonationsHubView(qrImageUrl) {
                 </p>
               </div>
 
-              <button
-                type="button"
-                class="btn-select-method btn-select-nequi"
-                data-nav="/donaciones/nequi"
-                aria-label="Abrir página dedicada de Nequi"
-              >
-                🔍 Ver Código QR Grande y Datos ➜
-              </button>
+              <div class="donation-card-actions-cluster">
+                <button
+                  type="button"
+                  class="btn-card-quick-copy"
+                  data-copy-target="johansttivelinaresb@gmail.com"
+                  aria-label="Copiar correo o llave de Nequi"
+                >
+                  📋 Copiar Llave Bre-B
+                </button>
+                <button
+                  type="button"
+                  class="btn-select-method btn-select-nequi"
+                  data-nav="/donaciones/nequi"
+                  aria-label="Abrir página dedicada de Nequi"
+                >
+                  🔍 Ver Código QR Grande y Datos ➜
+                </button>
+              </div>
             </article>
 
             <!-- BLOQUE 2: ARQ -->
             <article class="donation-method-card donation-card-arq donation-card-interactive" id="card-arq" data-navigate="/donaciones/arq" role="button" tabindex="0" aria-label="Ver detalles de donación con ARQ">
               <div class="donation-card-badge-row">
-                <span class="donation-badge badge-arq">🔵 ARQ</span>
+                <span class="donation-badge badge-arq">🟢 ARQ</span>
                 <span class="donation-country-tag">⚡ Dólares Digitales</span>
               </div>
 
@@ -132,22 +143,32 @@ function renderDonationsHubView(qrImageUrl) {
               <div class="donation-info-block">
                 <h3 class="donation-recipient-name">Usuario en ARQ</h3>
                 <div class="donation-field-row">
-                  <span class="field-label">Nombre de usuario:</span>
+                  <span class="field-label">Tag de usuario:</span>
                   <strong class="field-value arq-username" id="val-arq-user">$sttive</strong>
                 </div>
                 <p class="donation-instructions">
-                  Envía dólares digitales de forma instantánea y sin comisiones intermediarias.
+                  Envía dólares digitales de forma instantánea, segura y sin comisiones intermediarias.
                 </p>
               </div>
 
-              <button
-                type="button"
-                class="btn-select-method btn-select-arq"
-                data-nav="/donaciones/arq"
-                aria-label="Abrir página dedicada de ARQ"
-              >
-                🔍 Ver Usuario y Datos de ARQ ➜
-              </button>
+              <div class="donation-card-actions-cluster">
+                <button
+                  type="button"
+                  class="btn-card-quick-copy"
+                  data-copy-target="$sttive"
+                  aria-label="Copiar usuario $sttive de ARQ"
+                >
+                  📋 Copiar Tag ($sttive)
+                </button>
+                <button
+                  type="button"
+                  class="btn-select-method btn-select-arq"
+                  data-nav="/donaciones/arq"
+                  aria-label="Abrir página dedicada de ARQ"
+                >
+                  🔍 Ver Usuario y Datos de ARQ ➜
+                </button>
+              </div>
             </article>
 
             <!-- BLOQUE 3: PAYPAL -->
@@ -174,15 +195,50 @@ function renderDonationsHubView(qrImageUrl) {
                 </p>
               </div>
 
-              <button
-                type="button"
-                class="btn-select-method btn-select-paypal"
-                data-nav="/donaciones/paypal"
-                aria-label="Abrir página dedicada de PayPal"
-              >
-                🔍 Ver Datos y Donar con PayPal ➜
-              </button>
+              <div class="donation-card-actions-cluster">
+                <button
+                  type="button"
+                  class="btn-card-quick-copy"
+                  data-copy-target="johansttivelinaresb@gmail.com"
+                  aria-label="Copiar correo de PayPal"
+                >
+                  📋 Copiar Correo PayPal
+                </button>
+                <button
+                  type="button"
+                  class="btn-select-method btn-select-paypal"
+                  data-nav="/donaciones/paypal"
+                  aria-label="Abrir página dedicada de PayPal"
+                >
+                  🔍 Ver Datos y Donar con PayPal ➜
+                </button>
+              </div>
             </article>
+          </div>
+
+          <!-- BANNER DE TRANSPARENCIA E IMPACTO PEDAGÓGICO -->
+          <div class="donations-impact-banner">
+            <div class="impact-banner-header">
+              <span class="impact-banner-icon">🎯</span>
+              <h3>¿Por qué apoyar a Aprendiendo con Ari?</h3>
+            </div>
+            <div class="impact-cards-grid">
+              <div class="impact-card">
+                <span class="impact-card-emoji">🛡️</span>
+                <strong>100% Gratuito y Sin Anuncios</strong>
+                <p>Protegemos la atención y privacidad infantil sin anuncios comerciales ni ventas dentro de la app.</p>
+              </div>
+              <div class="impact-card">
+                <span class="impact-card-emoji">☁️</span>
+                <strong>Servidores y Sincronización</strong>
+                <p>Financia el hospedaje en la nube y la base de datos Supabase para guardar estrellas, logros y diplomas.</p>
+              </div>
+              <div class="impact-card">
+                <span class="impact-card-emoji">📚</span>
+                <strong>Nuevos Grados y Contenidos</strong>
+                <p>Permite crear lecciones interactivas para nuevos grados escolares, ciencias y comprensión lectora.</p>
+              </div>
+            </div>
           </div>
 
           <!-- PODIO DE AGRADECIMIENTO A DONADORES DE CORAZÓN -->
@@ -215,6 +271,16 @@ function renderNequiDedicatedView(qrImageUrl, qrSquareUrl) {
       <div class="dedicated-wrapper">
         <div class="purple-ribbon-banner donations-ribbon">
           <h1>🟣 Donar con Nequi y Bre-B</h1>
+        </div>
+
+        <div class="dedicated-mascot-row" style="margin-top: 1rem;">
+          ${renderAriMascot({
+            mood: 'excited',
+            message:
+              '¡Muchas gracias por apoyar este sueño educativo con Nequi y Bre-B! Escanea el código QR o copia la llave.',
+            compact: true,
+            showGreetButton: false
+          })}
         </div>
 
         <article class="dedicated-donation-card dedicated-card-nequi">
@@ -294,6 +360,28 @@ function renderNequiDedicatedView(qrImageUrl, qrSquareUrl) {
             </button>
           </div>
 
+          <div class="donation-suggested-section">
+            <h4 class="donation-suggested-title">💡 Sugerencias de aporte voluntario en Colombia:</h4>
+            <div class="donation-suggested-grid">
+              <div class="donation-suggested-chip">
+                <span class="suggested-amount">☕ $2.000 COP</span>
+                <span class="suggested-desc">Un cafecito para Johan</span>
+              </div>
+              <div class="donation-suggested-chip">
+                <span class="suggested-amount">📓 $5.000 COP</span>
+                <span class="suggested-desc">Cuaderno de estudio</span>
+              </div>
+              <div class="donation-suggested-chip">
+                <span class="suggested-amount">⭐ $10.000 COP</span>
+                <span class="suggested-desc">Súper Aporte Ari</span>
+              </div>
+              <div class="donation-suggested-chip">
+                <span class="suggested-amount">👑 $20.000 COP</span>
+                <span class="suggested-desc">Héroe de la Educación</span>
+              </div>
+            </div>
+          </div>
+
           <div class="dedicated-steps-panel">
             <h3>📖 ¿Cómo hacer tu donación paso a paso?</h3>
             <ol class="donation-steps-list">
@@ -352,13 +440,23 @@ function renderArqDedicatedView() {
 
       <div class="dedicated-wrapper">
         <div class="purple-ribbon-banner donations-ribbon">
-          <h1>🔵 Donar con ARQ (Dólares Digitales)</h1>
+          <h1>🟢 Donar con ARQ (Dólares Digitales)</h1>
+        </div>
+
+        <div class="dedicated-mascot-row" style="margin-top: 1rem;">
+          ${renderAriMascot({
+            mood: 'excited',
+            message:
+              '¡Muchas gracias por tu apoyo en dólares digitales mediante la app verde ARQ! Envía tu aporte al usuario $sttive.',
+            compact: true,
+            showGreetButton: false
+          })}
         </div>
 
         <article class="dedicated-donation-card dedicated-card-arq">
           <div class="dedicated-header-row">
             <div class="dedicated-brand-pill badge-arq">
-              <span>🔵 ARQ</span>
+              <span>🟢 ARQ Oficial</span>
             </div>
             <span class="dedicated-country-tag">⚡ Transferencias Instantáneas (USDT / USDC)</span>
           </div>
@@ -377,7 +475,19 @@ function renderArqDedicatedView() {
             </div>
           </div>
 
-          <div class="dedicated-copy-section">
+          <div class="dedicated-info-box">
+            <div class="dedicated-info-item">
+              <span class="info-label">Aplicación Financiera:</span>
+              <strong class="info-value" style="color: #059669;">🟢 ARQ (Dólares Digitales)</strong>
+            </div>
+
+            <div class="dedicated-info-item">
+              <span class="info-label">Tag de Usuario / Destinatario:</span>
+              <strong class="info-value info-highlight" style="color: #059669;" id="val-arq-user-dedicated">$sttive</strong>
+            </div>
+          </div>
+
+          <div class="dedicated-copy-section" style="display: flex; flex-direction: column; gap: 0.85rem;">
             <button
               type="button"
               class="btn-donation-copy btn-copy-arq btn-copy-large"
@@ -386,6 +496,37 @@ function renderArqDedicatedView() {
             >
               📋 Copiar Usuario ($sttive)
             </button>
+            <a
+              href="https://arq.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-donation-direct btn-arq-primary"
+              id="btn-arq-open-app"
+            >
+              🚀 Abrir Aplicación ARQ (arq.app) ↗
+            </a>
+          </div>
+
+          <div class="donation-suggested-section">
+            <h4 class="donation-suggested-title">💡 Sugerencias de aporte en ARQ (Dólares Digitales):</h4>
+            <div class="donation-suggested-grid">
+              <div class="donation-suggested-chip">
+                <span class="suggested-amount">☕ $1 USD</span>
+                <span class="suggested-desc">Café de programación</span>
+              </div>
+              <div class="donation-suggested-chip">
+                <span class="suggested-amount">⚡ $3 USD</span>
+                <span class="suggested-desc">Servidor de actividades</span>
+              </div>
+              <div class="donation-suggested-chip">
+                <span class="suggested-amount">⭐ $5 USD</span>
+                <span class="suggested-desc">Módulo interactivo</span>
+              </div>
+              <div class="donation-suggested-chip">
+                <span class="suggested-amount">👑 $10 USD</span>
+                <span class="suggested-desc">Patrocinador Educativo</span>
+              </div>
+            </div>
           </div>
 
           <div class="dedicated-steps-panel">
@@ -449,6 +590,16 @@ function renderPaypalDedicatedView() {
           <h1>🔷 Donar con PayPal (Internacional)</h1>
         </div>
 
+        <div class="dedicated-mascot-row" style="margin-top: 1rem;">
+          ${renderAriMascot({
+            mood: 'excited',
+            message:
+              '¡Muchas gracias por tu generosidad internacional con PayPal! Puedes aportar con tarjeta o saldo desde cualquier país.',
+            compact: true,
+            showGreetButton: false
+          })}
+        </div>
+
         <article class="dedicated-donation-card dedicated-card-paypal">
           <div class="dedicated-header-row">
             <div class="dedicated-brand-pill badge-paypal">
@@ -505,6 +656,28 @@ function renderPaypalDedicatedView() {
             >
               ↗️ Abrir PayPal para Transferir Dinero
             </a>
+          </div>
+
+          <div class="donation-suggested-section">
+            <h4 class="donation-suggested-title">💡 Sugerencias de aporte internacional en PayPal:</h4>
+            <div class="donation-suggested-grid">
+              <div class="donation-suggested-chip">
+                <span class="suggested-amount">☕ $1 USD</span>
+                <span class="suggested-desc">Coffee Supporter</span>
+              </div>
+              <div class="donation-suggested-chip">
+                <span class="suggested-amount">⚡ $3 USD</span>
+                <span class="suggested-desc">Hosting & Data</span>
+              </div>
+              <div class="donation-suggested-chip">
+                <span class="suggested-amount">⭐ $5 USD</span>
+                <span class="suggested-desc">Curriculum Expansion</span>
+              </div>
+              <div class="donation-suggested-chip">
+                <span class="suggested-amount">👑 $10 USD</span>
+                <span class="suggested-desc">Honorary Benefactor</span>
+              </div>
+            </div>
           </div>
 
           <div class="dedicated-steps-panel">
@@ -657,6 +830,7 @@ export function bindDonationsViewEvents(rootElement = document, rerender = null,
         }
 
         SoundService.play('correct');
+        fireConfetti({ count: 30, duration: 1800 });
         btn.innerHTML = '✅ ¡Copiado con éxito!';
         btn.classList.add('copy-success-pulse');
 
@@ -675,7 +849,7 @@ export function bindDonationsViewEvents(rootElement = document, rerender = null,
   });
 
   // Conectar eventos interactivos del Podio de Donadores (ticker, dar corazón, modal de registro)
-  bindDonorsPodiumEvents(rootElement, () => {
+  const cleanupPodium = bindDonorsPodiumEvents(rootElement, () => {
     if (typeof rerender === 'function') {
       rerender();
     }
@@ -703,4 +877,10 @@ export function bindDonationsViewEvents(rootElement = document, rerender = null,
       }
     }, 120);
   }
+
+  return () => {
+    if (typeof cleanupPodium === 'function') {
+      cleanupPodium();
+    }
+  };
 }

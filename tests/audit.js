@@ -175,6 +175,7 @@ async function runAudit() {
     await cdp.send('Page.enable');
     await cdp.send('Log.enable');
     await cdp.send('Network.enable');
+    await cdp.send('Page.navigate', { url: `${baseUrl}/#/inicio` });
     await cdp.send('Emulation.setDeviceMetricsOverride', {
       width: 1280,
       height: 800,
@@ -208,12 +209,17 @@ async function runAudit() {
     });
 
     // Clear storage to start from a clean slate
-    for (let i = 0; i < 30; i++) {
-      const isReady = await cdp.eval(`Boolean(window.__ARI_APP__ && window.__ARI_APP__.StorageService)`);
-      if (isReady) break;
+    let isAppReady = false;
+    for (let i = 0; i < 60; i++) {
+      try {
+        isAppReady = await cdp.eval(`Boolean(window.__ARI_APP__ && window.__ARI_APP__.StorageService)`);
+        if (isAppReady) break;
+      } catch (e) {}
       await sleep(100);
     }
-    await cdp.eval(`window.__ARI_APP__.StorageService.resetProgress(); window.location.hash = '#/inicio';`);
+    if (isAppReady) {
+      await cdp.eval(`window.__ARI_APP__.StorageService.resetProgress(); window.location.hash = '#/inicio';`);
+    }
     await sleep(200);
 
     // =========================================================================
@@ -234,7 +240,12 @@ async function runAudit() {
       { hash: '#/progreso', component: 'ProgressView' },
       { hash: '#/logros', component: 'ProgressView' },
       { hash: '#/donaciones', component: 'DonationsView' },
+      { hash: '#/donaciones/nequi', component: 'DonationsView' },
+      { hash: '#/donaciones/arq', component: 'DonationsView' },
+      { hash: '#/donaciones/paypal', component: 'DonationsView' },
       { hash: '#/donaciones/podio', component: 'DonationsView' },
+      { hash: '#/podio', component: 'DonationsView' },
+      { hash: '#/apoyar', component: 'DonationsView' },
       { hash: '#/ruta-no-existente', component: 'NotFoundView' }
     ];
 
@@ -785,6 +796,20 @@ async function runAudit() {
       );
     }
 
+    // Modal de Aviso Legal y Derechos de Autor desde el pie de página
+    await cdp.eval(`document.querySelector('#btn-footer-legal')?.click()`);
+    await sleep(70);
+    const legalModalOpen = await cdp.eval(`Boolean(document.querySelector('#legal-notice-modal'))`);
+    await cdp.eval(`document.querySelector('#legal-modal-close')?.click()`);
+    await sleep(70);
+    const legalModalClosed = await cdp.eval(`!document.querySelector('#legal-notice-modal')`);
+    assertCheck(
+      '3. Botones',
+      'Botón del pie de página #btn-footer-legal abre el modal de aviso legal y se cierra correctamente con #legal-modal-close',
+      legalModalOpen && legalModalClosed,
+      `modalAbierto=${legalModalOpen}, modalCerrado=${legalModalClosed}`
+    );
+
     // =========================================================================
     // 8. COMPROBACIÓN DE SONIDOS (Y BOTONES DE MÚSICA Y SONIDO)
     // =========================================================================
@@ -1167,7 +1192,13 @@ async function runAudit() {
     })`);
 
     await cdp.send('Page.reload', { ignoreCache: true });
-    await sleep(500);
+    for (let i = 0; i < 50; i++) {
+      try {
+        const isReady = await cdp.eval(`Boolean(window.__ARI_APP__ && window.__ARI_APP__.StorageService)`);
+        if (isReady) break;
+      } catch (e) {}
+      await sleep(100);
+    }
 
     const stateAfterReload = await cdp.eval(`({
       playerName: window.__ARI_APP__.StorageService.getState().playerName,

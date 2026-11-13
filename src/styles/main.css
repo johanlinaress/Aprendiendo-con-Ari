@@ -656,9 +656,6 @@ h3,
   box-shadow: 0 3px 0 #334155;
   opacity: 0.85;
 }
-  box-shadow: 0 3px 0 #334155;
-  opacity: 0.85;
-}
 
 /* ========================
    3D GLOSSY GAME BUTTONS
@@ -4183,7 +4180,7 @@ select:focus-visible,
 }
 
 .donation-card-arq {
-  border-top: 5px solid #2563eb;
+  border-top: 5px solid #10b981;
 }
 
 .donation-card-paypal {
@@ -4212,9 +4209,9 @@ select:focus-visible,
 }
 
 .badge-arq {
-  background: #eff6ff;
-  color: #1d4ed8;
-  border: 1px solid #bfdbfe;
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
 }
 
 .badge-paypal {
@@ -4260,14 +4257,14 @@ select:focus-visible,
   width: 90px;
   height: 90px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  background: linear-gradient(135deg, #10b981, #059669);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ffffff;
   font-size: 2.8rem;
   font-weight: 900;
-  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
 }
 
 .paypal-symbol-circle {
@@ -4318,7 +4315,7 @@ select:focus-visible,
 }
 
 .arq-username {
-  color: #1d4ed8 !important;
+  color: #059669 !important;
   font-size: 1.15rem !important;
 }
 
@@ -4359,9 +4356,9 @@ select:focus-visible,
 }
 
 .btn-copy-arq:hover {
-  background: #eff6ff;
-  border-color: #60a5fa;
-  color: #1d4ed8;
+  background: #ecfdf5;
+  border-color: #34d399;
+  color: #047857;
 }
 
 .btn-copy-paypal:hover {
@@ -4473,14 +4470,14 @@ select:focus-visible,
 }
 
 .btn-select-arq {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  background: linear-gradient(135deg, #10b981, #059669);
   color: #ffffff;
 }
 
 .btn-select-arq:hover {
-  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  background: linear-gradient(135deg, #059669, #047857);
   transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 8px 18px rgba(16, 185, 129, 0.35);
 }
 
 .btn-select-paypal {
@@ -4531,7 +4528,7 @@ select:focus-visible,
 }
 
 .dedicated-card-arq {
-  border-top: 8px solid #2563eb;
+  border-top: 8px solid #10b981;
 }
 
 .dedicated-card-paypal {
@@ -4712,8 +4709,8 @@ select:focus-visible,
 
 /* ARQ Hero Showcase */
 .arq-hero-showcase {
-  background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
-  border: 2px solid #bfdbfe;
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+  border: 2px solid #a7f3d0;
   border-radius: 20px;
   padding: 2rem;
   display: flex;
@@ -4737,7 +4734,7 @@ select:focus-visible,
   display: block;
   font-size: 0.88rem;
   font-weight: 700;
-  color: #64748b;
+  color: #047857;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 0.35rem;
@@ -4746,8 +4743,23 @@ select:focus-visible,
 .arq-user-tag {
   font-size: 2.4rem;
   font-weight: 900;
-  color: #1d4ed8;
+  color: #059669;
   letter-spacing: 0.02em;
+}
+
+.btn-arq-primary {
+  padding: 1.1rem 1.5rem !important;
+  font-size: 1.1rem !important;
+  border-radius: 14px !important;
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  box-shadow: 0 8px 22px rgba(16, 185, 129, 0.35) !important;
+  color: #ffffff !important;
+}
+
+.btn-arq-primary:hover {
+  background: linear-gradient(135deg, #059669, #047857) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 28px rgba(16, 185, 129, 0.45) !important;
 }
 
 /* PayPal Showcase */
@@ -4887,6 +4899,160 @@ select:focus-visible,
   flex-wrap: wrap;
   padding-top: 1rem;
   border-top: 2px solid #f1f5f9;
+}
+
+/* Banner de Transparencia e Impacto de Donaciones */
+.donations-impact-banner {
+  background: #ffffff;
+  border: 2px solid #e9d5ff;
+  border-radius: 20px;
+  padding: 1.5rem 1.75rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.impact-banner-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.impact-banner-icon {
+  font-size: 1.75rem;
+}
+
+.impact-banner-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #4c1d95;
+}
+
+.impact-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.impact-card {
+  background: #faf5ff;
+  border: 1px solid #e9d5ff;
+  border-radius: 14px;
+  padding: 1.1rem;
+  transition: transform 0.2s ease;
+}
+
+.impact-card:hover {
+  transform: translateY(-2px);
+}
+
+.impact-card-emoji {
+  font-size: 1.6rem;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.impact-card strong {
+  display: block;
+  font-size: 0.95rem;
+  color: #3b0764;
+  margin-bottom: 0.35rem;
+}
+
+.impact-card p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #64748b;
+}
+
+/* Sugerencias de Montos Voluntarios */
+.donation-suggested-section {
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  border-radius: 18px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.donation-suggested-title {
+  margin: 0 0 0.85rem;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.donation-suggested-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.75rem;
+}
+
+.donation-suggested-chip {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0.65rem 0.75rem;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.donation-suggested-chip:hover {
+  transform: translateY(-2px);
+  border-color: #8b5cf6;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+}
+
+.suggested-amount {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #1e293b;
+}
+
+.suggested-desc {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-top: 0.2rem;
+}
+
+/* Botones de acción rápida en las tarjetas del Hub */
+.donation-card-actions-cluster {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.btn-card-quick-copy {
+  width: 100%;
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  color: #475569;
+  border-radius: var(--radius-md);
+  padding: 0.45rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  transition: all 0.15s ease;
+}
+
+.btn-card-quick-copy:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+  transform: translateY(-1px);
 }
 
 @media (max-width: 1120px) {
@@ -6696,18 +6862,46 @@ html.ari-dark-mode .reading-passage-body {
 }
 
 @media print {
+  body {
+    background: #ffffff !important;
+    color: #1e293b !important;
+  }
+
+  .skip-link,
+  .scene-background-svg,
   .app-navbar,
   .app-footer,
+  .app-breadcrumbs-bar,
+  .breadcrumbs-nav,
+  .section-header-row,
+  .category-tabs,
+  .progress-subtabs-bar,
   .progress-tabs-bar,
+  .progress-overview-grid,
+  .subject-progress-cards-row,
   .cloud-sync-card,
   .achievements-section,
   .progress-mascot-aside,
   .levels-breakdown-section,
+  .progress-header-actions,
+  .parents-report-header button,
   #btn-print-certificate {
     display: none !important;
   }
 
-  .parents-report-card,
+  .app-main-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .parents-report-card {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
   .official-certificate-preview,
   .certificate-inner-border {
     border-color: #ca8a04 !important;

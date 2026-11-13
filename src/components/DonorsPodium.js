@@ -606,7 +606,7 @@ function renderDonorModalHtml() {
             </label>
             <select id="donor-select-method" class="form-control form-select">
               <option value="Bre-B Nequi">🟣 Bre-B • Nequi (Colombia)</option>
-              <option value="ARQ">🔵 ARQ (Dólares Digitales)</option>
+              <option value="ARQ">🟢 ARQ (Dólares Digitales)</option>
               <option value="PayPal">🔷 PayPal (Internacional)</option>
               <option value="Aporte Voluntario">💖 Aporte Voluntario / Educativo</option>
             </select>
@@ -724,11 +724,12 @@ export function bindDonorsPodiumEvents(
     });
   }
 
-  document.addEventListener('keydown', (e) => {
+  const handleEscape = (e) => {
     if (e.key === 'Escape' && modalOverlay && modalOverlay.style.display !== 'none') {
       closeModal();
     }
-  });
+  };
+  document.addEventListener('keydown', handleEscape);
 
   // 4. Procesar formulario de registro
   const form = rootElement.querySelector('#form-register-donor');
@@ -780,6 +781,14 @@ export function bindDonorsPodiumEvents(
       }
     });
   }
+
+  return () => {
+    if (tickerTimerId) {
+      clearInterval(tickerTimerId);
+      tickerTimerId = null;
+    }
+    document.removeEventListener('keydown', handleEscape);
+  };
 }
 
 /**
@@ -858,7 +867,7 @@ function getInitials(name = '') {
 function getMethodIcon(method = '') {
   const m = String(method).toLowerCase();
   if (m.includes('nequi') || m.includes('bre-b')) return '🟣';
-  if (m.includes('arq')) return '🔵';
+  if (m.includes('arq')) return '🟢';
   if (m.includes('paypal')) return '🔷';
   return '💖';
 }
